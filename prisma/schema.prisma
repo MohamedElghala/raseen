@@ -1,0 +1,129 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("buyer") // buyer, vendor, admin
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  products  Product[]
+  orders    Order[]
+  reviews   Review[]
+  reports   Report[]
+  payouts   Payout[]
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  name        String
+  nameEn      String
+  icon        String
+  description String?
+  products    Product[]
+}
+
+model Product {
+  id            String      @id @default(cuid())
+  title         String
+  description   String
+  price         Float
+  originalPrice Float?
+  fileType      String
+  license       String      @default("personal")
+  imageUrl      String?
+  fileUrl       String?
+  rating        Float       @default(0)
+  reviewCount   Int         @default(0)
+  salesCount    Int         @default(0)
+  tags          String      @default("")
+  featured      Boolean     @default(false)
+  status        String      @default("active") // active, pending, rejected
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  vendor        User        @relation(fields: [vendorId], references: [id])
+  vendorId      String
+  category      Category    @relation(fields: [categoryId], references: [id])
+  categoryId    String
+  orderItems    OrderItem[]
+  reviews       Review[]
+  reports       Report[]
+}
+
+model Order {
+  id            String      @id @default(cuid())
+  totalAmount   Float
+  currency      String      @default("EGP")
+  status        String      @default("completed") // pending, completed, refunded
+  paymentMethod String?
+  createdAt     DateTime    @default(now())
+  buyer         User        @relation(fields: [buyerId], references: [id])
+  buyerId       String
+  items         OrderItem[]
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  quantity  Int     @default(1)
+  price     Float
+  order     Order   @relation(fields: [orderId], references: [id])
+  orderId   String
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+}
+
+model DownloadToken {
+  id          String   @id @default(cuid())
+  token       String   @unique
+  productId   String
+  userId      String
+  maxDownloads Int     @default(10)
+  downloadCount Int    @default(0)
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+}
+
+model Payout {
+  id        String   @id @default(cuid())
+  amount    Float
+  fee       Float
+  net       Float
+  status    String   @default("pending") // pending, processing, completed
+  method    String?  // paymob_send
+  vendor    User     @relation(fields: [vendorId], references: [id])
+  vendorId  String
+  createdAt DateTime @default(now())
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int
+  comment   String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  createdAt DateTime @default(now())
+}
+
+model Report {
+  id        String   @id @default(cuid())
+  reason    String
+  details   String?
+  status    String   @default("pending") // pending, reviewed, resolved
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  createdAt DateTime @default(now())
+}
