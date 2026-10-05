@@ -3,12 +3,14 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSession, signOut } from 'next-auth/react';
 import { useCartStore } from '@/store/cartStore';
 import { useAuthStore } from '@/store/authStore';
 import type { Currency } from '@/lib/types';
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { data: session } = useSession();
 
   const totalItems = useCartStore((s) => s.totalItems);
   const toggleCart = useCartStore((s) => s.toggleCart);
@@ -18,6 +20,22 @@ export default function Navbar() {
   const user = useAuthStore((s) => s.user);
   const toggleLoginModal = useAuthStore((s) => s.toggleLoginModal);
   const logout = useAuthStore((s) => s.logout);
+
+  // Active user can be either NextAuth Google user or manual login user
+  const activeUser = session?.user
+    ? {
+        name: session.user.name || 'مستخدم رَصين',
+        email: session.user.email || '',
+        avatar: session.user.image,
+      }
+    : user;
+
+  const handleLogout = () => {
+    if (session) {
+      signOut({ callbackUrl: '/' });
+    }
+    logout();
+  };
 
   const cartCount = totalItems();
 
@@ -101,13 +119,20 @@ export default function Navbar() {
 
             {/* Auth */}
             <div className="hidden md:block">
-              {user ? (
+              {activeUser ? (
                 <div className="flex items-center gap-2">
-                  <Link href="/dashboard" className="btn-outline !px-3 !py-1.5 text-sm">
-                    {user.name}
+                  <Link href="/dashboard" className="btn-outline !px-3 !py-1.5 text-sm flex items-center gap-2">
+                    {activeUser.avatar && (
+                      <img 
+                        src={activeUser.avatar} 
+                        alt={activeUser.name} 
+                        className="w-5 h-5 rounded-full object-cover"
+                      />
+                    )}
+                    <span>{activeUser.name}</span>
                   </Link>
                   <button
-                    onClick={logout}
+                    onClick={handleLogout}
                     className="text-slate-400 hover:text-red-400 text-xs transition-colors"
                     aria-label="تسجيل الخروج"
                   >
@@ -120,6 +145,7 @@ export default function Navbar() {
                 </button>
               )}
             </div>
+
 
             {/* Hamburger */}
             <button
@@ -158,12 +184,19 @@ export default function Navbar() {
             ))}
 
             <div className="pt-3">
-              {user ? (
+              {activeUser ? (
                 <div className="flex flex-col gap-3">
-                  <Link href="/dashboard" className="btn-outline text-center" onClick={() => setIsMobileMenuOpen(false)}>
-                    حسابي — {user.name}
+                  <Link href="/dashboard" className="btn-outline text-center flex items-center justify-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
+                    {activeUser.avatar && (
+                      <img 
+                        src={activeUser.avatar} 
+                        alt={activeUser.name} 
+                        className="w-5 h-5 rounded-full object-cover"
+                      />
+                    )}
+                    <span>حسابي — {activeUser.name}</span>
                   </Link>
-                  <button onClick={() => { logout(); setIsMobileMenuOpen(false); }} className="text-red-400 text-sm py-2">
+                  <button onClick={() => { handleLogout(); setIsMobileMenuOpen(false); }} className="text-red-400 text-sm py-2">
                     تسجيل الخروج
                   </button>
                 </div>
@@ -176,6 +209,7 @@ export default function Navbar() {
                 </button>
               )}
             </div>
+
           </div>
         </div>
       )}

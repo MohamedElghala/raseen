@@ -5,6 +5,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import CartModal from '@/components/storefront/CartModal';
 import LoginModal from '@/components/auth/LoginModal';
+import AuthProvider from '@/components/providers/AuthProvider';
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-WWN1MNE93T';
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
@@ -133,12 +134,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </noscript>
         )}
 
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-        <CartModal />
-        <LoginModal />
+        <AuthProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+          <CartModal />
+          <LoginModal />
+        </AuthProvider>
       </body>
     </html>
   );
 }
+
