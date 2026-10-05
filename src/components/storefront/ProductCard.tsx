@@ -107,25 +107,31 @@ export default function ProductCard({ product }: ProductCardProps) {
           <span className="text-xs text-slate-300">{product.vendorName}</span>
         </div>
 
-        <div className="flex items-center justify-between mt-2 pt-3 border-t border-rawnaq-border/50">
+        <div className="flex items-center justify-between mt-2 pt-3 border-t border-rawnaq-border/50 gap-2">
           <div className="flex flex-col">
-            <span className="text-xl font-bold text-rawnaq-gold">{displayPrice}</span>
+            <span className="text-lg sm:text-xl font-black text-rawnaq-gold">{displayPrice}</span>
             {displayOriginal && (
               <span className="text-xs text-slate-500 line-through">{displayOriginal}</span>
             )}
-            <span className="text-[10px] text-green-400 flex items-center gap-1">
-              ✓ تنزيل فوري
+            <span className="text-[10px] text-green-400 flex items-center gap-1 font-medium">
+              ✓ تسليم فوري
             </span>
           </div>
 
-          <button
-            onClick={handleBuyClick}
-            aria-label={`شراء ${product.title} الآن`}
-            className="btn-gold !px-4 !py-2 text-sm flex items-center gap-2"
-          >
-            <span>شراء الآن</span>
-            <span>🛒</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-slate-300 group-hover:text-rawnaq-gold font-bold px-2 py-1 rounded transition-colors flex items-center gap-1">
+              <span>التفاصيل</span>
+              <span className="text-sm">←</span>
+            </span>
+            <button
+              onClick={handleBuyClick}
+              aria-label={`شراء ${product.title} الآن`}
+              className="btn-gold !px-3.5 !py-2 text-xs font-bold flex items-center gap-1.5 shadow-md shadow-rawnaq-gold/10"
+            >
+              <span>شراء</span>
+              <span>🛒</span>
+            </button>
+          </div>
         </div>
       </div>
     </Link>

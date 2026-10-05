@@ -183,6 +183,44 @@ export default function Navbar() {
               </Link>
             ))}
 
+            <div className="pt-2 pb-1 border-b border-rawnaq-border/50">
+              <span className="text-[11px] font-bold text-rawnaq-gold block mb-2">أركان الأصول الرقمية:</span>
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <Link
+                  href="/category/accounting"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2.5 rounded-lg bg-rawnaq-surface border border-rawnaq-border hover:border-emerald-500/50 text-slate-200 flex items-center gap-1.5"
+                >
+                  <span>📊</span>
+                  <span>الشيتات المالية</span>
+                </Link>
+                <Link
+                  href="/category/business"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2.5 rounded-lg bg-rawnaq-surface border border-rawnaq-border hover:border-blue-500/50 text-slate-200 flex items-center gap-1.5"
+                >
+                  <span>⚖️</span>
+                  <span>العقود القانونية</span>
+                </Link>
+                <Link
+                  href="/editor"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2.5 rounded-lg bg-rawnaq-surface border border-rawnaq-border hover:border-cyan-500/50 text-slate-200 flex items-center gap-1.5"
+                >
+                  <span>🎨</span>
+                  <span>استوديو Canva</span>
+                </Link>
+                <Link
+                  href="/category/engineering"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2.5 rounded-lg bg-rawnaq-surface border border-rawnaq-border hover:border-purple-500/50 text-slate-200 flex items-center gap-1.5"
+                >
+                  <span>📐</span>
+                  <span>المكتبات الهندسية</span>
+                </Link>
+              </div>
+            </div>
+
             <div className="pt-3">
               {activeUser ? (
                 <div className="flex flex-col gap-3">

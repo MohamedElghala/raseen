@@ -12,6 +12,18 @@ export default function HomePage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedFileType, setSelectedFileType] = useState('all');
+  const [activeFilterNotice, setActiveFilterNotice] = useState<string | null>(null);
+
+  const handlePillarSelect = (category: string, fileType: string, label: string) => {
+    setSelectedCategory(category);
+    setSelectedFileType(fileType);
+    setSearchTerm('');
+    setActiveFilterNotice(label);
+    const element = document.getElementById('products');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const filteredProducts = useMemo(() => {
     return mockProducts.filter((product) => {
@@ -37,72 +49,200 @@ export default function HomePage() {
       <div className="container mx-auto px-4 py-12 space-y-24">
         
         {/* 2. Interactive Asset Suite (4 Pillars) */}
-        <section className="space-y-6">
+        <section id="pillars" className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-rawnaq-border pb-4">
             <div>
               <div className="text-[11px] font-mono text-rawnaq-gold font-bold mb-1">INTERACTIVE ASSET SUITE</div>
               <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">أركان منظومة رَصين المتكاملة</h2>
             </div>
             <p className="text-xs text-slate-400 max-w-md">
-              جميع الأصول مهيأة بمعادلات آلية، شاشات تخصيص حية، وقوالب موثقة وجاهزة للتنفيذ الفوري في بيئات العمل الحقيقية.
+              اضغط على أي ركن للانتقال المباشر وتصفية الأصول التخصصية أو فتح محرر الاستوديو المباشر.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             
-            {/* Excel Pillar */}
-            <div className="bg-rawnaq-surface border border-rawnaq-border rounded-2xl p-6 space-y-3 hover:border-rawnaq-gold/40 transition-all">
-              <div className="w-10 h-10 rounded-xl bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-xl">
-                📊
+            {/* 1. Excel Pillar */}
+            <div 
+              onClick={() => handlePillarSelect('accounting', 'all', 'النماذج والشيتات المالية المحاسبية')}
+              className={`rounded-2xl p-6 space-y-4 transition-all cursor-pointer group border flex flex-col justify-between ${
+                selectedCategory === 'accounting' 
+                  ? 'bg-emerald-950/40 border-emerald-500 shadow-xl shadow-emerald-500/10 scale-[1.02]' 
+                  : 'bg-rawnaq-surface border-rawnaq-border hover:border-emerald-500/50 hover:bg-rawnaq-surface/90'
+              }`}
+            >
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="w-12 h-12 rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    📊
+                  </div>
+                  <span className="text-[11px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
+                    12 شيت تخصصي
+                  </span>
+                </div>
+                <h3 className="font-black text-lg text-white group-hover:text-emerald-300 transition-colors">
+                  النماذج والشيتات المالية
+                </h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  شيتات محاسبة آلية، حساب ضريبة القيمة المضافة، موازنات تقديرية، ولوحات قيادة مالية مرتبطة بـ Power BI.
+                </p>
+                <div className="text-[11px] text-emerald-400 font-mono flex items-center gap-1.5 pt-1">
+                  <span>✓</span> معادلات ديناميكية بدون أخطاء
+                </div>
               </div>
-              <h3 className="font-bold text-base text-white">النماذج والشيتات المالية</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                شيتات محاسبة آلية، حساب ضريبة القيمة المضافة، موازنات تقديرية، ولوحات قيادة مالية مرتبطة بـ Power BI.
-              </p>
-              <div className="pt-2 text-[11px] text-emerald-400 font-mono">
-                ✓ معادلات ديناميكية بدون أخطاء
+
+              <div className="pt-3 space-y-2">
+                <button 
+                  type="button"
+                  className="w-full py-2.5 px-3 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-bold text-xs flex items-center justify-between group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all shadow-sm"
+                >
+                  <span>استعراض الشيتات في السوق</span>
+                  <span className="text-sm font-black transition-transform group-hover:translate-x-[-3px]">←</span>
+                </button>
+                <Link
+                  href="/category/accounting"
+                  onClick={(e) => e.stopPropagation()}
+                  className="w-full py-1.5 px-2 text-center text-[11px] text-slate-400 hover:text-emerald-300 transition-colors block"
+                >
+                  فتح صفحة القسم المستقلة ↗
+                </Link>
               </div>
             </div>
 
-            {/* Legal Pillar */}
-            <div className="bg-rawnaq-surface border border-rawnaq-border rounded-2xl p-6 space-y-3 hover:border-rawnaq-gold/40 transition-all">
-              <div className="w-10 h-10 rounded-xl bg-blue-950/60 border border-blue-500/30 text-blue-400 flex items-center justify-center text-xl">
-                ⚖️
+            {/* 2. Legal Pillar */}
+            <div 
+              onClick={() => handlePillarSelect('business', 'word-pdf', 'العقود والأطر القانونية')}
+              className={`rounded-2xl p-6 space-y-4 transition-all cursor-pointer group border flex flex-col justify-between ${
+                selectedCategory === 'business' 
+                  ? 'bg-blue-950/40 border-blue-500 shadow-xl shadow-blue-500/10 scale-[1.02]' 
+                  : 'bg-rawnaq-surface border-rawnaq-border hover:border-blue-500/50 hover:bg-rawnaq-surface/90'
+              }`}
+            >
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="w-12 h-12 rounded-xl bg-blue-950/80 border border-blue-500/40 text-blue-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    ⚖️
+                  </div>
+                  <span className="text-[11px] font-mono font-bold text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-full border border-blue-500/20">
+                    10 عقود معتمدة
+                  </span>
+                </div>
+                <h3 className="font-black text-lg text-white group-hover:text-blue-300 transition-colors">
+                  العقود والأطر القانونية
+                </h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  عقود عمل وتوظيف، اتفاقيات عدم إفصاح (NDA)، عقود شراكة وتأسيس شركات مصاغة وفق الأنظمة القانونية العربية.
+                </p>
+                <div className="text-[11px] text-blue-400 font-mono flex items-center gap-1.5 pt-1">
+                  <span>✓</span> صيغ Word + PDF قابلة للتعديل
+                </div>
               </div>
-              <h3 className="font-bold text-base text-white">العقود والأطر القانونية</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                عقود عمل وتوظيف، اتفاقيات عدم إفصاح (NDA)، عقود شراكة وتأسيس شركات مصاغة وفق الأنظمة القانونية العربية.
-              </p>
-              <div className="pt-2 text-[11px] text-blue-400 font-mono">
-                ✓ صيغ Word + PDF قابلة للتعديل
+
+              <div className="pt-3 space-y-2">
+                <button 
+                  type="button"
+                  className="w-full py-2.5 px-3 rounded-xl bg-blue-500/15 border border-blue-500/30 text-blue-300 font-bold text-xs flex items-center justify-between group-hover:bg-blue-500 group-hover:text-slate-950 transition-all shadow-sm"
+                >
+                  <span>استعراض العقود في السوق</span>
+                  <span className="text-sm font-black transition-transform group-hover:translate-x-[-3px]">←</span>
+                </button>
+                <Link
+                  href="/category/business"
+                  onClick={(e) => e.stopPropagation()}
+                  className="w-full py-1.5 px-2 text-center text-[11px] text-slate-400 hover:text-blue-300 transition-colors block"
+                >
+                  فتح صفحة القسم المستقلة ↗
+                </Link>
               </div>
             </div>
 
-            {/* Canva Pillar */}
-            <div className="bg-rawnaq-surface border border-rawnaq-border rounded-2xl p-6 space-y-3 hover:border-rawnaq-gold/40 transition-all">
-              <div className="w-10 h-10 rounded-xl bg-cyan-950/60 border border-cyan-500/30 text-cyan-400 flex items-center justify-center text-xl">
-                🎨
+            {/* 3. Canva Studio Pillar */}
+            <div 
+              className="rounded-2xl p-6 space-y-4 transition-all group border flex flex-col justify-between bg-rawnaq-surface border-rawnaq-border hover:border-cyan-500/50 hover:bg-rawnaq-surface/90 relative overflow-hidden"
+            >
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="w-12 h-12 rounded-xl bg-cyan-950/80 border border-cyan-500/40 text-cyan-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    🎨
+                  </div>
+                  <span className="text-[11px] font-mono font-bold text-cyan-400 bg-cyan-500/10 px-2.5 py-1 rounded-full border border-cyan-500/20">
+                    محرر مباشر + 14 قالباً
+                  </span>
+                </div>
+                <h3 className="font-black text-lg text-white group-hover:text-cyan-300 transition-colors">
+                  استوديو قوالب Canva
+                </h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  عروض تقديمية (Pitch Decks)، تقارير أعمال، وهويات بصرية كاملة مع إمكانية التعديل داخل المتصفح أو في Canva.
+                </p>
+                <div className="text-[11px] text-cyan-400 font-mono flex items-center gap-1.5 pt-1">
+                  <span>✓</span> تعديل مباشر وطباعة A4
+                </div>
               </div>
-              <h3 className="font-bold text-base text-white">استوديو قوالب Canva</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                عروض تقديمية (Pitch Decks)، تقارير أعمال، وهويات بصرية كاملة مع إمكانية التعديل داخل المتصفح أو في Canva.
-              </p>
-              <div className="pt-2 text-[11px] text-cyan-400 font-mono">
-                ✓ تعديل مباشر وطباعة A4
+
+              <div className="pt-3 space-y-2">
+                <Link 
+                  href="/editor"
+                  className="w-full py-2.5 px-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs flex items-center justify-between transition-all shadow-md shadow-cyan-500/20"
+                >
+                  <span>🎨 فتح محرر الاستوديو المباشر</span>
+                  <span className="text-sm font-black">➔</span>
+                </Link>
+                <button 
+                  type="button"
+                  onClick={() => handlePillarSelect('all', 'powerpoint', 'قوالب العروض وكانفا والتصميم')}
+                  className="w-full py-2 px-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-bold text-[11px] flex items-center justify-between hover:bg-cyan-500/20 transition-all"
+                >
+                  <span>تصفح قوالب التصميم في السوق</span>
+                  <span>←</span>
+                </button>
               </div>
             </div>
 
-            {/* CAD Pillar */}
-            <div className="bg-rawnaq-surface border border-rawnaq-border rounded-2xl p-6 space-y-3 hover:border-rawnaq-gold/40 transition-all">
-              <div className="w-10 h-10 rounded-xl bg-purple-950/60 border border-purple-500/30 text-purple-400 flex items-center justify-center text-xl">
-                📐
+            {/* 4. CAD Pillar */}
+            <div 
+              onClick={() => handlePillarSelect('engineering', 'cad-revit', 'المكتبات الهندسية CAD & BIM')}
+              className={`rounded-2xl p-6 space-y-4 transition-all cursor-pointer group border flex flex-col justify-between ${
+                selectedCategory === 'engineering' 
+                  ? 'bg-purple-950/40 border-purple-500 shadow-xl shadow-purple-500/10 scale-[1.02]' 
+                  : 'bg-rawnaq-surface border-rawnaq-border hover:border-purple-500/50 hover:bg-rawnaq-surface/90'
+              }`}
+            >
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="w-12 h-12 rounded-xl bg-purple-950/80 border border-purple-500/40 text-purple-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    📐
+                  </div>
+                  <span className="text-[11px] font-mono font-bold text-purple-400 bg-purple-500/10 px-2.5 py-1 rounded-full border border-purple-500/20">
+                    8 مشاريع ومكتبات
+                  </span>
+                </div>
+                <h3 className="font-black text-lg text-white group-hover:text-purple-300 transition-colors">
+                  المكتبات الهندسية CAD & BIM
+                </h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  مكتبات معمارية وإنشائية وكهروميكانيكية متوافقة مع الكود العربي والاشتراطات الهندسية الحديثة 2026.
+                </p>
+                <div className="text-[11px] text-purple-400 font-mono flex items-center gap-1.5 pt-1">
+                  <span>✓</span> ملفات .DWG و .RVT معيارية
+                </div>
               </div>
-              <h3 className="font-bold text-base text-white">المكتبات الهندسية CAD</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                مكتبات معمارية وإنشائية وكهروميكانيكية متوافقة مع الكود العربي والاشتراطات الهندسية الحديثة 2026.
-              </p>
-              <div className="pt-2 text-[11px] text-purple-400 font-mono">
-                ✓ ملفات .DWG و .RVT معيارية
+
+              <div className="pt-3 space-y-2">
+                <button 
+                  type="button"
+                  className="w-full py-2.5 px-3 rounded-xl bg-purple-500/15 border border-purple-500/30 text-purple-300 font-bold text-xs flex items-center justify-between group-hover:bg-purple-500 group-hover:text-slate-950 transition-all shadow-sm"
+                >
+                  <span>استعراض المكتبات في السوق</span>
+                  <span className="text-sm font-black transition-transform group-hover:translate-x-[-3px]">←</span>
+                </button>
+                <Link
+                  href="/category/engineering"
+                  onClick={(e) => e.stopPropagation()}
+                  className="w-full py-1.5 px-2 text-center text-[11px] text-slate-400 hover:text-purple-300 transition-colors block"
+                >
+                  فتح صفحة القسم المستقلة ↗
+                </Link>
               </div>
             </div>
 
@@ -113,12 +253,50 @@ export default function HomePage() {
         <BundleDeals />
 
         {/* 4. Filter Bar & Comprehensive Catalog */}
-        <section id="products" className="space-y-6">
+        <section id="products" className="space-y-6 scroll-mt-24">
+          
+          {/* Active Filter Announcement Banner */}
+          {activeFilterNotice && (
+            <div className="p-4 rounded-2xl bg-rawnaq-surface border-2 border-rawnaq-gold flex items-center justify-between flex-wrap gap-4 shadow-xl shadow-rawnaq-gold/5 animate-fade-in-up">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl">🎯</span>
+                <div>
+                  <span className="text-xs text-slate-400 block font-medium">تم تحديد الركن التخصصي:</span>
+                  <span className="text-base font-black text-white">
+                    {activeFilterNotice}{' '}
+                    <span className="text-rawnaq-gold font-mono text-sm">
+                      ({filteredProducts.length} أصل متاح)
+                    </span>
+                  </span>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedCategory('all');
+                  setSelectedFileType('all');
+                  setActiveFilterNotice(null);
+                  setSearchTerm('');
+                }}
+                className="px-4 py-2 rounded-xl bg-rawnaq-dark border border-slate-600 hover:border-rawnaq-gold hover:text-rawnaq-gold text-xs font-bold text-slate-200 transition-all flex items-center gap-1.5"
+              >
+                <span>✕ إلغاء التصفية وعرض كافة الأصول</span>
+              </button>
+            </div>
+          )}
+
           <FilterBar
             selectedCategory={selectedCategory}
             selectedFileType={selectedFileType}
-            onCategoryChange={setSelectedCategory}
-            onFileTypeChange={setSelectedFileType}
+            onCategoryChange={(cat) => {
+              setSelectedCategory(cat);
+              if (cat === 'all') setActiveFilterNotice(null);
+            }}
+            onFileTypeChange={(type) => {
+              setSelectedFileType(type);
+              if (type === 'all' && selectedCategory === 'all') setActiveFilterNotice(null);
+            }}
             totalProducts={filteredProducts.length}
           />
 
