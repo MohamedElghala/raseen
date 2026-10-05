@@ -6,7 +6,7 @@ import Footer from '@/components/layout/Footer';
 import CartModal from '@/components/storefront/CartModal';
 import LoginModal from '@/components/auth/LoginModal';
 
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-WWN1MNE93T';
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 const GOOGLE_VERIFICATION = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || 'verification_token_placeholder';
 

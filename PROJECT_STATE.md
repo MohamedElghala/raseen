@@ -91,7 +91,7 @@
 ## 8. روابط وإعدادات أدوات التسويق والتحليلات (Marketing & SEO Direct Links)
 * 📈 **Google Analytics 4 (GA4):**
   * الرابط المباشر: [https://analytics.google.com/analytics/web/](https://analytics.google.com/analytics/web/)
-  * المتغير المطلوب: `NEXT_PUBLIC_GA_ID` (معرف القياس `G-XXXXXXXXXX`).
+  * **معرف القياس المعتمد والمربوط:** `G-WWN1MNE93T` (مدمج في `src/app/layout.tsx` ويعمل حياً).
 * 🔍 **Google Search Console (GSC):**
   * الرابط المباشر: [https://search.google.com/search-console](https://search.google.com/search-console)
   * رابط السايت ماب لتقديمه: `https://<DOMAIN>/sitemap.xml`
