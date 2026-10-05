@@ -126,3 +126,13 @@
 2. **تغذية كتالوج الأصول:** الاستمرار في رفع حزم قوالب جديدة (كانفا، ريفيت، كاد، إكسيل تنفيذي).
 3. **تفعيل بوابة الدفع الحقيقية:** استبدال محاكاة بوابات الدفع (Paymob / InstaPay) بالمفاتيح الحية فور جاهزية السجل التجاري أو وثيقة العمل الحر.
 
+---
+
+## 12. قاعدة البيانات السحابية الحقيقية (Live Supabase Cloud PostgreSQL)
+* **المزود:** Supabase PostgreSQL (AWS eu-west-1 Ireland)
+* **معرف المشروع:** `llmphkxegxkehnjwsgoi` (`raseen-prod`)
+* **رابط المشروع:** `https://llmphkxegxkehnjwsgoi.supabase.co`
+* **الحالة التقنية:** تم بنجاح ربط محرك Prisma بنظام PostgreSQL ومزامنة وتوليد كافة الجداول السحابية الحقيقية (User, Product, Category, Order, OrderItem, DownloadToken, Payout, Review, Report) بنسبة 100%.
+* **أداء البناء:** `npm run build` اجتاز بنجاح خلال 2.5 ثانية لكافة المسارات الـ 15.
+
+
