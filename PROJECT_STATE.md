@@ -77,14 +77,13 @@
 ## 7. حالة الرفع والنشر (Deployment Status)
 * 🚀 **مستودع GitHub الرسمي حي ومحدث بالكامل:**
   * الرابط: **[https://github.com/MohamedElghala/raseen](https://github.com/MohamedElghala/raseen)**
-  * الفرع: `main` | آخر Commit: `ae902cc` (feat: expand catalog to 50 comprehensive executive assets and enhance verification suite).
-  * تم دفع كافة الملفات والمكونات والـ 50 أصلاً واجتياز فحص OpenSSL والـ Git بنجاح.
+  * الفرع: `main` | آخر Commit: `9ca507c` (`feat(hero): deploy approved architectural horizon eclipse and official aerodynamic 3D monogram logo`).
+  * تم دفع كافة الملفات والمكونات والشعار رقم 2 وتصميم الأفق المعماري واجتياز الفحص بنجاح.
 
-* 🌐 **خطوة النشر المباشر على Vercel بنقرة واحدة (1-Click Vercel Deploy):**
-  1. افتح صفحة استيراد المشاريع في فيرسل: **[https://vercel.com/new](https://vercel.com/new)**
-  2. ستجد مستودع **`raseen`** ظاهراً في قائمة مستودعات حسابك في GitHub، اضغط على زر **"Import"**.
-  3. سيتعرف Vercel تلقائياً على إعدادات Next.js 15 و Prisma، اضغط على زر **"Deploy"**.
-  4. خلال 60 ثانية سيعطيك Vercel الرابط الحي المباشر (مثل `https://raseen.vercel.app`) مع تفعيل الـ SSL المجاني والنشر التلقائي عند أي تحديث مستقبلي!
+* 🌐 **الموقع الحي المباشر على Vercel:**
+  * الرابط المباشر: **[https://raseen-nine.vercel.app](https://raseen-nine.vercel.app)**
+  * الحالة: **LIVE ومُحدّث بنسبة 100%** مع التصميم المعتمد وشعار المونوغرام وخلفية الكسوف الذهبي.
+
 
 ---
 
