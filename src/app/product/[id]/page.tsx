@@ -11,6 +11,7 @@ import ProductCard from '@/components/storefront/ProductCard';
 import ExcelInspector from '@/components/products/ExcelInspector';
 import ContractInspector from '@/components/products/ContractInspector';
 import CadRevitInspector from '@/components/products/CadRevitInspector';
+import FreelanceCustomizationCard from '@/components/products/FreelanceCustomizationCard';
 
 export default function ProductDetailPage() {
   const router = useRouter();
@@ -204,6 +205,9 @@ export default function ProductDetailPage() {
             <CadRevitInspector product={product} />
           </div>
         )}
+
+        {/* Freelance Customization & Expert Assistance */}
+        <FreelanceCustomizationCard productTitle={product.title} fileType={product.fileType} />
 
         {/* Reviews Section */}
         <div className="mb-16">

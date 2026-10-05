@@ -63,7 +63,7 @@ export default function Footer() {
           <div className="col-span-1">
             <h3 className="text-lg font-bold text-slate-200 mb-4">أدوات وروابط</h3>
             <ul className="space-y-3">
-              <li><Link href="/editor" className="text-slate-400 hover:text-rawnaq-gold transition-colors text-sm">🎨 محرر القوالب (Canva Studio)</Link></li>
+              <li><Link href="/editor" className="text-slate-400 hover:text-rawnaq-gold transition-colors text-sm">🎨 محرر وتخصيص القوالب</Link></li>
               <li><Link href="/tools" className="text-slate-400 hover:text-rawnaq-gold transition-colors text-sm">أدوات مجانية</Link></li>
               <li><Link href="/vendor" className="text-slate-400 hover:text-rawnaq-gold transition-colors text-sm">بوابة البائعين</Link></li>
               <li><Link href="/dashboard" className="text-slate-400 hover:text-rawnaq-gold transition-colors text-sm">لوحة المشتري</Link></li>

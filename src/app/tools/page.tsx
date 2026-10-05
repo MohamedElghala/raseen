@@ -6,15 +6,23 @@ import InvoiceGenerator from '@/components/tools/InvoiceGenerator';
 import VatCalculator from '@/components/tools/VatCalculator';
 import UnitConverter from '@/components/tools/UnitConverter';
 import ExcelFormulaAssistant from '@/components/tools/ExcelFormulaAssistant';
+import PdfConverterTool from '@/components/tools/PdfConverterTool';
 
 export default function ToolsPage() {
-  const [openSection, setOpenSection] = useState<string | null>('excel');
+  const [openSection, setOpenSection] = useState<string | null>('pdf-converter');
 
   const toggleSection = (id: string) => {
     setOpenSection((prev) => (prev === id ? null : id));
   };
 
   const tools = [
+    {
+      id: 'pdf-converter',
+      title: 'محول ومستخرج المستندات الذكي (PDF to Word & Excel)',
+      icon: '📄',
+      desc: 'حوّل ملفات العقود والفواتير من PDF إلى مستندات Word أو جداول Excel بدقة OCR.',
+      component: <PdfConverterTool />,
+    },
     {
       id: 'excel',
       title: 'مساعد ومولد معادلات الإكسيل الذكي (XLOOKUP / SUMIFS)',

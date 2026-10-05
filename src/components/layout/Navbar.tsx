@@ -23,7 +23,7 @@ export default function Navbar() {
 
   const navLinks = [
     { href: '/#products', label: 'السوق الرقمي', icon: '🛒' },
-    { href: '/editor', label: 'محرر القوالب (Canva Studio)', icon: '🎨' },
+    { href: '/editor', label: 'محرر القوالب الذكي', icon: '🎨' },
     { href: '/tools', label: 'أدوات مجانية', icon: '🛠️' },
     { href: '/vendor', label: 'بوابة البائعين', icon: '🏪' },
   ];
@@ -35,21 +35,32 @@ export default function Navbar() {
 
           {/* Logo with Refined Mobius Infinity Ribbon */}
           <Link href="/" className="flex items-center gap-3 shrink-0 group" aria-label="الرئيسية - رَصين">
-            <div className="relative w-11 h-11 rounded-xl bg-rawnaq-surface border border-rawnaq-border flex items-center justify-center p-2 group-hover:border-rawnaq-gold/60 transition-all duration-300 shadow-lg shadow-black/50">
-              <svg viewBox="0 0 32 32" fill="none" className="w-full h-full transform group-hover:scale-105 transition-transform duration-300">
+            <div className="relative w-11 h-11 rounded-xl bg-rawnaq-surface border border-rawnaq-border flex items-center justify-center p-1.5 group-hover:border-rawnaq-gold/60 transition-all duration-300 shadow-lg shadow-black/50">
+              <svg viewBox="0 0 36 36" fill="none" className="w-full h-full transform group-hover:scale-105 transition-transform duration-300">
+                {/* Mobius Infinity Double Loop */}
                 <path 
-                  d="M7 16C7 11.5817 10.5817 8 15 8C19.4183 8 20.5 13 25 13C27.2091 13 29 14.7909 29 17C29 19.2091 27.2091 21 25 21C20.5 21 19.4183 16 15 16C10.5817 16 7 19.5817 7 24" 
-                  stroke="url(#mobiusNavbarGrad)" 
-                  strokeWidth="2.5" 
+                  d="M18 18C13 10 6 10 6 18C6 26 13 26 18 18ZM18 18C23 26 30 26 30 18C30 10 23 10 18 18Z" 
+                  stroke="url(#mobiusNavbarGrad1)" 
+                  strokeWidth="3.2" 
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path 
+                  d="M13 13.5C16 17.5 20 20.5 23 22.5" 
+                  stroke="url(#mobiusNavbarGrad2)" 
+                  strokeWidth="3.2" 
                   strokeLinecap="round"
                 />
-                <circle cx="25" cy="17" r="2.5" fill="#f5b731"/>
-                <circle cx="7" cy="16" r="2" fill="#fef08a"/>
+                <circle cx="18" cy="18" r="2" fill="#fef08a"/>
                 <defs>
-                  <linearGradient id="mobiusNavbarGrad" x1="7" y1="8" x2="29" y2="24" gradientUnits="userSpaceOnUse">
+                  <linearGradient id="mobiusNavbarGrad1" x1="6" y1="10" x2="30" y2="26" gradientUnits="userSpaceOnUse">
                     <stop stopColor="#fef08a"/>
                     <stop offset="0.5" stopColor="#f5b731"/>
-                    <stop offset="1" stopColor="#c9962a"/>
+                    <stop offset="1" stopColor="#d97706"/>
+                  </linearGradient>
+                  <linearGradient id="mobiusNavbarGrad2" x1="12" y1="12" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#ffffff"/>
+                    <stop offset="1" stopColor="#f5b731"/>
                   </linearGradient>
                 </defs>
               </svg>

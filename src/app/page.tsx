@@ -168,7 +168,7 @@ export default function HomePage() {
             <div className="lg:col-span-7 space-y-4">
               <div className="inline-flex items-center gap-2 text-cyan-400 text-xs font-mono font-bold">
                 <span>✦</span>
-                <span>RASEEN CANVA STUDIO</span>
+                <span>RASEEN TEMPLATES & CANVA ENGINE</span>
               </div>
               <h2 className="text-2xl sm:text-4xl font-black text-white leading-tight">
                 عدل قوالبك في المتصفح واطبعها مباشرة دون برامج معقدة

@@ -3,13 +3,14 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useAuthStore } from '@/store/authStore';
+import QuickStoreWizard from '@/components/vendor/QuickStoreWizard';
 
 export default function VendorDashboardPage() {
   const user = useAuthStore((s) => s.user);
   const login = useAuthStore((s) => s.login);
   const toggleLoginModal = useAuthStore((s) => s.toggleLoginModal);
 
-  const [activeTab, setActiveTab] = useState<'overview' | 'products' | 'upload'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'products' | 'upload' | 'wizard'>('overview');
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -140,7 +141,7 @@ export default function VendorDashboardPage() {
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex gap-2 mb-8 bg-rawnaq-surface p-1.5 rounded-xl border border-rawnaq-border w-full max-w-md">
+        <div className="flex flex-wrap gap-2 mb-8 bg-rawnaq-surface p-1.5 rounded-xl border border-rawnaq-border w-full max-w-2xl">
           <button
             onClick={() => setActiveTab('overview')}
             className={`flex-1 py-2.5 text-sm font-bold rounded-lg transition-all min-h-[44px] ${
@@ -164,6 +165,15 @@ export default function VendorDashboardPage() {
             }`}
           >
             رفع منتج
+          </button>
+          <button
+            onClick={() => setActiveTab('wizard')}
+            className={`flex-1 py-2.5 text-xs sm:text-sm font-bold rounded-lg transition-all min-h-[44px] flex items-center justify-center gap-1.5 ${
+              activeTab === 'wizard' ? 'bg-gradient-to-r from-rawnaq-gold to-yellow-500 text-slate-950 shadow' : 'text-rawnaq-gold hover:text-white bg-rawnaq-gold/10'
+            }`}
+          >
+            <span>⚡</span>
+            <span>معالج المتجر (5 دقائق)</span>
           </button>
         </div>
 
@@ -414,6 +424,16 @@ export default function VendorDashboardPage() {
                   </button>
                 </div>
               </form>
+            </div>
+          )}
+
+          {activeTab === 'wizard' && (
+            <div className="py-4">
+              <QuickStoreWizard
+                onFinish={(data) => {
+                  setSuccessNotice(`تم إنشاء متجر "${data.storeName}" بنجاح! الرابط جاهز للمشاركة.`);
+                }}
+              />
             </div>
           )}
 
