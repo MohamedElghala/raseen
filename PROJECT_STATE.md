@@ -85,3 +85,21 @@
   2. ستجد مستودع **`raseen`** ظاهراً في قائمة مستودعات حسابك في GitHub، اضغط على زر **"Import"**.
   3. سيتعرف Vercel تلقائياً على إعدادات Next.js 15 و Prisma، اضغط على زر **"Deploy"**.
   4. خلال 60 ثانية سيعطيك Vercel الرابط الحي المباشر (مثل `https://raseen.vercel.app`) مع تفعيل الـ SSL المجاني والنشر التلقائي عند أي تحديث مستقبلي!
+
+---
+
+## 8. روابط وإعدادات أدوات التسويق والتحليلات (Marketing & SEO Direct Links)
+* 📈 **Google Analytics 4 (GA4):**
+  * الرابط المباشر: [https://analytics.google.com/analytics/web/](https://analytics.google.com/analytics/web/)
+  * المتغير المطلوب: `NEXT_PUBLIC_GA_ID` (معرف القياس `G-XXXXXXXXXX`).
+* 🔍 **Google Search Console (GSC):**
+  * الرابط المباشر: [https://search.google.com/search-console](https://search.google.com/search-console)
+  * رابط السايت ماب لتقديمه: `https://<DOMAIN>/sitemap.xml`
+  * كود إثبات الملكية: `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`
+* 🏷️ **Google Tag Manager (GTM):**
+  * الرابط المباشر: [https://tagmanager.google.com/](https://tagmanager.google.com/)
+  * المتغير المطلوب: `NEXT_PUBLIC_GTM_ID` (`GTM-XXXXXXX`)
+* 📢 **Google Ads:**
+  * الرابط المباشر: [https://ads.google.com/](https://ads.google.com/)
+* 🛒 **Google Merchant Center:**
+  * الرابط المباشر: [https://merchants.google.com/](https://merchants.google.com/)
