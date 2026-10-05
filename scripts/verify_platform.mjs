@@ -1,7 +1,7 @@
 import http from 'http';
 import crypto from 'crypto';
 
-const SECRET_KEY = process.env.DOWNLOAD_TOKEN_SECRET || 'rawnaq-secure-jwt-signing-key-2026';
+const SECRET_KEY = process.env.DOWNLOAD_TOKEN_SECRET || 'raseen-secure-jwt-signing-key-2026';
 
 function generateDownloadToken(productId, userId = 'guest-buyer') {
   const now = Date.now();

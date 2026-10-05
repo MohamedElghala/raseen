@@ -38,4 +38,6 @@ next-env.d.ts
 *.db-journal
 
 .vercel
+.claude
+push_to_github_api.js
 .superdesign

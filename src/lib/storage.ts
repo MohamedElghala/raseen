@@ -16,7 +16,7 @@ interface TokenState {
 // In-memory token tracker (in production, syncs with Redis or Supabase)
 const tokenRegistry = new Map<string, TokenState>();
 
-const SECRET_KEY = process.env.DOWNLOAD_TOKEN_SECRET || 'rawnaq-secure-jwt-signing-key-2026';
+const SECRET_KEY = process.env.DOWNLOAD_TOKEN_SECRET || 'raseen-secure-jwt-signing-key-2026';
 const EXPIRY_HOURS = 48;
 const MAX_ALLOWED_DOWNLOADS = 10;
 
@@ -115,7 +115,7 @@ export function validateDownloadToken(token: string): TokenValidation {
     const expiresInHours = Math.round((payload.expiresAt - now) / (1000 * 60 * 60));
 
     // Simulated Cloudflare R2 / S3 Pre-signed URL
-    const directDownloadUrl = `https://storage.rawnaq.store/vault/${payload.productId}/${payload.userId}.zip?signed=${signature}`;
+    const directDownloadUrl = `https://storage.raseen.store/vault/${payload.productId}/${payload.userId}.zip?signed=${signature}`;
 
     return {
       valid: true,

@@ -74,7 +74,7 @@ export const useCartStore = create<CartState>()(
       },
     }),
     {
-      name: 'rawnaq-cart-storage',
+      name: 'raseen-cart-storage',
       partialize: (state) => ({ items: state.items, currency: state.currency }),
     }
   )

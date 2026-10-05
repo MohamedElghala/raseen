@@ -7,7 +7,6 @@ import QuickStoreWizard from '@/components/vendor/QuickStoreWizard';
 
 export default function VendorDashboardPage() {
   const user = useAuthStore((s) => s.user);
-  const login = useAuthStore((s) => s.login);
   const toggleLoginModal = useAuthStore((s) => s.toggleLoginModal);
 
   const [activeTab, setActiveTab] = useState<'overview' | 'products' | 'upload' | 'wizard'>('overview');
@@ -44,17 +43,17 @@ export default function VendorDashboardPage() {
           </p>
           <div className="flex flex-col gap-3">
             <button
-              onClick={() => login('vendor@rawnaq.com', 'password123')}
+              onClick={() => toggleLoginModal(true)}
               className="btn-gold w-full min-h-[44px]"
             >
-              دخول سريع كبائع تجريبي (أحمد البائع)
+              تسجيل الدخول أو إنشاء حساب بائع
             </button>
-            <button
-              onClick={() => toggleLoginModal(true)}
-              className="btn-outline w-full min-h-[44px] text-sm"
+            <Link
+              href="/"
+              className="btn-outline w-full min-h-[44px] text-sm text-center flex items-center justify-center"
             >
-              تسجيل حساب بائع جديد
-            </button>
+              العودة للرئيسية وتصفح السوق
+            </Link>
           </div>
         </div>
       </div>
