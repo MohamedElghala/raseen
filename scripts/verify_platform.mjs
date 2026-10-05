@@ -50,10 +50,15 @@ async function runTests() {
     { name: 'منتج شيت إكسل محاسبي (Product p7)', path: '/product/p7' },
     { name: 'منتج كاد وريفت معماري (Product p13)', path: '/product/p13' },
     { name: 'منتج قوالب Canva (Product p31)', path: '/product/p31' },
+    { name: 'مشروع فيلا Revit BIM (Product p41)', path: '/product/p41' },
+    { name: 'هوية بصرية Canva (Product p45)', path: '/product/p45' },
+    { name: 'خزنة برومبتات AI (Product p50)', path: '/product/p50' },
     { name: 'استوديو كانفا والقوالب التفاعلية (/editor)', path: '/editor' },
     { name: 'صفحة الأدوات المجانية الأربعة (/tools)', path: '/tools' },
     { name: 'لوحة تحكم البائعين (/vendor)', path: '/vendor' },
     { name: 'لوحة تحكم المشتري والتنزيلات (/dashboard)', path: '/dashboard' },
+    { name: 'خريطة الموقع الآلية لمسؤولي بحث جوجل (/sitemap.xml)', path: '/sitemap.xml' },
+    { name: 'ملف تعليمات الزواحف الرسمية (/robots.txt)', path: '/robots.txt' },
   ];
 
   let passed = 0;
