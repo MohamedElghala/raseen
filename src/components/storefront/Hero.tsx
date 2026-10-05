@@ -33,7 +33,7 @@ export default function Hero({ onSearch }: HeroProps) {
   };
 
   return (
-    <section className="relative w-full py-20 md:py-32 bg-[#060a14] border-b border-rawnaq-border overflow-hidden">
+    <section className="relative w-full pt-4 pb-8 sm:pt-6 sm:pb-10 md:pt-8 md:pb-12 bg-[#060a14] border-b border-rawnaq-border overflow-hidden">
       
       {/* ========================================================================= */}
       {/* AUTHENTIC 3D MATHEMATICAL MOBIUS STRIP BACKGROUND CANVAS */}
@@ -41,31 +41,31 @@ export default function Hero({ onSearch }: HeroProps) {
       <MobiusRibbonCanvas />
 
       {/* ========================================================================= */}
-      {/* COMMANDING FULL-WIDTH HERO CONTENT ("واكل للشاشة") */}
+      {/* ABOVE-THE-FOLD COMPACT HERO CONTENT (NO SCROLL NEEDED) */}
       {/* ========================================================================= */}
-      <div className="relative z-10 max-w-5xl mx-auto px-4 text-center flex flex-col items-center">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 text-center flex flex-col items-center">
         
         {/* Brand Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full bg-rawnaq-surface/90 border border-rawnaq-gold/40 text-rawnaq-gold text-xs font-mono font-bold shadow-2xl backdrop-blur-md">
-          <span className="w-2 h-2 rounded-full bg-rawnaq-gold animate-ping" />
+        <div className="inline-flex items-center gap-2 px-3 py-1 mb-2.5 sm:mb-3 rounded-full bg-rawnaq-surface/90 border border-rawnaq-gold/40 text-rawnaq-gold text-[11px] font-mono font-bold shadow-lg backdrop-blur-md">
+          <span className="w-1.5 h-1.5 rounded-full bg-rawnaq-gold animate-ping" />
           <span>رَصِيـن | RASEEN • منصة الأصول الرقمية والإبداعية والعمل الحر 2026</span>
         </div>
 
-        {/* MASSIVE HEADLINE (DOMINATES SCREEN WIDTH) */}
-        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white mb-6 leading-[1.08] tracking-tight drop-shadow-2xl">
+        {/* COMPACT COMMANDING 2-LINE HEADLINE */}
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mb-2 sm:mb-3 leading-snug tracking-tight drop-shadow-xl">
           أدوات وشيتات وقوالب ذكية
-          <span className="gold-gradient-text block mt-2 sm:mt-3 drop-shadow-[0_10px_35px_rgba(245,183,49,0.3)]">
+          <span className="gold-gradient-text block mt-0.5 sm:mt-1 drop-shadow-[0_6px_20px_rgba(245,183,49,0.3)]">
             تختصر سنوات من جهدك وعملك
           </span>
         </h1>
 
-        {/* Subtitle */}
-        <p className="text-slate-200 text-sm sm:text-lg md:text-xl max-w-3xl mb-10 leading-relaxed font-normal opacity-90 drop-shadow">
+        {/* Subtitle - Crisp and immediately visible without scroll */}
+        <p className="text-slate-300 text-xs sm:text-sm md:text-base max-w-2xl mb-4 sm:mb-5 leading-relaxed font-normal opacity-90 drop-shadow">
           الترسانة التنفيذية الأولى في الشرق الأوسط: نماذج إكسل محاسبية مؤتمتة، عقود قانونية موثقة، قوالب كانفا حرة، ومكتبات كاد وريفت معمارية — جاهزة للاستخدام الفوري أو طلب التخصيص بواسطة مستقلين معتمدين.
         </p>
 
         {/* Central Search Bar */}
-        <form onSubmit={handleSubmit} className="w-full max-w-2xl relative mb-4 flex items-center shadow-2xl shadow-black/90">
+        <form onSubmit={handleSubmit} className="w-full max-w-xl relative mb-2.5 sm:mb-3 flex items-center shadow-xl shadow-black/80">
           <input
             type="text"
             value={query}
@@ -75,15 +75,15 @@ export default function Hero({ onSearch }: HeroProps) {
             }}
             placeholder="ابحث في أكثر من 1,400 أصل: شيت محاسبة، عقد شراكة، Pitch Deck، بلوكات CAD..."
             aria-label="ابحث عن المنتجات والأصول الرقمية"
-            className="w-full h-14 sm:h-16 pl-4 pr-12 sm:pr-14 rounded-r-2xl bg-rawnaq-surface/95 border-2 border-rawnaq-border text-white placeholder-slate-400 focus:outline-none focus:border-rawnaq-gold transition-all text-sm sm:text-base font-cairo backdrop-blur-xl"
+            className="w-full h-11 sm:h-12 pl-3 pr-10 sm:pr-12 rounded-r-xl bg-rawnaq-surface/95 border-2 border-rawnaq-border text-white placeholder-slate-400 focus:outline-none focus:border-rawnaq-gold transition-all text-xs sm:text-sm font-cairo backdrop-blur-xl"
           />
-          <span className="absolute right-4 sm:right-5 top-1/2 -translate-y-1/2 text-slate-400 text-xl pointer-events-none">
+          <span className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-slate-400 text-base pointer-events-none">
             🔍
           </span>
           <button
             type="submit"
             aria-label="بحث فوري"
-            className="btn-gold !rounded-r-none !rounded-l-2xl !h-14 sm:!h-16 !px-7 sm:!px-10 text-sm sm:text-base font-black whitespace-nowrap flex items-center gap-2 shadow-xl hover:scale-[1.02] transition-transform"
+            className="btn-gold !rounded-r-none !rounded-l-xl !h-11 sm:!h-12 !px-5 sm:!px-7 text-xs sm:text-sm font-black whitespace-nowrap flex items-center gap-1.5 shadow-lg hover:scale-[1.02] transition-transform"
           >
             <span>بحث</span>
             <span>←</span>
@@ -91,14 +91,14 @@ export default function Hero({ onSearch }: HeroProps) {
         </form>
 
         {/* Popular Tags Pills */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-10 max-w-2xl">
-          <span className="text-xs text-slate-400 font-bold">الأكثر طلباً:</span>
+        <div className="flex flex-wrap items-center justify-center gap-1.5 mb-4 sm:mb-5 max-w-2xl">
+          <span className="text-[11px] text-slate-400 font-bold">الأكثر طلباً:</span>
           {POPULAR_SEARCH_TAGS.map((tag) => (
             <button
               key={tag}
               type="button"
               onClick={() => handleChipClick(tag)}
-              className="text-xs px-3 py-1.5 bg-rawnaq-surface/80 border border-rawnaq-border hover:border-rawnaq-gold hover:text-rawnaq-gold text-slate-300 rounded-xl transition-all cursor-pointer backdrop-blur-sm shadow"
+              className="text-[11px] px-2.5 py-1 bg-rawnaq-surface/80 border border-rawnaq-border hover:border-rawnaq-gold hover:text-rawnaq-gold text-slate-300 rounded-lg transition-all cursor-pointer backdrop-blur-sm shadow-sm"
             >
               {tag}
             </button>
@@ -106,47 +106,47 @@ export default function Hero({ onSearch }: HeroProps) {
         </div>
 
         {/* 4 Pillars Interactive Floating Badges */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 w-full max-w-4xl pt-2">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 w-full max-w-3xl pt-1">
           
-          <div className="p-4 rounded-2xl bg-rawnaq-surface/70 border border-rawnaq-border/80 backdrop-blur-md hover:border-emerald-500/50 transition-all text-right group">
-            <div className="flex items-center gap-2 mb-1.5">
-              <span className="text-2xl p-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">📊</span>
+          <div className="p-2.5 sm:p-3 rounded-xl bg-rawnaq-surface/70 border border-rawnaq-border/80 backdrop-blur-md hover:border-emerald-500/50 transition-all text-right group">
+            <div className="flex items-center gap-1.5 mb-1">
+              <span className="text-xl p-1 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">📊</span>
               <span className="text-xs font-bold text-white group-hover:text-emerald-400 transition-colors">شيتات Excel الذكية</span>
             </div>
-            <p className="text-[11px] text-slate-400 leading-tight">معادلات مؤتمتة وحسابات فورية</p>
+            <p className="text-[10px] sm:text-[11px] text-slate-400 leading-tight">معادلات مؤتمتة وحسابات فورية</p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-rawnaq-surface/70 border border-rawnaq-border/80 backdrop-blur-md hover:border-amber-500/50 transition-all text-right group">
-            <div className="flex items-center gap-2 mb-1.5">
-              <span className="text-2xl p-1.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400">⚖️</span>
+          <div className="p-2.5 sm:p-3 rounded-xl bg-rawnaq-surface/70 border border-rawnaq-border/80 backdrop-blur-md hover:border-amber-500/50 transition-all text-right group">
+            <div className="flex items-center gap-1.5 mb-1">
+              <span className="text-xl p-1 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400">⚖️</span>
               <span className="text-xs font-bold text-white group-hover:text-amber-400 transition-colors">عقود قانونية موثقة</span>
             </div>
-            <p className="text-[11px] text-slate-400 leading-tight">لمصر والسعودية والإمارات</p>
+            <p className="text-[10px] sm:text-[11px] text-slate-400 leading-tight">لمصر والسعودية والإمارات</p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-rawnaq-surface/70 border border-rawnaq-border/80 backdrop-blur-md hover:border-cyan-500/50 transition-all text-right group">
-            <div className="flex items-center gap-2 mb-1.5">
-              <span className="text-2xl p-1.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">🎨</span>
+          <div className="p-2.5 sm:p-3 rounded-xl bg-rawnaq-surface/70 border border-rawnaq-border/80 backdrop-blur-md hover:border-cyan-500/50 transition-all text-right group">
+            <div className="flex items-center gap-1.5 mb-1">
+              <span className="text-xl p-1 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">🎨</span>
               <span className="text-xs font-bold text-white group-hover:text-cyan-400 transition-colors">قوالب Canva حرة</span>
             </div>
-            <p className="text-[11px] text-slate-400 leading-tight">تعديل بالمتصفح وطباعة A4</p>
+            <p className="text-[10px] sm:text-[11px] text-slate-400 leading-tight">تعديل بالمتصفح وطباعة A4</p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-rawnaq-surface/70 border border-rawnaq-border/80 backdrop-blur-md hover:border-purple-500/50 transition-all text-right group">
-            <div className="flex items-center gap-2 mb-1.5">
-              <span className="text-2xl p-1.5 rounded-xl bg-purple-500/10 border border-purple-500/30 text-purple-400">📐</span>
+          <div className="p-2.5 sm:p-3 rounded-xl bg-rawnaq-surface/70 border border-rawnaq-border/80 backdrop-blur-md hover:border-purple-500/50 transition-all text-right group">
+            <div className="flex items-center gap-1.5 mb-1">
+              <span className="text-xl p-1 rounded-lg bg-purple-500/10 border border-purple-500/30 text-purple-400">📐</span>
               <span className="text-xs font-bold text-white group-hover:text-purple-400 transition-colors">مكتبات CAD و Revit</span>
             </div>
-            <p className="text-[11px] text-slate-400 leading-tight">بلوكات BIM بمعيار LOD 350</p>
+            <p className="text-[10px] sm:text-[11px] text-slate-400 leading-tight">بلوكات BIM بمعيار LOD 350</p>
           </div>
 
         </div>
 
         {/* Quick Freelance & Store Generator Link Bar */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-xs font-bold">
+        <div className="mt-4 sm:mt-5 flex flex-wrap items-center justify-center gap-2.5 text-[11px] sm:text-xs font-bold">
           <Link
             href="/vendor"
-            className="px-4 py-2 rounded-xl bg-rawnaq-gold/10 border border-rawnaq-gold/40 text-rawnaq-gold hover:bg-rawnaq-gold hover:text-slate-950 transition-all flex items-center gap-2 shadow"
+            className="px-3.5 py-1.5 rounded-lg bg-rawnaq-gold/10 border border-rawnaq-gold/40 text-rawnaq-gold hover:bg-rawnaq-gold hover:text-slate-950 transition-all flex items-center gap-1.5 shadow-sm"
           >
             <span>🚀 أنشئ متجرك الرقمي في 5 دقائق وابدأ البيع</span>
             <span>➔</span>
@@ -154,7 +154,7 @@ export default function Hero({ onSearch }: HeroProps) {
 
           <Link
             href="/tools"
-            className="px-4 py-2 rounded-xl bg-cyan-500/10 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-500 hover:text-slate-950 transition-all flex items-center gap-2 shadow"
+            className="px-3.5 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-500 hover:text-slate-950 transition-all flex items-center gap-1.5 shadow-sm"
           >
             <span>📄 محول المستندات الذكي PDF to Word & Excel مجاناً</span>
             <span>➔</span>
