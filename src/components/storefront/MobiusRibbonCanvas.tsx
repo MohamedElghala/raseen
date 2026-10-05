@@ -25,19 +25,17 @@ export default function MobiusRibbonCanvas() {
     handleResize();
     window.addEventListener('resize', handleResize);
 
-    // Number of segments along the ring
     const SEGMENTS = 140;
-    // Particles traveling along the Mobius track
-    const PARTICLE_COUNT = 20;
+    const PARTICLE_COUNT = 24;
     const particles = Array.from({ length: PARTICLE_COUNT }, (_, i) => ({
-      u: (i / PARTICLE_COUNT) * Math.PI * 4, // 0 to 4pi (2 full turns for complete Mobius cycle)
+      u: (i / PARTICLE_COUNT) * Math.PI * 4,
       speed: 0.005 + (i % 3) * 0.0015,
-      size: 2.5 + (i % 2) * 1.5,
-      hue: i % 2 === 0 ? '#fef08a' : '#f5b731',
+      size: 2.2 + (i % 2) * 1.2,
+      hue: i % 2 === 0 ? '#38bdf8' : '#f5b731',
     }));
 
     const render = () => {
-      time += 0.006; // Calm, soothing, luxurious motion
+      time += 0.007; // Calm, soothing, majestic speed
 
       const rect = canvas.getBoundingClientRect();
       const width = rect.width;
@@ -47,20 +45,18 @@ export default function MobiusRibbonCanvas() {
       const centerX = width / 2;
       const centerY = height / 2;
 
-      // Authentic Wide Mobius Strip Dimensions
-      // Rx, Ry give it an elegant elliptical span behind the text
-      const Rx = Math.min(width * 0.34, 290);
-      const Ry = Math.min(width * 0.22, 175);
-      // W is significantly wider so the Mobius ribbon twist is unmistakable
-      const W = Math.min(width * 0.08, 68);
-      const D = 650; // Camera distance for subtle perspective
+      // Perfectly balanced holographic Mobius dimensions
+      const Rx = Math.min(width * 0.32, 270);
+      const Ry = Math.min(width * 0.20, 160);
+      // Width reduced slightly per user request (from 68 down to 48px)
+      const W = Math.min(width * 0.058, 48);
+      const D = 620;
 
-      // Camera view angles: isometric luxury perspective
-      const pitch = 0.48; // ~28 degrees tilt
-      const yaw = time * 0.25; // Gentle majestic spatial rotation
-      const twistPhase = time * 0.65; // Intrinsic Möbius traveling twist!
+      // Camera view angles
+      const pitch = 0.50; // ~29 degrees isometric view
+      const yaw = time * 0.22; // Gentle spatial revolution
+      const twistPhase = time * 0.60; // Intrinsic Möbius traveling twist
 
-      // Generate quads for the strip
       interface Quad {
         p1: { x: number; y: number; z: number };
         p2: { x: number; y: number; z: number };
@@ -84,26 +80,25 @@ export default function MobiusRibbonCanvas() {
           const cosPhi = Math.cos(phi);
           const sinPhi = Math.sin(phi);
 
-          // 3D coordinates on wide Mobius ribbon
           const rawX = (Rx + v * cosPhi) * Math.cos(u);
           const rawY = (Ry + v * cosPhi) * Math.sin(u);
           const rawZ = v * sinPhi;
 
-          // Apply Yaw (Y-axis rotation)
+          // Yaw
           const cosYaw = Math.cos(yaw);
           const sinYaw = Math.sin(yaw);
           const x1 = rawX * cosYaw - rawY * sinYaw;
           const y1 = rawX * sinYaw + rawY * cosYaw;
           const z1 = rawZ;
 
-          // Apply Pitch (X-axis tilt)
+          // Pitch
           const cosPitch = Math.cos(pitch);
           const sinPitch = Math.sin(pitch);
           const x2 = x1;
           const y2 = y1 * cosPitch - z1 * sinPitch;
           const z2 = y1 * sinPitch + z1 * cosPitch;
 
-          // Perspective projection
+          // Perspective
           const scale = D / (D + z2);
           const projX = centerX + x2 * scale;
           const projY = centerY + y2 * scale;
@@ -129,10 +124,10 @@ export default function MobiusRibbonCanvas() {
         });
       }
 
-      // Painter's algorithm: sort quads back-to-front by depth
+      // Painter's algorithm
       quads.sort((a, b) => b.avgZ - a.avgZ);
 
-      // Render each quad of the wide ribbon
+      // Render holographic dual-tone quads
       for (const q of quads) {
         ctx.beginPath();
         ctx.moveTo(q.p1.x, q.p1.y);
@@ -142,26 +137,28 @@ export default function MobiusRibbonCanvas() {
         ctx.closePath();
 
         const depthNorm = (q.avgZ + Rx) / (Rx * 2);
-        const alpha = Math.max(0.18, Math.min(0.85, 1 - depthNorm * 0.4));
+        const alpha = Math.max(0.18, Math.min(0.80, 1 - depthNorm * 0.45));
         const twistSin = Math.sin(q.twistAngle);
 
+        // High-Tech Holographic Coloring: Cyber Cyan / Luminous Electric Gold
         if (twistSin > 0) {
-          // Illuminated Royal Gold side
-          ctx.fillStyle = `rgba(245, 183, 49, ${alpha * 0.75})`;
+          // Cyber Cyan Hologram face
+          ctx.fillStyle = `rgba(14, 165, 233, ${alpha * 0.65})`;
         } else {
-          // Inverted/underside side with Bronze/Amber depth
-          ctx.fillStyle = `rgba(180, 83, 9, ${alpha * 0.65})`;
+          // Luminous Gold / Amber Hologram face
+          ctx.fillStyle = `rgba(245, 183, 49, ${alpha * 0.60})`;
         }
 
         ctx.fill();
 
-        // Edge highlights on the wide strip
-        ctx.strokeStyle = `rgba(254, 240, 138, ${alpha * 0.35})`;
-        ctx.lineWidth = 1;
+        // High-tech holographic neon edge outline
+        const edgeColor = twistSin > 0 ? 'rgba(56, 189, 248, 0.45)' : 'rgba(254, 240, 138, 0.45)';
+        ctx.strokeStyle = edgeColor;
+        ctx.lineWidth = 0.85;
         ctx.stroke();
       }
 
-      // Render traveling quantum particles along the center of the Mobius track
+      // Render traveling holographic quantum particles
       for (const p of particles) {
         p.u = (p.u + p.speed) % (Math.PI * 4);
 
@@ -191,14 +188,14 @@ export default function MobiusRibbonCanvas() {
         const px = centerX + x2 * scale;
         const py = centerY + y2 * scale;
 
-        const pAlpha = Math.max(0.25, Math.min(0.9, (scale - 0.7) * 2));
+        const pAlpha = Math.max(0.25, Math.min(0.95, (scale - 0.7) * 2.2));
 
         ctx.beginPath();
         ctx.arc(px, py, p.size * scale, 0, Math.PI * 2);
         ctx.fillStyle = p.hue;
         ctx.globalAlpha = pAlpha;
-        ctx.shadowColor = '#f5b731';
-        ctx.shadowBlur = 8;
+        ctx.shadowColor = p.hue === '#38bdf8' ? '#38bdf8' : '#f5b731';
+        ctx.shadowBlur = 10;
         ctx.fill();
         ctx.shadowBlur = 0;
         ctx.globalAlpha = 1.0;
@@ -217,15 +214,15 @@ export default function MobiusRibbonCanvas() {
 
   return (
     <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden z-0">
-      {/* Gentle ambient luxury gold glow */}
-      <div className="absolute w-[580px] h-[320px] bg-gradient-to-r from-amber-500/10 via-rawnaq-gold/15 to-yellow-600/10 rounded-full blur-[110px] transform -translate-y-4 pointer-events-none" />
+      {/* Ambient Cyber Holographic Glow (Cyan & Gold) */}
+      <div className="absolute w-[600px] h-[300px] bg-gradient-to-r from-sky-500/12 via-cyan-400/10 to-amber-500/12 rounded-full blur-[100px] transform -translate-y-2 pointer-events-none" />
 
-      {/* 3D Wide Mobius Canvas */}
+      {/* 3D Holographic Mobius Canvas */}
       <canvas
         ref={canvasRef}
-        className="w-full h-full max-w-[950px] max-h-[520px] opacity-75"
+        className="w-full h-full max-w-[920px] max-h-[500px] opacity-80"
         style={{
-          filter: 'drop-shadow(0 0 25px rgba(245, 183, 49, 0.2))',
+          filter: 'drop-shadow(0 0 25px rgba(56, 189, 248, 0.25)) drop-shadow(0 0 15px rgba(245, 183, 49, 0.2))',
         }}
       />
     </div>

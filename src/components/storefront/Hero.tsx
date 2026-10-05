@@ -105,60 +105,53 @@ export default function Hero({ onSearch }: HeroProps) {
           ))}
         </div>
 
-        {/* 4 Pillars Interactive Floating Badges */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 w-full max-w-3xl pt-1">
+        {/* The Two Main Action Gateways (Store Creator & Document Converter) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-xl pt-2">
           
-          <div className="p-2.5 sm:p-3 rounded-xl bg-rawnaq-surface/70 border border-rawnaq-border/80 backdrop-blur-md hover:border-emerald-500/50 transition-all text-right group">
-            <div className="flex items-center gap-1.5 mb-1">
-              <span className="text-xl p-1 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">📊</span>
-              <span className="text-xs font-bold text-white group-hover:text-emerald-400 transition-colors">شيتات Excel الذكية</span>
-            </div>
-            <p className="text-[10px] sm:text-[11px] text-slate-400 leading-tight">معادلات مؤتمتة وحسابات فورية</p>
-          </div>
-
-          <div className="p-2.5 sm:p-3 rounded-xl bg-rawnaq-surface/70 border border-rawnaq-border/80 backdrop-blur-md hover:border-amber-500/50 transition-all text-right group">
-            <div className="flex items-center gap-1.5 mb-1">
-              <span className="text-xl p-1 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400">⚖️</span>
-              <span className="text-xs font-bold text-white group-hover:text-amber-400 transition-colors">عقود قانونية موثقة</span>
-            </div>
-            <p className="text-[10px] sm:text-[11px] text-slate-400 leading-tight">لمصر والسعودية والإمارات</p>
-          </div>
-
-          <div className="p-2.5 sm:p-3 rounded-xl bg-rawnaq-surface/70 border border-rawnaq-border/80 backdrop-blur-md hover:border-cyan-500/50 transition-all text-right group">
-            <div className="flex items-center gap-1.5 mb-1">
-              <span className="text-xl p-1 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">🎨</span>
-              <span className="text-xs font-bold text-white group-hover:text-cyan-400 transition-colors">قوالب Canva حرة</span>
-            </div>
-            <p className="text-[10px] sm:text-[11px] text-slate-400 leading-tight">تعديل بالمتصفح وطباعة A4</p>
-          </div>
-
-          <div className="p-2.5 sm:p-3 rounded-xl bg-rawnaq-surface/70 border border-rawnaq-border/80 backdrop-blur-md hover:border-purple-500/50 transition-all text-right group">
-            <div className="flex items-center gap-1.5 mb-1">
-              <span className="text-xl p-1 rounded-lg bg-purple-500/10 border border-purple-500/30 text-purple-400">📐</span>
-              <span className="text-xs font-bold text-white group-hover:text-purple-400 transition-colors">مكتبات CAD و Revit</span>
-            </div>
-            <p className="text-[10px] sm:text-[11px] text-slate-400 leading-tight">بلوكات BIM بمعيار LOD 350</p>
-          </div>
-
-        </div>
-
-        {/* Quick Freelance & Store Generator Link Bar */}
-        <div className="mt-4 sm:mt-5 flex flex-wrap items-center justify-center gap-2.5 text-[11px] sm:text-xs font-bold">
           <Link
             href="/vendor"
-            className="px-3.5 py-1.5 rounded-lg bg-rawnaq-gold/10 border border-rawnaq-gold/40 text-rawnaq-gold hover:bg-rawnaq-gold hover:text-slate-950 transition-all flex items-center gap-1.5 shadow-sm"
+            className="p-3.5 rounded-2xl bg-rawnaq-surface/85 border border-rawnaq-gold/40 hover:border-rawnaq-gold transition-all text-right flex items-center justify-between group shadow-lg backdrop-blur-md"
           >
-            <span>🚀 أنشئ متجرك الرقمي في 5 دقائق وابدأ البيع</span>
-            <span>➔</span>
+            <div className="flex items-center gap-3">
+              <span className="w-10 h-10 rounded-xl bg-rawnaq-gold/15 text-rawnaq-gold flex items-center justify-center text-xl shrink-0 group-hover:scale-110 transition-transform">
+                🚀
+              </span>
+              <div>
+                <span className="text-xs font-black text-white block group-hover:text-rawnaq-gold transition-colors">
+                  أنشئ متجرك الرقمي في 5 دقائق
+                </span>
+                <span className="text-[11px] text-slate-400 block">
+                  ابدأ ببيع ملفاتك واكسب 85% مع إنستاباي
+                </span>
+              </div>
+            </div>
+            <span className="text-rawnaq-gold text-sm group-hover:translate-x-[-4px] transition-transform">
+              ←
+            </span>
           </Link>
 
           <Link
             href="/tools"
-            className="px-3.5 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-500 hover:text-slate-950 transition-all flex items-center gap-1.5 shadow-sm"
+            className="p-3.5 rounded-2xl bg-rawnaq-surface/85 border border-cyan-500/40 hover:border-cyan-400 transition-all text-right flex items-center justify-between group shadow-lg backdrop-blur-md"
           >
-            <span>📄 محول المستندات الذكي PDF to Word & Excel مجاناً</span>
-            <span>➔</span>
+            <div className="flex items-center gap-3">
+              <span className="w-10 h-10 rounded-xl bg-cyan-500/15 text-cyan-400 flex items-center justify-center text-xl shrink-0 group-hover:scale-110 transition-transform">
+                📄
+              </span>
+              <div>
+                <span className="text-xs font-black text-white block group-hover:text-cyan-400 transition-colors">
+                  محول المستندات الذكي مجاناً
+                </span>
+                <span className="text-[11px] text-slate-400 block">
+                  تحويل من PDF إلى Word و Excel بدقة OCR
+                </span>
+              </div>
+            </div>
+            <span className="text-cyan-400 text-sm group-hover:translate-x-[-4px] transition-transform">
+              ←
+            </span>
           </Link>
+
         </div>
 
       </div>
