@@ -33,37 +33,16 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 md:h-20">
 
-          {/* Logo with Refined Mobius Infinity Ribbon */}
+          {/* Official 3D Sovereign Aerodynamic Monogram Logo */}
           <Link href="/" className="flex items-center gap-3 shrink-0 group" aria-label="الرئيسية - رَصين">
-            <div className="relative w-11 h-11 rounded-xl bg-rawnaq-surface border border-rawnaq-border flex items-center justify-center p-1.5 group-hover:border-rawnaq-gold/60 transition-all duration-300 shadow-lg shadow-black/50">
-              <svg viewBox="0 0 36 36" fill="none" className="w-full h-full transform group-hover:scale-105 transition-transform duration-300">
-                {/* Mobius Infinity Double Loop */}
-                <path 
-                  d="M18 18C13 10 6 10 6 18C6 26 13 26 18 18ZM18 18C23 26 30 26 30 18C30 10 23 10 18 18Z" 
-                  stroke="url(#mobiusNavbarGrad1)" 
-                  strokeWidth="3.2" 
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path 
-                  d="M13 13.5C16 17.5 20 20.5 23 22.5" 
-                  stroke="url(#mobiusNavbarGrad2)" 
-                  strokeWidth="3.2" 
-                  strokeLinecap="round"
-                />
-                <circle cx="18" cy="18" r="2" fill="#fef08a"/>
-                <defs>
-                  <linearGradient id="mobiusNavbarGrad1" x1="6" y1="10" x2="30" y2="26" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#fef08a"/>
-                    <stop offset="0.5" stopColor="#f5b731"/>
-                    <stop offset="1" stopColor="#d97706"/>
-                  </linearGradient>
-                  <linearGradient id="mobiusNavbarGrad2" x1="12" y1="12" x2="24" y2="24" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#ffffff"/>
-                    <stop offset="1" stopColor="#f5b731"/>
-                  </linearGradient>
-                </defs>
-              </svg>
+            <div className="relative w-11 h-11 rounded-xl bg-rawnaq-surface border border-rawnaq-gold/40 flex items-center justify-center p-1 group-hover:border-rawnaq-gold transition-all duration-300 shadow-lg shadow-black/50 overflow-hidden">
+              <Image 
+                src="/brand/raseen_monogram.jpg" 
+                alt="شعار رَصين" 
+                width={44} 
+                height={44} 
+                className="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-300"
+              />
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-2 leading-none">

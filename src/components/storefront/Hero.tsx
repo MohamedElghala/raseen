@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import MobiusRibbonCanvas from './MobiusRibbonCanvas';
+import HorizonEclipseBackground from './HorizonEclipseBackground';
 
 interface HeroProps {
   onSearch: (query: string) => void;
@@ -36,9 +36,9 @@ export default function Hero({ onSearch }: HeroProps) {
     <section className="relative w-full pt-4 pb-8 sm:pt-6 sm:pb-10 md:pt-8 md:pb-12 bg-[#060a14] border-b border-rawnaq-border overflow-hidden">
       
       {/* ========================================================================= */}
-      {/* AUTHENTIC 3D MATHEMATICAL MOBIUS STRIP BACKGROUND CANVAS */}
+      {/* MAJESTIC ARCHITECTURAL GOLDEN HORIZON ECLIPSE BACKGROUND */}
       {/* ========================================================================= */}
-      <MobiusRibbonCanvas />
+      <HorizonEclipseBackground />
 
       {/* ========================================================================= */}
       {/* ABOVE-THE-FOLD COMPACT HERO CONTENT (NO SCROLL NEEDED) */}

@@ -13,24 +13,14 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="col-span-1 md:col-span-1">
             <Link href="/" className="flex items-center gap-3 mb-4 group" aria-label="الرئيسية - رَصين">
-              <div className="w-10 h-10 rounded-xl bg-rawnaq-surface border border-rawnaq-border flex items-center justify-center p-2 group-hover:border-rawnaq-gold/60 transition-all duration-300 shadow-md">
-                <svg viewBox="0 0 32 32" fill="none" className="w-full h-full transform group-hover:scale-105 transition-transform duration-300">
-                  <path 
-                    d="M7 16C7 11.5817 10.5817 8 15 8C19.4183 8 20.5 13 25 13C27.2091 13 29 14.7909 29 17C29 19.2091 27.2091 21 25 21C20.5 21 19.4183 16 15 16C10.5817 16 7 19.5817 7 24" 
-                    stroke="url(#mobiusFooterGrad)" 
-                    strokeWidth="2.5" 
-                    strokeLinecap="round"
-                  />
-                  <circle cx="25" cy="17" r="2.5" fill="#f5b731"/>
-                  <circle cx="7" cy="16" r="2" fill="#fef08a"/>
-                  <defs>
-                    <linearGradient id="mobiusFooterGrad" x1="7" y1="8" x2="29" y2="24" gradientUnits="userSpaceOnUse">
-                      <stop stopColor="#fef08a"/>
-                      <stop offset="0.5" stopColor="#f5b731"/>
-                      <stop offset="1" stopColor="#c9962a"/>
-                    </linearGradient>
-                  </defs>
-                </svg>
+              <div className="w-10 h-10 rounded-xl bg-rawnaq-surface border border-rawnaq-gold/40 flex items-center justify-center p-1 group-hover:border-rawnaq-gold transition-all duration-300 shadow-md overflow-hidden">
+                <Image 
+                  src="/brand/raseen_monogram.jpg" 
+                  alt="شعار رَصين" 
+                  width={40} 
+                  height={40} 
+                  className="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-300"
+                />
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-2xl font-black gold-gradient-text tracking-tight font-cairo">رَصِيـن</span>
