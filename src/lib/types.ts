@@ -22,6 +22,17 @@ export interface ProductItem {
   tags: string[];
   createdAt: string;
   featured?: boolean;
+  technicalSpecs?: {
+    compatibility?: string[];
+    fileFormats?: string[];
+    sheetsCount?: number;
+    formulasCount?: number;
+    blocksCount?: number;
+    lodStandard?: string;
+    pagesCount?: number;
+    jurisdiction?: string;
+    canvaDirectUrl?: string;
+  };
 }
 
 export interface CartItem extends ProductItem {

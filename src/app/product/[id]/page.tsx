@@ -8,6 +8,9 @@ import { mockProducts, mockReviews } from '@/lib/mockData';
 import { useCartStore } from '@/store/cartStore';
 import { convertPrice, formatPrice } from '@/lib/currency';
 import ProductCard from '@/components/storefront/ProductCard';
+import ExcelInspector from '@/components/products/ExcelInspector';
+import ContractInspector from '@/components/products/ContractInspector';
+import CadRevitInspector from '@/components/products/CadRevitInspector';
 
 export default function ProductDetailPage() {
   const router = useRouter();
@@ -182,6 +185,25 @@ export default function ProductDetailPage() {
             </div>
           </div>
         </div>
+
+        {/* Dynamic Specialized Technology & Asset Inspector */}
+        {product.fileType === 'excel' && (
+          <div className="mb-16">
+            <ExcelInspector product={product} />
+          </div>
+        )}
+
+        {(product.fileType === 'word-pdf' || product.tags.includes('عقود') || product.tags.includes('قانوني')) && (
+          <div className="mb-16">
+            <ContractInspector product={product} />
+          </div>
+        )}
+
+        {product.fileType === 'cad-revit' && (
+          <div className="mb-16">
+            <CadRevitInspector product={product} />
+          </div>
+        )}
 
         {/* Reviews Section */}
         <div className="mb-16">

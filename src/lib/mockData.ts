@@ -84,7 +84,13 @@ export const products: ProductItem[] = [
     vendorName: 'مكتب الصفوة القانوني',
     tags: ['عقود', 'قانوني', 'شركات', 'شراكة', 'توظيف'],
     createdAt: new Date().toISOString(),
-    featured: true
+    featured: true,
+    technicalSpecs: {
+      compatibility: ['Microsoft Word 2016 - 2024', 'Google Docs', 'Adobe Acrobat Pro'],
+      fileFormats: ['.DOCX', '.PDF (A4 Print Ready 300 DPI)'],
+      pagesCount: 28,
+      jurisdiction: 'القانون المدني والتجاري المصري والأنظمة السعودية ونظام المعاملات الإماراتي',
+    },
   },
   {
     id: 'p2',
@@ -118,7 +124,13 @@ export const products: ProductItem[] = [
     vendorName: 'استشارات فينتشر',
     tags: ['دراسة جدوى', 'نموذج مالي', 'إكسل', 'استثمار'],
     createdAt: new Date().toISOString(),
-    featured: true
+    featured: true,
+    technicalSpecs: {
+      compatibility: ['Excel 2016 - 2024', 'Microsoft 365', 'Google Sheets'],
+      fileFormats: ['.XLSX', '.XLSM'],
+      sheetsCount: 6,
+      formulasCount: 940,
+    },
   },
   {
     id: 'p4',
@@ -187,7 +199,13 @@ export const products: ProductItem[] = [
     vendorName: 'الحلول المالية الذكية',
     tags: ['محاسبة', 'إكسل', 'تقارير مالية', 'قيود يومية'],
     createdAt: new Date().toISOString(),
-    featured: true
+    featured: true,
+    technicalSpecs: {
+      compatibility: ['Excel 2016 - 2026', 'Microsoft 365', 'Google Sheets'],
+      fileFormats: ['.XLSX', '.XLSM (VBA Macros Enabled)'],
+      sheetsCount: 12,
+      formulasCount: 1850,
+    },
   },
   {
     id: 'p8',
@@ -289,7 +307,13 @@ export const products: ProductItem[] = [
     vendorName: 'أركيتيكت هاب',
     tags: ['AutoCAD', 'معماري', 'بلوكات', 'تصميم'],
     createdAt: new Date().toISOString(),
-    featured: true
+    featured: true,
+    technicalSpecs: {
+      compatibility: ['AutoCAD 2013 - 2026', 'Autodesk Revit 2020 - 2026', 'Civil 3D'],
+      fileFormats: ['.DWG', '.DXF', '.PAT'],
+      blocksCount: 1520,
+      lodStandard: 'LOD 350 (BIM Compliant)',
+    },
   },
   {
     id: 'p14',
@@ -337,7 +361,13 @@ export const products: ProductItem[] = [
     salesCount: 230,
     vendorName: 'بيم أركي تك',
     tags: ['Revit', 'BIM', 'عائلات', 'ديكور', 'MEP'],
-    createdAt: new Date().toISOString()
+    createdAt: new Date().toISOString(),
+    technicalSpecs: {
+      compatibility: ['Autodesk Revit 2020 - 2026', 'Navisworks', 'AutoCAD Architecture'],
+      fileFormats: ['.RFA (Revit Parametric Family)', '.RVT'],
+      blocksCount: 450,
+      lodStandard: 'LOD 350',
+    },
   },
   {
     id: 'p17',

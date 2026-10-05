@@ -5,15 +5,23 @@ import GpaCalculator from '@/components/tools/GpaCalculator';
 import InvoiceGenerator from '@/components/tools/InvoiceGenerator';
 import VatCalculator from '@/components/tools/VatCalculator';
 import UnitConverter from '@/components/tools/UnitConverter';
+import ExcelFormulaAssistant from '@/components/tools/ExcelFormulaAssistant';
 
 export default function ToolsPage() {
-  const [openSection, setOpenSection] = useState<string | null>('gpa');
+  const [openSection, setOpenSection] = useState<string | null>('excel');
 
   const toggleSection = (id: string) => {
     setOpenSection((prev) => (prev === id ? null : id));
   };
 
   const tools = [
+    {
+      id: 'excel',
+      title: 'مساعد ومولد معادلات الإكسيل الذكي (XLOOKUP / SUMIFS)',
+      icon: '📗',
+      desc: 'صمم معادلات الإكسيل المحاسبية المتقدمة واشتق دوال البحث والجمع الشرطي الجاهزة.',
+      component: <ExcelFormulaAssistant />,
+    },
     {
       id: 'gpa',
       title: 'حاسبة المعدل التراكمي الجامعي (GPA)',

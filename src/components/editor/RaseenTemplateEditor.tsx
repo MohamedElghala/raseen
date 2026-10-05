@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import RaseenLogoLoader from '@/components/brand/RaseenLogoLoader';
 
-type TemplateType = 'cv' | 'invoice' | 'social' | 'contract' | 'certificate';
+type TemplateType = 'cv' | 'invoice' | 'social' | 'contract' | 'certificate' | 'pitch_deck' | 'quotation' | 'nda';
 type ThemeColor = 'gold' | 'navy' | 'emerald' | 'violet' | 'ruby';
 
 interface TemplateConfig {
@@ -57,6 +57,30 @@ const TEMPLATES: TemplateConfig[] = [
     category: 'التعليم والتدريب',
     description: 'شهادة تقدير وإنجاز فاخرة بإطارات هندسية وختم ذهبي رقمي.',
     canvaUrl: 'https://www.canva.com/search/templates?q=elegant+certificate+achievement',
+  },
+  {
+    id: 'pitch_deck',
+    name: 'عرض المستثمرين (Pitch Deck)',
+    icon: '🚀',
+    category: 'الشركات والتمويل',
+    description: 'شريحة تنفيذية متكاملة لعرض القيمة، حجم السوق، ونموذج العمل أمام المستثمرين.',
+    canvaUrl: 'https://www.canva.com/search/templates?q=investor+pitch+deck+startup',
+  },
+  {
+    id: 'quotation',
+    name: 'عرض أسعار ونطاق العمل',
+    icon: '📋',
+    category: 'المبيعات والمشاريع',
+    description: 'عرض سعر تجاري موثق يوضح مواصفات التسليم، الجدول الزمني، وشروط الدفعات.',
+    canvaUrl: 'https://www.canva.com/search/templates?q=commercial+quotation+proposal',
+  },
+  {
+    id: 'nda',
+    name: 'اتفاقية سرية معلومات (NDA)',
+    icon: '🔒',
+    category: 'القانون وحماية الأفكار',
+    description: 'صيغة قانونية ملزمة لحماية الأفكار والبيانات ونماذج التشغيل من التسريب.',
+    canvaUrl: 'https://www.canva.com/search/templates?q=non+disclosure+agreement',
   },
 ];
 
@@ -145,6 +169,20 @@ export default function RaseenTemplateEditor() {
     certCourse: 'الدبلوم التنفيذي المتقدم في إدارة المنتجات الرقمية والحوسبة السحابية',
     certIssuer: 'أكاديمية رَصين للتعليم التقني المستمر',
     certScore: 'امتياز مع مرتبة الشرف (98%)',
+
+    // Pitch deck specifics
+    deckProblem: 'صعوبة وصول رواد الأعمال والشركات في منطقة الشرق الأوسط إلى عقود وأدوات وشيتات محاسبية معتمدة ومجهزة باللغة العربية، مما يسبب إهدار مئات الساعات وملايين الجنيهات.',
+    deckSolution: 'منصة "رَصين" كأول مستودع استثماري وتقني متكامل للأصول الرقمية والبرمجية المعتمدة مع التخصيص السحابي الفوري.',
+    deckMarket: 'سوق الأصول الرقمية والحلول المؤسسية في منطقة MENA يتجاوز 4.2 مليار دولار سنوياً بمعدل نمو سنوي مركب 24%.',
+    deckAsk: '500,000 دولار أمريكي مقابل حصة ملكية 12% لتسريع التوسع في السوق السعودي والإماراتي.',
+
+    // Quotation specifics
+    quoteValidity: '15 يوماً من تاريخ الإصدار',
+    quoteTerms: '50% دفعة مقدمة عند التعاقد، و 50% عند التسليم النهائي واجتياز الفحص الفني.',
+
+    // NDA specifics
+    ndaTerm: 'سنتان من تاريخ التوقيع على الاتفاقية',
+    ndaScope: 'تشمل كافة الأكواد المصدرية، الدراسات المالية، خوارزميات الذكاء الاصطناعي، وبيانات العملاء والموردين.',
   });
 
   const handleInputChange = (field: string, value: any) => {
@@ -214,7 +252,7 @@ export default function RaseenTemplateEditor() {
         </div>
 
         {/* Template Quick Selector Strip */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mt-6">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-3 mt-6">
           {TEMPLATES.map((tmpl) => {
             const isSelected = selectedTemplate === tmpl.id;
             return (
@@ -562,6 +600,124 @@ export default function RaseenTemplateEditor() {
                         value={formData.certScore}
                         onChange={(e) => handleInputChange('certScore', e.target.value)}
                         className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3.5 py-2.5 text-sm text-white"
+                      />
+                    </div>
+                  </>
+                )}
+
+                {selectedTemplate === 'pitch_deck' && (
+                  <>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-300 mb-1.5">المشكلة والتحدي السوقي (Problem)</label>
+                      <textarea
+                        rows={3}
+                        value={formData.deckProblem}
+                        onChange={(e) => handleInputChange('deckProblem', e.target.value)}
+                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl p-3 text-xs text-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-300 mb-1.5">الحل المقترح وميزة المشروع (Solution)</label>
+                      <textarea
+                        rows={3}
+                        value={formData.deckSolution}
+                        onChange={(e) => handleInputChange('deckSolution', e.target.value)}
+                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl p-3 text-xs text-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-300 mb-1.5">حجم السوق وفرصة النمو (Market Size)</label>
+                      <input
+                        type="text"
+                        value={formData.deckMarket}
+                        onChange={(e) => handleInputChange('deckMarket', e.target.value)}
+                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3.5 py-2.5 text-xs text-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-300 mb-1.5">طلب التمويل والحصة (Investment Ask)</label>
+                      <input
+                        type="text"
+                        value={formData.deckAsk}
+                        onChange={(e) => handleInputChange('deckAsk', e.target.value)}
+                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3.5 py-2.5 text-xs text-white"
+                      />
+                    </div>
+                  </>
+                )}
+
+                {selectedTemplate === 'quotation' && (
+                  <>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-semibold text-slate-300 mb-1.5">اسم العميل / الشركة</label>
+                        <input
+                          type="text"
+                          value={formData.clientName}
+                          onChange={(e) => handleInputChange('clientName', e.target.value)}
+                          className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3 py-2 text-xs text-white"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-semibold text-slate-300 mb-1.5">مدة صلاحية العرض</label>
+                        <input
+                          type="text"
+                          value={formData.quoteValidity}
+                          onChange={(e) => handleInputChange('quoteValidity', e.target.value)}
+                          className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3 py-2 text-xs text-white"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-300 mb-1.5">شروط الدفع والتسليم</label>
+                      <textarea
+                        rows={2}
+                        value={formData.quoteTerms}
+                        onChange={(e) => handleInputChange('quoteTerms', e.target.value)}
+                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl p-3 text-xs text-white"
+                      />
+                    </div>
+                  </>
+                )}
+
+                {selectedTemplate === 'nda' && (
+                  <>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-semibold text-slate-300 mb-1.5">الطرف المفصح</label>
+                        <input
+                          type="text"
+                          value={formData.organization}
+                          onChange={(e) => handleInputChange('organization', e.target.value)}
+                          className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3 py-2 text-xs text-white"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-semibold text-slate-300 mb-1.5">الطرف المتلقي للسر</label>
+                        <input
+                          type="text"
+                          value={formData.clientName}
+                          onChange={(e) => handleInputChange('clientName', e.target.value)}
+                          className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3 py-2 text-xs text-white"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-300 mb-1.5">مدة سريان الالتزام بالسرية</label>
+                      <input
+                        type="text"
+                        value={formData.ndaTerm}
+                        onChange={(e) => handleInputChange('ndaTerm', e.target.value)}
+                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3 py-2 text-xs text-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-300 mb-1.5">نطاق المعلومات المحمية</label>
+                      <textarea
+                        rows={3}
+                        value={formData.ndaScope}
+                        onChange={(e) => handleInputChange('ndaScope', e.target.value)}
+                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl p-3 text-xs text-white"
                       />
                     </div>
                   </>
@@ -1072,6 +1228,155 @@ export default function RaseenTemplateEditor() {
                       <div>النتيجة: <strong>{formData.certScore}</strong></div>
                       <span>•</span>
                       <div>تاريخ الإصدار: <strong>{formData.date}</strong></div>
+                    </div>
+                  </div>
+                )}
+
+                {/* ------------------------------------------------------------------ */}
+                {/* 6. PITCH DECK EXECUTIVE SUMMARY PREVIEW */}
+                {/* ------------------------------------------------------------------ */}
+                {selectedTemplate === 'pitch_deck' && (
+                  <div className="space-y-6">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b gap-3" style={{ borderColor: currentTheme.hex }}>
+                      <div>
+                        <span className="text-[10px] font-mono tracking-widest uppercase opacity-70">EXECUTIVE PITCH DECK</span>
+                        <h2 className="text-xl sm:text-2xl font-black mt-1" style={{ color: currentTheme.hex }}>
+                          {formData.title} — ملخص جولة التمويل
+                        </h2>
+                      </div>
+                      <div className="p-2.5 rounded-xl text-center border" style={{ borderColor: currentTheme.hex, backgroundColor: previewMode === 'paper' ? '#f8fafc' : '#0f1a33' }}>
+                        <div className="text-[10px] opacity-70">مبلغ التمويل المطلوب</div>
+                        <div className="text-sm font-black font-mono" style={{ color: currentTheme.hex }}>{formData.deckAsk}</div>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="p-4 rounded-2xl border" style={{ borderColor: previewMode === 'paper' ? '#e2e8f0' : '#1e293b', backgroundColor: previewMode === 'paper' ? '#f8fafc' : '#0f1a33' }}>
+                        <div className="flex items-center gap-2 mb-2 font-bold text-sm text-red-500">
+                          <span>⚠️</span>
+                          <span>التحدي والمشكلة (Problem)</span>
+                        </div>
+                        <p className="text-xs leading-relaxed opacity-90">{formData.deckProblem}</p>
+                      </div>
+
+                      <div className="p-4 rounded-2xl border" style={{ borderColor: currentTheme.hex, backgroundColor: previewMode === 'paper' ? '#f0fdf4' : '#062016' }}>
+                        <div className="flex items-center gap-2 mb-2 font-bold text-sm text-emerald-500">
+                          <span>💡</span>
+                          <span>الحل التكنولوجي (Solution)</span>
+                        </div>
+                        <p className="text-xs leading-relaxed opacity-90">{formData.deckSolution}</p>
+                      </div>
+                    </div>
+
+                    <div className="p-4 rounded-2xl border" style={{ borderColor: previewMode === 'paper' ? '#e2e8f0' : '#1e293b' }}>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs font-bold">فرصة السوق والنمو (Market Opportunity)</span>
+                        <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold">TAM & CAGR +24%</span>
+                      </div>
+                      <p className="text-xs leading-relaxed opacity-85">{formData.deckMarket}</p>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-4 border-t text-xs font-mono" style={{ borderColor: previewMode === 'paper' ? '#e2e8f0' : '#1e293b' }}>
+                      <div>المقر الرئيسي: <strong>{formData.address}</strong></div>
+                      <div>التواصل: <strong>{formData.email}</strong></div>
+                    </div>
+                  </div>
+                )}
+
+                {/* ------------------------------------------------------------------ */}
+                {/* 7. COMMERCIAL QUOTATION PREVIEW */}
+                {/* ------------------------------------------------------------------ */}
+                {selectedTemplate === 'quotation' && (
+                  <div className="space-y-6">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b gap-4" style={{ borderColor: currentTheme.hex }}>
+                      <div>
+                        <span className="text-[10px] font-mono tracking-widest uppercase opacity-70">OFFICIAL COMMERCIAL QUOTATION</span>
+                        <h2 className="text-xl sm:text-2xl font-black mt-1" style={{ color: currentTheme.hex }}>
+                          عرض أسعار رسمي ونطاق عمل
+                        </h2>
+                        <p className="text-xs opacity-70 mt-1">تاريخ الإصدار: {formData.date}</p>
+                      </div>
+                      <div className="text-left sm:text-right text-xs space-y-1">
+                        <div>صلاحية العرض: <strong className="text-amber-500">{formData.quoteValidity}</strong></div>
+                        <div>العميل الموجه له: <strong>{formData.clientName}</strong></div>
+                      </div>
+                    </div>
+
+                    {/* Scope Items */}
+                    <div className="p-4 rounded-2xl border space-y-3" style={{ borderColor: previewMode === 'paper' ? '#e2e8f0' : '#1e293b' }}>
+                      <div className="text-xs font-bold" style={{ color: currentTheme.hex }}>نطاق الخدمات والبنود المسعرة:</div>
+                      <div className="flex items-center justify-between text-xs py-2 border-b" style={{ borderColor: previewMode === 'paper' ? '#f1f5f9' : '#1e293b' }}>
+                        <span>1. {formData.item1Name}</span>
+                        <span className="font-mono font-bold">{(formData.item1Qty * formData.item1Price).toLocaleString()} ج.م</span>
+                      </div>
+                      <div className="flex items-center justify-between text-xs py-2 border-b" style={{ borderColor: previewMode === 'paper' ? '#f1f5f9' : '#1e293b' }}>
+                        <span>2. {formData.item2Name}</span>
+                        <span className="font-mono font-bold">{(formData.item2Qty * formData.item2Price).toLocaleString()} ج.م</span>
+                      </div>
+                      <div className="flex justify-between items-center pt-2 font-bold text-sm">
+                        <span>إجمالي القيمة المقترحة:</span>
+                        <span className="font-mono text-base" style={{ color: currentTheme.hex }}>{grandTotal.toLocaleString()} ج.م</span>
+                      </div>
+                    </div>
+
+                    <div className="p-3.5 rounded-xl bg-slate-500/5 text-xs space-y-1">
+                      <div className="font-bold">شروط الدفع والتسليم:</div>
+                      <p className="opacity-80">{formData.quoteTerms}</p>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-8 pt-4 border-t text-xs" style={{ borderColor: previewMode === 'paper' ? '#e2e8f0' : '#1e293b' }}>
+                      <div className="text-center space-y-4">
+                        <span className="font-bold">اعتماد رَصين للحلول الرقمية</span>
+                        <div className="h-10 border-b border-dashed border-slate-400 w-32 mx-auto" />
+                      </div>
+                      <div className="text-center space-y-4">
+                        <span className="font-bold">موافقة وتوقيع العميل</span>
+                        <div className="h-10 border-b border-dashed border-slate-400 w-32 mx-auto" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* ------------------------------------------------------------------ */}
+                {/* 8. MUTUAL NDA PREVIEW */}
+                {/* ------------------------------------------------------------------ */}
+                {selectedTemplate === 'nda' && (
+                  <div className="space-y-6">
+                    <div className="text-center border-b pb-4" style={{ borderColor: currentTheme.hex }}>
+                      <span className="text-[10px] font-mono tracking-widest uppercase opacity-70">MUTUAL NON-DISCLOSURE AGREEMENT</span>
+                      <h2 className="text-xl sm:text-2xl font-black mt-1" style={{ color: currentTheme.hex }}>
+                        اتفاقية عدم إفصاح وحماية سرية المعلومات
+                      </h2>
+                      <p className="text-xs opacity-70 mt-1">تاريخ الاتفاق: {formData.date}</p>
+                    </div>
+
+                    <div className="text-xs leading-relaxed space-y-3 opacity-90 text-justify">
+                      <p>
+                        أبرمت هذه الاتفاقية بين كل من: <strong>الطرف المفصح: {formData.organization}</strong>، و <strong>الطرف المتلقي: {formData.clientName}</strong>.
+                      </p>
+                      <div className="p-3.5 rounded-xl bg-slate-500/5 space-y-1.5 border" style={{ borderColor: previewMode === 'paper' ? '#e2e8f0' : '#1e293b' }}>
+                        <div><strong>1. نطاق السرية:</strong> {formData.ndaScope}</div>
+                        <div><strong>2. مدة السريان:</strong> {formData.ndaTerm}</div>
+                      </div>
+                      <p>
+                        <strong>3. التزامات الطرف المتلقي:</strong> يلتزم الطرف المتلقي باتخاذ أعلى درجات الحيطة والعناية للحفاظ على سرية المعلومات وعدم نسخها أو إفشائها دون إذن كتابي مسبق.
+                      </p>
+                      <p>
+                        <strong>4. الاختصاص القضائي:</strong> تختص المحاكم التجارية المختصة بنظر أي نزاع قد ينشأ عن تفسير أو خرق هذه الاتفاقية مع أحقية المطالبة بالتعويض الكامل.
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-8 pt-6 border-t" style={{ borderColor: previewMode === 'paper' ? '#e2e8f0' : '#1e293b' }}>
+                      <div className="text-center space-y-4 text-xs">
+                        <span className="font-bold">توقيع الطرف المفصح</span>
+                        <div className="h-10 border-b border-dashed border-slate-400 w-32 mx-auto" />
+                        <div className="text-[10px] opacity-60">{formData.organization}</div>
+                      </div>
+                      <div className="text-center space-y-4 text-xs">
+                        <span className="font-bold">توقيع الطرف المتلقي</span>
+                        <div className="h-10 border-b border-dashed border-slate-400 w-32 mx-auto" />
+                        <div className="text-[10px] opacity-60">{formData.clientName}</div>
+                      </div>
                     </div>
                   </div>
                 )}
