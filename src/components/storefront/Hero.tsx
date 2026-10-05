@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import MobiusRibbonCanvas from './MobiusRibbonCanvas';
 
 interface HeroProps {
   onSearch: (query: string) => void;
@@ -35,120 +36,9 @@ export default function Hero({ onSearch }: HeroProps) {
     <section className="relative w-full py-20 md:py-32 bg-[#060a14] border-b border-rawnaq-border overflow-hidden">
       
       {/* ========================================================================= */}
-      {/* 3D HOLOGRAPHIC MOBIUS INFINITY RIBBON BACKGROUND ANIMATION */}
+      {/* AUTHENTIC 3D MATHEMATICAL MOBIUS STRIP BACKGROUND CANVAS */}
       {/* ========================================================================= */}
-      <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden z-0">
-        
-        {/* Ambient Radial Core Glow */}
-        <div className="absolute w-[600px] h-[350px] bg-gradient-to-r from-amber-500/20 via-rawnaq-gold/25 to-yellow-600/15 rounded-full blur-[120px] transform -translate-y-10 animate-pulse" />
-
-        {/* 3D Rotating Holographic Mobius Vector Canvas */}
-        <div className="relative w-[780px] h-[400px] max-w-full opacity-65 transform scale-90 sm:scale-105 md:scale-125">
-          
-          {/* Subtle Cyber Perspective Grid */}
-          <div
-            className="absolute inset-0 opacity-15"
-            style={{
-              backgroundImage:
-                'radial-gradient(circle at center, rgba(245,183,49,0.3) 1px, transparent 1px)',
-              backgroundSize: '32px 32px',
-            }}
-          />
-
-          <svg
-            viewBox="0 0 800 400"
-            fill="none"
-            className="w-full h-full animate-[spin_24s_linear_infinite]"
-            style={{
-              filter: 'drop-shadow(0 0 25px rgba(245, 183, 49, 0.45))',
-            }}
-          >
-            {/* Holographic Outer Ring */}
-            <ellipse
-              cx="400"
-              cy="200"
-              rx="360"
-              ry="160"
-              stroke="url(#holoRingGrad)"
-              strokeWidth="1.2"
-              strokeDasharray="6 12"
-              opacity="0.4"
-            />
-
-            {/* Mobius Infinity Loop - Main Ribbon */}
-            <path
-              d="M400 200 C280 80 120 80 120 200 C120 320 280 320 400 200 Z"
-              stroke="url(#mobiusGoldGlow1)"
-              strokeWidth="6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              opacity="0.9"
-            />
-            <path
-              d="M400 200 C520 320 680 320 680 200 C680 80 520 80 400 200 Z"
-              stroke="url(#mobiusGoldGlow2)"
-              strokeWidth="6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              opacity="0.9"
-            />
-
-            {/* Inner Holographic Crossing Flow Ribbon */}
-            <path
-              d="M260 140 C340 200 460 200 540 260"
-              stroke="url(#mobiusFlowLight)"
-              strokeWidth="4"
-              strokeLinecap="round"
-              opacity="0.95"
-            />
-            <path
-              d="M540 140 C460 200 340 200 260 260"
-              stroke="url(#mobiusFlowLight2)"
-              strokeWidth="3.5"
-              strokeLinecap="round"
-              opacity="0.8"
-            />
-
-            {/* Orbiting Quantum Nodes */}
-            <circle cx="120" cy="200" r="6" fill="#fef08a" className="animate-ping" style={{ animationDuration: '3s' }} />
-            <circle cx="680" cy="200" r="6" fill="#f5b731" className="animate-ping" style={{ animationDuration: '4s' }} />
-            <circle cx="400" cy="200" r="5" fill="#ffffff" />
-
-            {/* SVG Gradients */}
-            <defs>
-              <linearGradient id="holoRingGrad" x1="40" y1="40" x2="760" y2="360" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#fef08a" />
-                <stop offset="0.5" stopColor="#f5b731" />
-                <stop offset="1" stopColor="#0284c7" />
-              </linearGradient>
-
-              <linearGradient id="mobiusGoldGlow1" x1="120" y1="80" x2="400" y2="320" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#fef08a" />
-                <stop offset="0.5" stopColor="#f5b731" />
-                <stop offset="1" stopColor="#b45309" />
-              </linearGradient>
-
-              <linearGradient id="mobiusGoldGlow2" x1="400" y1="80" x2="680" y2="320" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#ffffff" />
-                <stop offset="0.4" stopColor="#f5b731" />
-                <stop offset="1" stopColor="#d97706" />
-              </linearGradient>
-
-              <linearGradient id="mobiusFlowLight" x1="260" y1="140" x2="540" y2="260" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#ffffff" />
-                <stop offset="0.6" stopColor="#fef08a" />
-                <stop offset="1" stopColor="#f5b731" />
-              </linearGradient>
-
-              <linearGradient id="mobiusFlowLight2" x1="540" y1="140" x2="260" y2="260" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#38bdf8" />
-                <stop offset="0.7" stopColor="#f5b731" />
-                <stop offset="1" stopColor="#fef08a" />
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-      </div>
+      <MobiusRibbonCanvas />
 
       {/* ========================================================================= */}
       {/* COMMANDING FULL-WIDTH HERO CONTENT ("واكل للشاشة") */}
