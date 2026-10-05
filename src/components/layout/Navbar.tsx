@@ -33,16 +33,26 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 md:h-20">
 
-          {/* Logo */}
+          {/* Logo with Refined Mobius Infinity Ribbon */}
           <Link href="/" className="flex items-center gap-3 shrink-0 group" aria-label="الرئيسية - رَصين">
-            <div className="relative w-11 h-11 rounded-xl overflow-hidden border border-rawnaq-gold/40 shadow-lg shadow-rawnaq-gold/15 bg-white/5 backdrop-blur-sm shrink-0 group-hover:border-rawnaq-gold transition-all duration-300 flex items-center justify-center p-1">
-              <Image
-                src="/brand/logo_transparent.png"
-                alt="شعار رَصين"
-                fill
-                className="object-contain p-1 group-hover:scale-110 transition-transform duration-300"
-                priority
-              />
+            <div className="relative w-11 h-11 rounded-xl bg-rawnaq-surface border border-rawnaq-border flex items-center justify-center p-2 group-hover:border-rawnaq-gold/60 transition-all duration-300 shadow-lg shadow-black/50">
+              <svg viewBox="0 0 32 32" fill="none" className="w-full h-full transform group-hover:scale-105 transition-transform duration-300">
+                <path 
+                  d="M7 16C7 11.5817 10.5817 8 15 8C19.4183 8 20.5 13 25 13C27.2091 13 29 14.7909 29 17C29 19.2091 27.2091 21 25 21C20.5 21 19.4183 16 15 16C10.5817 16 7 19.5817 7 24" 
+                  stroke="url(#mobiusNavbarGrad)" 
+                  strokeWidth="2.5" 
+                  strokeLinecap="round"
+                />
+                <circle cx="25" cy="17" r="2.5" fill="#f5b731"/>
+                <circle cx="7" cy="16" r="2" fill="#fef08a"/>
+                <defs>
+                  <linearGradient id="mobiusNavbarGrad" x1="7" y1="8" x2="29" y2="24" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#fef08a"/>
+                    <stop offset="0.5" stopColor="#f5b731"/>
+                    <stop offset="1" stopColor="#c9962a"/>
+                  </linearGradient>
+                </defs>
+              </svg>
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-2 leading-none">
@@ -50,7 +60,7 @@ export default function Navbar() {
                 <span className="text-slate-500 text-xs font-light">|</span>
                 <span className="text-xs md:text-sm font-black tracking-[0.2em] text-white font-sans uppercase">RASEEN</span>
               </div>
-              <span className="text-[10px] text-slate-400 font-medium hidden sm:block mt-0.5">رصيدك الذكي من الأدوات والخبرات</span>
+              <span className="text-[10px] text-slate-400 font-medium hidden sm:block mt-0.5">منصة الأصول الرقمية والإبداعية</span>
             </div>
           </Link>
 

@@ -36,3 +36,6 @@ next-env.d.ts
 
 # SQLite journal
 *.db-journal
+
+.vercel
+.superdesign
