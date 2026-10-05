@@ -94,8 +94,10 @@
   * **معرف القياس المعتمد والمربوط:** `G-WWN1MNE93T` (مدمج في `src/app/layout.tsx` ويعمل حياً).
 * 🔍 **Google Search Console (GSC):**
   * الرابط المباشر: [https://search.google.com/search-console](https://search.google.com/search-console)
-  * رابط السايت ماب لتقديمه: `https://<DOMAIN>/sitemap.xml`
-  * كود إثبات الملكية: `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`
+  * رابط السايت ماب الحي المعتمد: `https://raseen-nine.vercel.app/sitemap.xml`
+  * **إثبات الملكية النشط:** 
+    * عبر ملف HTML المرفوع: `public/googlec660322f2991dfce.html`
+    * عبر وسم Meta Tag المدمج: `googlec660322f2991dfce`
 * 🏷️ **Google Tag Manager (GTM):**
   * الرابط المباشر: [https://tagmanager.google.com/](https://tagmanager.google.com/)
   * المتغير المطلوب: `NEXT_PUBLIC_GTM_ID` (`GTM-XXXXXXX`)

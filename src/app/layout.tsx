@@ -8,7 +8,7 @@ import LoginModal from '@/components/auth/LoginModal';
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-WWN1MNE93T';
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
-const GOOGLE_VERIFICATION = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || 'verification_token_placeholder';
+const GOOGLE_VERIFICATION = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || 'googlec660322f2991dfce';
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://raseen.me'),
