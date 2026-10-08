@@ -4,6 +4,9 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useAuthStore } from '@/store/authStore';
+import { useWishlistStore } from '@/store/wishlistStore';
+import { mockProducts } from '@/lib/mockData';
+import ProductCard from '@/components/storefront/ProductCard';
 
 const MOCK_PURCHASES = [
   {
@@ -43,6 +46,9 @@ export default function BuyerDashboardPage() {
   const [activeTab, setActiveTab] = useState<'purchases' | 'wishlist'>('purchases');
   const [downloading, setDownloading] = useState<string | null>(null);
   const [downloadAlert, setDownloadAlert] = useState<string | null>(null);
+
+  const wishlistIds = useWishlistStore((s) => s.wishlistIds);
+  const favoriteProducts = mockProducts.filter((p) => wishlistIds.includes(p.id));
 
   const handleDownload = (id: string, title: string) => {
     setDownloading(id);
@@ -147,7 +153,7 @@ export default function BuyerDashboardPage() {
                   }`}
                 >
                   <span>❤️</span>
-                  <span>المفضلة</span>
+                  <span>المفضلة ({wishlistIds.length})</span>
                 </button>
               </div>
             </div>
@@ -222,15 +228,35 @@ export default function BuyerDashboardPage() {
               )}
 
               {activeTab === 'wishlist' && (
-                <div className="flex flex-col items-center justify-center h-[350px] text-center">
-                  <span className="text-5xl mb-4">❤️</span>
-                  <h2 className="text-xl font-bold text-white mb-2">قائمة المفضلة فارغة</h2>
-                  <p className="text-slate-400 text-sm mb-6 max-w-sm">
-                    تصفح السوق وأضف المنتجات التي تهمك إلى قائمة المفضلة للرجوع إليها لاحقاً.
-                  </p>
-                  <Link href="/" className="btn-gold !px-6 !py-2 text-sm">
-                    تصفح المنتجات في السوق
-                  </Link>
+                <div>
+                  <div className="flex items-center justify-between mb-6 pb-4 border-b border-rawnaq-border">
+                    <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                      <span>❤️</span>
+                      <span>قائمة الأصول المفضلة ({favoriteProducts.length})</span>
+                    </h2>
+                    <Link href="/#products" className="text-xs text-rawnaq-gold hover:underline">
+                      + تصفح المزيد من الأصول
+                    </Link>
+                  </div>
+
+                  {favoriteProducts.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center h-[320px] text-center">
+                      <span className="text-5xl mb-4">❤️</span>
+                      <h3 className="text-lg font-bold text-white mb-2">قائمة المفضلة فارغة حالياً</h3>
+                      <p className="text-slate-400 text-xs mb-6 max-w-sm leading-relaxed">
+                        اضغط على أيقونة القلب على أي شيت أو عقد أو مشروع لحفظه هنا والرجوع إليه لاحقاً.
+                      </p>
+                      <Link href="/#products" className="btn-gold !px-6 !py-2 text-xs font-bold">
+                        تصفح المنتجات في السوق
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {favoriteProducts.map((prod) => (
+                        <ProductCard key={prod.id} product={prod} />
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
 
