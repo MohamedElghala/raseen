@@ -41,6 +41,7 @@ export default function Navbar() {
 
   const navLinks = [
     { href: '/#products', label: 'السوق الرقمي', icon: '🛒' },
+    { href: '/community', label: 'مجتمع رَصين', icon: '💬' },
     { href: '/editor', label: 'محرر القوالب الذكي', icon: '🎨' },
     { href: '/tools', label: 'أدوات مجانية', icon: '🛠️' },
     { href: '/vendor', label: 'بوابة البائعين', icon: '🏪' },
