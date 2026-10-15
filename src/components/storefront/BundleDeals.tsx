@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { bundleDeals, products } from '@/lib/mockData';
 import { useCartStore } from '@/store/cartStore';
-import { convertPrice, formatPrice } from '@/lib/currency';
+import { formatPrice } from '@/lib/currency';
 
 export default function BundleDeals() {
   const addItem = useCartStore((s) => s.addItem);
@@ -37,8 +37,8 @@ export default function BundleDeals() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
         {bundleDeals.map((bundle) => {
-          const displayPrice = formatPrice(convertPrice(bundle.bundlePrice, currency), currency);
-          const displayOriginal = formatPrice(convertPrice(bundle.originalPrice, currency), currency);
+          const displayPrice = formatPrice(bundle.bundlePrice, currency);
+          const displayOriginal = formatPrice(bundle.originalPrice, currency);
 
           return (
             <div

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCartStore } from '@/store/cartStore';
-import { convertPrice, formatPrice } from '@/lib/currency';
+import { formatPrice } from '@/lib/currency';
 import RaseenLogoLoader from '@/components/brand/RaseenLogoLoader';
 
 type PaymentMethod = 'card' | 'vodafone' | 'instapay' | null;
@@ -26,7 +26,7 @@ export default function CartModal() {
   if (!isOpen) return null;
 
   const totalPriceEGP = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const displayTotalPrice = formatPrice(convertPrice(totalPriceEGP, currency), currency);
+  const displayTotalPrice = formatPrice(totalPriceEGP, currency);
 
   const handleCheckout = () => {
     setStep('checkout');
@@ -126,7 +126,7 @@ export default function CartModal() {
             ) : (
               <div className="flex flex-col gap-3">
                 {items.map((item) => {
-                  const itemPrice = formatPrice(convertPrice(item.price, currency), currency);
+                  const itemPrice = formatPrice(item.price, currency);
 
                   return (
                     <div

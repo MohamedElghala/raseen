@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import { mockProducts, mockReviews } from '@/lib/mockData';
 import { useCartStore } from '@/store/cartStore';
-import { convertPrice, formatPrice } from '@/lib/currency';
+import { formatPrice } from '@/lib/currency';
 import ProductCard from '@/components/storefront/ProductCard';
 import ExcelInspector from '@/components/products/ExcelInspector';
 import ContractInspector from '@/components/products/ContractInspector';
@@ -51,9 +51,9 @@ export default function ProductDetailPage() {
     );
   }
 
-  const displayPrice = formatPrice(convertPrice(product.price, currency), currency);
+  const displayPrice = formatPrice(product.price, currency);
   const displayOriginalPrice = product.originalPrice
-    ? formatPrice(convertPrice(product.originalPrice, currency), currency)
+    ? formatPrice(product.originalPrice, currency)
     : null;
 
   return (

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useCartStore } from '@/store/cartStore';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { ProductItem } from '@/lib/types';
-import { convertPrice, formatPrice } from '@/lib/currency';
+import { formatPrice } from '@/lib/currency';
 
 interface ProductCardProps {
   product: ProductItem;
@@ -36,9 +36,9 @@ export default function ProductCard({ product }: ProductCardProps) {
       )
     : 0;
 
-  const displayPrice = formatPrice(convertPrice(product.price, currency), currency);
+  const displayPrice = formatPrice(product.price, currency);
   const displayOriginal = product.originalPrice
-    ? formatPrice(convertPrice(product.originalPrice, currency), currency)
+    ? formatPrice(product.originalPrice, currency)
     : null;
 
   return (
