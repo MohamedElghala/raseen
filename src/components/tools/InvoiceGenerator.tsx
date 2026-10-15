@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
+import { generateZatcaTLV, generateZatcaQRSvg } from '@/lib/zatca';
 
 interface InvoiceItem {
   id: string;
@@ -66,6 +67,25 @@ export default function InvoiceGenerator() {
   };
 
   const getTotal = () => getTaxableAmount() + getTax();
+
+  const subtotal = getSubtotal();
+  const tax = getTax();
+  const total = getTotal();
+
+  const zatcaQrSvg = useMemo(() => {
+    try {
+      const payload = generateZatcaTLV({
+        sellerName: companyName || 'شركة رَصين للحلول الرقمية',
+        vatNumber: taxNumber || '31024589200003',
+        timestamp: `${date}T12:00:00Z`,
+        totalAmount: total.toFixed(2),
+        vatAmount: tax.toFixed(2),
+      });
+      return generateZatcaQRSvg(payload, 160);
+    } catch {
+      return '';
+    }
+  }, [companyName, taxNumber, date, total, tax]);
 
   const handlePrint = (e: React.FormEvent) => {
     e.preventDefault();
@@ -356,11 +376,10 @@ export default function InvoiceGenerator() {
             <div className="bg-slate-900/60 p-3 rounded-xl border border-slate-800 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 {/* Visual QR Code Box */}
-                <div className="w-12 h-12 bg-white rounded-lg p-1 shrink-0 flex items-center justify-center shadow">
-                  <svg viewBox="0 0 24 24" className="w-full h-full text-slate-950 fill-current">
-                    <path d="M2 2h8v8H2V2zm2 2v4h4V4H4zm10-2h8v8h-8V2zm2 2v4h4V4h-4zM2 14h8v8H2v-8zm2 2v4h4v-4H4zm10 0h2v2h-2v-2zm4 0h2v2h-2v-2zm-2 2h2v2h-2v-2zm2 2h2v2h-2v-2zm-4 0h2v2h-2v-2zm6-4h2v6h-2v-6z" />
-                  </svg>
-                </div>
+                <div 
+                  className="w-12 h-12 bg-white rounded-lg p-1 shrink-0 flex items-center justify-center shadow overflow-hidden [&>svg]:w-full [&>svg]:h-full"
+                  dangerouslySetInnerHTML={{ __html: zatcaQrSvg }}
+                />
                 <div className="text-[11px]">
                   <span className="text-emerald-400 font-bold block">رمز الاستجابة السريع ZATCA QR</span>
                   <span className="text-slate-400 block text-[10px]">مشفّر ببيانات البائع والمشتري والضريبة تلقائياً</span>
@@ -399,11 +418,10 @@ export default function InvoiceGenerator() {
 
           <div className="text-left">
             {/* Visual QR Code in Print */}
-            <div className="w-20 h-20 bg-slate-100 border border-slate-300 rounded p-1 mb-2 inline-block">
-              <svg viewBox="0 0 24 24" className="w-full h-full text-slate-950 fill-current">
-                <path d="M2 2h8v8H2V2zm2 2v4h4V4H4zm10-2h8v8h-8V2zm2 2v4h4V4h-4zM2 14h8v8H2v-8zm2 2v4h4v-4H4zm10 0h2v2h-2v-2zm4 0h2v2h-2v-2zm-2 2h2v2h-2v-2zm2 2h2v2h-2v-2zm-4 0h2v2h-2v-2zm6-4h2v6h-2v-6z" />
-              </svg>
-            </div>
+            <div 
+              className="w-20 h-20 bg-slate-50 border border-slate-300 rounded p-1 mb-2 inline-block overflow-hidden [&>svg]:w-full [&>svg]:h-full"
+              dangerouslySetInnerHTML={{ __html: zatcaQrSvg }}
+            />
             <div className="text-xs font-mono">
               <p><strong>رقم الفاتورة:</strong> {invoiceNumber}</p>
               <p><strong>التاريخ:</strong> {date}</p>
