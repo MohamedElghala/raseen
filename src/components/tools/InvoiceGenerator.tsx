@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { generateZatcaTLV, renderQRCodeMatrix, generateZatcaQRSvg } from '@/lib/zatca';
+import { Analytics } from '@/lib/analytics';
 
 interface InvoiceItem {
   id: string;
@@ -119,6 +120,7 @@ export default function InvoiceGenerator() {
       return;
     }
     setError('');
+    Analytics.toolUsed('invoice_generator', { total: total, currency });
     window.print();
   };
 

@@ -10,6 +10,7 @@ import RaseenAssistant from '@/components/assistant/RaseenAssistant';
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-WWN1MNE93T';
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
 const GOOGLE_VERIFICATION = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || 'googlec660322f2991dfce';
 
 export const metadata: Metadata = {
@@ -103,6 +104,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 gtag('config', '${GA_ID}', {
                   page_path: window.location.pathname,
                 });
+                ${GOOGLE_ADS_ID ? `gtag('config', '${GOOGLE_ADS_ID}');` : ''}
               `}
             </Script>
           </>

@@ -38,6 +38,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
+  // Dynamic category routes for Google indexing
+  const categoryRoutes: MetadataRoute.Sitemap = [
+    'business',
+    'accounting',
+    'engineering',
+    'students',
+    'individuals',
+  ].map((slug) => ({
+    url: `${baseUrl}/category/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.9,
+  }));
+
   // Dynamic product routes for Google indexing
   const productRoutes: MetadataRoute.Sitemap = mockProducts.map((product) => ({
     url: `${baseUrl}/product/${product.id}`,
@@ -46,5 +60,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }));
 
-  return [...staticRoutes, ...productRoutes];
+  return [...staticRoutes, ...categoryRoutes, ...productRoutes];
 }

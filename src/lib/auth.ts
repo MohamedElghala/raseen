@@ -1,12 +1,13 @@
 import { AuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import prisma from '@/lib/prisma';
 import { verifyPassword } from '@/lib/passwords';
+import { findUserByEmail, createUser } from '@/lib/userService';
 
 export const authOptions: AuthOptions = {
   session: {
     strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   providers: [
     GoogleProvider({
@@ -24,9 +25,7 @@ export const authOptions: AuthOptions = {
           throw new Error('يرجى إدخال البريد الإلكتروني وكلمة المرور');
         }
 
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email.toLowerCase().trim() },
-        });
+        const user = await findUserByEmail(credentials.email);
 
         if (!user || !user.password) {
           throw new Error('البريد الإلكتروني أو كلمة المرور غير صحيحة');
@@ -52,22 +51,17 @@ export const authOptions: AuthOptions = {
       if (!user.email) return false;
       if (account?.provider === 'google') {
         try {
-          await prisma.user.upsert({
-            where: { email: user.email },
-            update: {
-              name: user.name || 'مستخدم رَصين',
-              avatar: user.image || null,
-            },
-            create: {
+          const existing = await findUserByEmail(user.email);
+          if (!existing) {
+            await createUser({
               email: user.email,
               name: user.name || 'مستخدم رَصين',
               avatar: user.image || null,
-              password: '',
               role: 'buyer',
-            },
-          });
+            });
+          }
         } catch (error) {
-          console.error('Error saving user in Supabase on signIn:', error);
+          console.warn('Silent fallback on Google signIn user sync:', error);
         }
       }
       return true;

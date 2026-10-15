@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
+import { Analytics } from '@/lib/analytics';
 
 interface AuditCheck {
   id: string;
@@ -169,6 +170,7 @@ export default function StoreAuditWidget() {
 
     navigator.clipboard.writeText(report).then(() => {
       setCopied(true);
+      Analytics.toolUsed('store_audit', { score: totalScore, storeType });
       setTimeout(() => setCopied(false), 2500);
     });
   };

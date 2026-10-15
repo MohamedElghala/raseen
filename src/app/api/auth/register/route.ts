@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
-import { hashPassword, checkPasswordStrength } from '@/lib/passwords';
+import { checkPasswordStrength } from '@/lib/passwords';
+import { findUserByEmail, createUser } from '@/lib/userService';
 
 export async function POST(request: Request) {
   try {
@@ -26,43 +26,35 @@ export async function POST(request: Request) {
     const assignedRole = role === 'vendor' ? 'vendor' : 'buyer';
     const cleanEmail = email.toLowerCase().trim();
 
-    // 2. Check existing user
-    const existing = await prisma.user.findUnique({
-      where: { email: cleanEmail },
-    });
+    // 2. Check existing user via resilient userService
+    const existing = await findUserByEmail(cleanEmail);
 
     if (existing) {
       return NextResponse.json({ error: 'هذا البريد الإلكتروني مسجل بالفعل، يمكنك تسجيل الدخول مباشرة' }, { status: 409 });
     }
 
-    // 3. Hash password
-    const hashedPassword = hashPassword(password);
-
-    // 4. Create in Supabase PostgreSQL
-    const newUser = await prisma.user.create({
-      data: {
-        name: name.trim(),
-        email: cleanEmail,
-        password: hashedPassword,
-        role: assignedRole,
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        role: true,
-        createdAt: true,
-      },
+    // 3. Create user via resilient userService (Supabase + local persistent mirror)
+    const newUser = await createUser({
+      name: name.trim(),
+      email: cleanEmail,
+      password,
+      role: assignedRole,
     });
 
     return NextResponse.json({
       success: true,
-      message: 'تم إنشاء الحساب بنجاح في قاعدة البيانات',
-      user: newUser,
+      message: 'تم إنشاء الحساب بنجاح، مرحباً بك في رَصين!',
+      user: {
+        id: newUser.id,
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role,
+        createdAt: newUser.createdAt,
+      },
     }, { status: 201 });
 
   } catch (error) {
     console.error('Registration error:', error);
-    return NextResponse.json({ error: 'حدث خطأ في السيرفر أثناء تسجيل الحساب' }, { status: 500 });
+    return NextResponse.json({ error: 'حدث خطأ غير متوقع أثناء تسجيل الحساب' }, { status: 500 });
   }
 }

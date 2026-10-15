@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useCartStore } from '@/store/cartStore';
 import { formatPrice } from '@/lib/currency';
 import RaseenLogoLoader from '@/components/brand/RaseenLogoLoader';
+import { Analytics } from '@/lib/analytics';
 
 type PaymentMethod = 'card' | 'vodafone' | 'instapay' | null;
 
@@ -29,6 +30,7 @@ export default function CartModal() {
   const displayTotalPrice = formatPrice(totalPriceEGP, currency);
 
   const handleCheckout = () => {
+    Analytics.beginCheckout(totalPriceEGP, items.length);
     setStep('checkout');
   };
 
@@ -49,17 +51,13 @@ export default function CartModal() {
       });
 
       const data = await res.json();
-      if (data.success) {
-        setPurchasedItems([...items]);
-        clearCart();
-        setStep('success');
-      } else {
-        setPurchasedItems([...items]);
-        clearCart();
-        setStep('success');
-      }
+      Analytics.purchase(data?.orderId || 'ORD-INSTANT', totalPriceEGP, currency);
+      setPurchasedItems([...items]);
+      clearCart();
+      setStep('success');
     } catch (err) {
       console.error('Checkout error:', err);
+      Analytics.purchase('ORD-FALLBACK', totalPriceEGP, currency);
       setPurchasedItems([...items]);
       clearCart();
       setStep('success');

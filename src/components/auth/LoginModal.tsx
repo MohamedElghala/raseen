@@ -21,6 +21,14 @@ export default function LoginModal() {
   const [success, setSuccess] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const handleQuickDemo = (demoEmail: string, demoPass: string, demoRole: 'buyer' | 'vendor') => {
+    setTab('login');
+    setRole(demoRole);
+    setEmail(demoEmail);
+    setPassword(demoPass);
+    setError('');
+  };
+
   if (!isLoginOpen) return null;
 
   const pwdStrength = checkPasswordStrength(password);
@@ -190,6 +198,31 @@ export default function LoginModal() {
             <p className="text-[11px] text-slate-400 mt-1.5 text-center">
               {role === 'buyer' ? 'تصفح وتحميل الأصول والشيتات الرقمية فوراً' : 'إنشاء متجرك الخاص وبيع ملفاتك وجني أرباح 85%'}
             </p>
+          </div>
+
+          {/* Quick 1-Click Demo Buttons for Fast Evaluation */}
+          <div className="mb-4 p-2.5 rounded-xl bg-slate-900/90 border border-cyan-500/30 shadow-inner">
+            <span className="text-[11px] font-bold text-cyan-400 block mb-1.5 text-center">
+              🚀 تجربة فورية بنقرة واحدة (حسابات جاهزة للاختبار):
+            </span>
+            <div className="grid grid-cols-2 gap-1.5">
+              <button
+                type="button"
+                onClick={() => handleQuickDemo('demo.buyer@raseen.me', 'Buyer@Pass2026!', 'buyer')}
+                className="px-2.5 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-[11px] text-slate-200 font-bold border border-slate-700 hover:border-cyan-400 transition-all flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer"
+              >
+                <span>🛒</span>
+                <span>حساب مشترٍ</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleQuickDemo('demo.vendor@raseen.me', 'Vendor@Pass2026!', 'vendor')}
+                className="px-2.5 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-[11px] text-slate-200 font-bold border border-slate-700 hover:border-amber-400 transition-all flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer"
+              >
+                <span>🏪</span>
+                <span>بائع معتمد (85%)</span>
+              </button>
+            </div>
           </div>
 
           {/* Quick Google Sign In */}

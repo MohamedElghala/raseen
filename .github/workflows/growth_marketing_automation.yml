@@ -1,0 +1,66 @@
+name: Raseen Platform Autonomous Growth & Content Automation
+
+on:
+  schedule:
+    # Run every day at 08:00 UTC (11:00 AM Cairo / Riyadh)
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'scripts/growth_marketing_engine.js'
+
+permissions:
+  contents: write
+
+jobs:
+  growth_marketing:
+    name: Generate Viral Marketing Campaigns & Ping Search Engines
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Production Dependencies
+        run: npm ci --prefer-offline
+
+      - name: Execute Growth Marketing Engine
+        run: node scripts/growth_marketing_engine.js
+
+      - name: Verify Live Platform Health on Vercel
+        run: |
+          echo "Pinging live production platform..."
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://raseen-nine.vercel.app)
+          echo "Platform HTTP Status: $HTTP_STATUS"
+          if [ "$HTTP_STATUS" -ne 200 ]; then
+            echo "Warning: Platform returned $HTTP_STATUS"
+          else
+            echo "Platform is healthy and responding with HTTP 200!"
+          fi
+
+      - name: Ping Search Engine Sitemaps
+        run: |
+          echo "Pinging Google Search sitemap..."
+          curl -s -I "https://www.google.com/ping?sitemap=https://raseen-nine.vercel.app/sitemap.xml" || true
+          echo "Pinging Bing Search sitemap..."
+          curl -s -I "https://www.bing.com/ping?sitemap=https://raseen-nine.vercel.app/sitemap.xml" || true
+
+      - name: Commit Fresh Daily Marketing Dispatch
+        run: |
+          git config --global user.name "Raseen Growth Bot"
+          git config --global user.email "bot@raseen.me"
+          git add MARKETING_DISPATCH.md public/marketing/growth_digest.json
+          if git diff --staged --quiet; then
+            echo "No marketing content changes to commit."
+          else
+            git commit -m "chore(marketing): update daily viral growth dispatch and campaigns [skip ci]"
+            git push origin main || true
+          fi

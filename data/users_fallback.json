@@ -1,0 +1,42 @@
+{
+  "admin@raseen.me": {
+    "id": "usr_admin_001",
+    "name": "مدير منصة رَصين",
+    "email": "admin@raseen.me",
+    "password": "e15f3ae8ce00a831c43e43693407c8d3:b4070f41432e4a1bccffcf34621eb6d278eb7efe8a6e836bc7ebfdf3d59fbe9fc9bfd90a9b132153bc6e810924d42aa354bdf1d1ecc52f5db69bd5173ceca740",
+    "role": "admin",
+    "avatar": null,
+    "createdAt": "2026-10-15T22:03:55.724Z",
+    "source": "resilient_storage"
+  },
+  "demo.vendor@raseen.me": {
+    "id": "usr_vendor_001",
+    "name": "م. كريم محمود (بائع معتمد)",
+    "email": "demo.vendor@raseen.me",
+    "password": "4fe40abc548a686880239f0222f80689:d58a3ce0008d985d0fa1ef5e118834993e886cb7ee7bbaff5fc2887307873940fb68fc439852905306b958df42cdc731a6532354c5aa39491146c27066fc7d6f",
+    "role": "vendor",
+    "avatar": null,
+    "createdAt": "2026-10-15T22:03:55.791Z",
+    "source": "resilient_storage"
+  },
+  "demo.buyer@raseen.me": {
+    "id": "usr_buyer_001",
+    "name": "سلطان القحطاني",
+    "email": "demo.buyer@raseen.me",
+    "password": "e41d36222f51627428b166761ba1782a:c6a1f64dc97f85510fc28f608db91b86f365063e841e975cc05b97dee225e117ddb39df6f669707db2d303ba8d283fa0a195390eb49324f3e54c3d53f6527c98",
+    "role": "buyer",
+    "avatar": null,
+    "createdAt": "2026-10-15T22:03:55.846Z",
+    "source": "resilient_storage"
+  },
+  "new_customer_1792101835902@example.com": {
+    "id": "usr_mva35w76_8hngg",
+    "name": "عميل جديد",
+    "email": "new_customer_1792101835902@example.com",
+    "password": "12dde58b8ce4ddf782b24cc987099988:7acaa5a1e8efa40dada29074dc7b9833ff36d37067a9cd4aa8921f8b6f2575333c1a3197488033fe76fcfef029dac929e7b4c59972b862562c1af3143990793e",
+    "role": "buyer",
+    "avatar": null,
+    "createdAt": "2026-10-15T22:03:58.146Z",
+    "source": "resilient_storage"
+  }
+}

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { Analytics } from '@/lib/analytics';
 
 // --- Types ---
 export type IndustryKey = 'companies' | 'construction' | 'ecommerce' | 'restaurants' | 'freelance';
@@ -633,6 +634,9 @@ export default function RaseenAssistant() {
       if (res.ok && data.success) {
         setCapturedLeadId(data.leadId);
         setShowLeadPrompt(false);
+
+        // Fire Google Analytics & Ads conversion event
+        Analytics.leadCaptured(data.leadId, leadChannel, leadInterest);
 
         const contactRef = trimmedPhone || trimmedEmail;
         const successText =
