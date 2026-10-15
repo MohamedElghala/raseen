@@ -60,7 +60,7 @@ export default function PdfConverterTool() {
 
   return (
     <div className="space-y-6 text-right">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-3 border-b border-rawnaq-border gap-3">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-3 border-b border-raseen-border gap-3">
         <div>
           <h3 className="text-lg font-bold text-white flex items-center gap-2">
             <span>📄</span>
@@ -76,15 +76,15 @@ export default function PdfConverterTool() {
       </div>
 
       {/* Upload & Dropzone */}
-      <div className="p-6 border-2 border-dashed border-rawnaq-border rounded-2xl bg-rawnaq-dark text-center hover:border-rawnaq-gold/50 transition-colors">
-        <div className="w-12 h-12 mx-auto mb-3 rounded-2xl bg-rawnaq-surface flex items-center justify-center text-2xl border border-rawnaq-border">
+      <div className="p-6 border-2 border-dashed border-raseen-border rounded-2xl bg-raseen-dark text-center hover:border-raseen-gold/50 transition-colors">
+        <div className="w-12 h-12 mx-auto mb-3 rounded-2xl bg-raseen-surface flex items-center justify-center text-2xl border border-raseen-border">
           📥
         </div>
         <p className="text-sm font-bold text-white mb-1">
           اسحب وأفلت ملف الـ PDF هنا، أو تصفح من جهازك
         </p>
         <p className="text-xs text-slate-400 mb-4">
-          الملف الحالي الجاهز للمعاينة: <strong className="text-rawnaq-gold font-mono">{fileName}</strong>
+          الملف الحالي الجاهز للمعاينة: <strong className="text-raseen-gold font-mono">{fileName}</strong>
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-2">
@@ -115,7 +115,7 @@ export default function PdfConverterTool() {
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border flex items-center gap-1.5 ${
               convertedMode === 'word'
                 ? 'bg-blue-600 text-white border-blue-400 shadow-lg shadow-blue-600/30'
-                : 'bg-rawnaq-dark text-slate-300 border-rawnaq-border hover:border-slate-500'
+                : 'bg-raseen-dark text-slate-300 border-raseen-border hover:border-slate-500'
             }`}
           >
             <span>📝 تحويل إلى Word (.DOCX)</span>
@@ -127,7 +127,7 @@ export default function PdfConverterTool() {
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border flex items-center gap-1.5 ${
               convertedMode === 'excel'
                 ? 'bg-emerald-600 text-white border-emerald-400 shadow-lg shadow-emerald-600/30'
-                : 'bg-rawnaq-dark text-slate-300 border-rawnaq-border hover:border-slate-500'
+                : 'bg-raseen-dark text-slate-300 border-raseen-border hover:border-slate-500'
             }`}
           >
             <span>📊 تحويل إلى جداول Excel (.XLSX)</span>
@@ -139,7 +139,7 @@ export default function PdfConverterTool() {
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border flex items-center gap-1.5 ${
               convertedMode === 'text'
                 ? 'bg-amber-600 text-white border-amber-400 shadow-lg shadow-amber-600/30'
-                : 'bg-rawnaq-dark text-slate-300 border-rawnaq-border hover:border-slate-500'
+                : 'bg-raseen-dark text-slate-300 border-raseen-border hover:border-slate-500'
             }`}
           >
             <span>📄 استخراج نصوص نقية (TXT)</span>
@@ -150,7 +150,7 @@ export default function PdfConverterTool() {
           type="button"
           onClick={handleDownloadFile}
           disabled={isProcessing}
-          className="btn-gold !py-2 !px-5 text-xs font-bold flex items-center gap-1.5 shadow-lg shadow-rawnaq-gold/20"
+          className="btn-gold !py-2 !px-5 text-xs font-bold flex items-center gap-1.5 shadow-lg shadow-raseen-gold/20"
         >
           <span>تنزيل الملف المحول</span>
           <span>⬇️</span>
@@ -171,8 +171,8 @@ export default function PdfConverterTool() {
         </div>
 
         {isProcessing ? (
-          <div className="p-12 rounded-xl bg-rawnaq-dark border border-rawnaq-border text-center text-slate-400 space-y-3">
-            <div className="w-8 h-8 mx-auto border-2 border-rawnaq-gold border-t-transparent rounded-full animate-spin" />
+          <div className="p-12 rounded-xl bg-raseen-dark border border-raseen-border text-center text-slate-400 space-y-3">
+            <div className="w-8 h-8 mx-auto border-2 border-raseen-gold border-t-transparent rounded-full animate-spin" />
             <p className="text-xs">جاري تفكيك صفحات الـ PDF واستخراج الجداول والنصوص بدقة...</p>
           </div>
         ) : (
@@ -180,7 +180,7 @@ export default function PdfConverterTool() {
             rows={7}
             value={extractedText}
             onChange={(e) => setExtractedText(e.target.value)}
-            className="w-full p-4 rounded-xl bg-rawnaq-dark border border-rawnaq-border text-white text-xs font-mono leading-relaxed focus:outline-none focus:border-rawnaq-gold transition-colors"
+            className="w-full p-4 rounded-xl bg-raseen-dark border border-raseen-border text-white text-xs font-mono leading-relaxed focus:outline-none focus:border-raseen-gold transition-colors"
           />
         )}
       </div>

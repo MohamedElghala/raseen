@@ -27,7 +27,7 @@ export default function RaseenLogoLoader({
         {/* Hologram Pulse Ring */}
         <div className="absolute inset-0 rounded-full border border-cyan-400/30 animate-ping opacity-30" />
         <div
-          className="absolute inset-0 rounded-full border border-dashed border-rawnaq-gold/40 animate-spin"
+          className="absolute inset-0 rounded-full border border-dashed border-raseen-gold/40 animate-spin"
           style={{ animationDuration: '4s' }}
         />
         <div
@@ -36,7 +36,7 @@ export default function RaseenLogoLoader({
         />
 
         {/* Central Glowing Icon */}
-        <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden border border-cyan-400/40 shadow-xl shadow-cyan-900/40 bg-rawnaq-dark/40 backdrop-blur-md flex items-center justify-center p-2">
+        <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden border border-cyan-400/40 shadow-xl shadow-cyan-900/40 bg-raseen-dark/40 backdrop-blur-md flex items-center justify-center p-2">
           <Image
             src="/brand/logo_transparent.png"
             alt="رَصين - لودر التحميل"

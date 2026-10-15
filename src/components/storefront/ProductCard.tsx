@@ -44,10 +44,10 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       href={`/product/${product.id}`}
-      className="block group rounded-xl overflow-hidden bg-rawnaq-surface border border-rawnaq-border hover:border-rawnaq-gold/40 hover:shadow-lg hover:shadow-rawnaq-gold/5 transition-all duration-300 rawnaq-glass-hover"
+      className="block group rounded-xl overflow-hidden bg-raseen-surface border border-raseen-border hover:border-raseen-gold/40 hover:shadow-lg hover:shadow-raseen-gold/5 transition-all duration-300 raseen-glass-hover"
       aria-label={`عرض تفاصيل المنتج ${product.title}`}
     >
-      <div className="relative aspect-[3/2] w-full bg-rawnaq-navy overflow-hidden">
+      <div className="relative aspect-[3/2] w-full bg-raseen-navy overflow-hidden">
         <Image
           src={product.imageUrl}
           alt={product.title}
@@ -56,7 +56,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
         />
 
-        <div className="absolute top-3 right-3 bg-rawnaq-dark/80 backdrop-blur-md px-2 py-1 rounded-md text-xs font-bold text-white border border-rawnaq-border">
+        <div className="absolute top-3 right-3 bg-raseen-dark/80 backdrop-blur-md px-2 py-1 rounded-md text-xs font-bold text-white border border-raseen-border">
           {product.category === 'business' && '🏢 شركات'}
           {product.category === 'accounting' && '📊 محاسبة'}
           {product.category === 'engineering' && '📐 هندسة'}
@@ -82,7 +82,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           className={`absolute bottom-3 right-3 p-2 rounded-full backdrop-blur-md transition-all border min-h-[44px] min-w-[44px] flex items-center justify-center ${
             isFav
               ? 'bg-red-500/20 text-red-400 border-red-500/50 shadow-lg shadow-red-500/20'
-              : 'bg-rawnaq-dark/50 hover:bg-rawnaq-dark text-slate-300 hover:text-red-400 border-transparent hover:border-rawnaq-border'
+              : 'bg-raseen-dark/50 hover:bg-raseen-dark text-slate-300 hover:text-red-400 border-transparent hover:border-raseen-border'
           }`}
           aria-label={isFav ? 'إزالة من المفضلة' : 'أضف إلى المفضلة'}
         >
@@ -94,7 +94,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       <div className="p-4 flex flex-col gap-3">
         <div className="flex items-center justify-between text-xs text-slate-400">
-          <div className="flex items-center gap-1 text-rawnaq-gold">
+          <div className="flex items-center gap-1 text-raseen-gold">
             <span>⭐</span>
             <span className="font-medium">{product.rating}</span>
             <span>({product.reviewCount})</span>
@@ -109,15 +109,15 @@ export default function ProductCard({ product }: ProductCardProps) {
         <p className="text-sm text-slate-400 line-clamp-2">{product.description}</p>
 
         <div className="flex items-center gap-2 mt-1">
-          <div className="w-6 h-6 rounded-full bg-rawnaq-accent flex items-center justify-center text-xs font-bold text-white border border-rawnaq-border">
+          <div className="w-6 h-6 rounded-full bg-raseen-accent flex items-center justify-center text-xs font-bold text-white border border-raseen-border">
             {product.vendorName.charAt(0)}
           </div>
           <span className="text-xs text-slate-300">{product.vendorName}</span>
         </div>
 
-        <div className="flex items-center justify-between mt-2 pt-3 border-t border-rawnaq-border/50 gap-2">
+        <div className="flex items-center justify-between mt-2 pt-3 border-t border-raseen-border/50 gap-2">
           <div className="flex flex-col">
-            <span className="text-lg sm:text-xl font-black text-rawnaq-gold">{displayPrice}</span>
+            <span className="text-lg sm:text-xl font-black text-raseen-gold">{displayPrice}</span>
             {displayOriginal && (
               <span className="text-xs text-slate-500 line-through">{displayOriginal}</span>
             )}
@@ -127,14 +127,14 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs text-slate-300 group-hover:text-rawnaq-gold font-bold px-2 py-1 rounded transition-colors flex items-center gap-1">
+            <span className="text-xs text-slate-300 group-hover:text-raseen-gold font-bold px-2 py-1 rounded transition-colors flex items-center gap-1">
               <span>التفاصيل</span>
               <span className="text-sm">←</span>
             </span>
             <button
               onClick={handleBuyClick}
               aria-label={`شراء ${product.title} الآن`}
-              className="btn-gold !px-3.5 !py-2 text-xs font-bold flex items-center gap-1.5 shadow-md shadow-rawnaq-gold/10"
+              className="btn-gold !px-3.5 !py-2 text-xs font-bold flex items-center gap-1.5 shadow-md shadow-raseen-gold/10"
             >
               <span>شراء</span>
               <span>🛒</span>

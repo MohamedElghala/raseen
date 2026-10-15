@@ -10,38 +10,62 @@ interface InvoiceItem {
 }
 
 export default function InvoiceGenerator() {
-  const [companyName, setCompanyName] = useState('');
-  const [invoiceNumber, setInvoiceNumber] = useState(`INV-${Math.floor(1000 + Math.random() * 9000)}`);
+  const [companyName, setCompanyName] = useState('شركة رَصين للحلول الرقمية');
+  const [taxNumber, setTaxNumber] = useState('31024589200003');
+  const [invoiceNumber, setInvoiceNumber] = useState(`INV-2026-${Math.floor(1000 + Math.random() * 9000)}`);
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
-  const [clientName, setClientName] = useState('');
+  const [clientName, setClientName] = useState('مؤسسة الأفق المتقدمة');
+  const [clientTaxNumber, setClientTaxNumber] = useState('');
+  const [currency, setCurrency] = useState<'SAR' | 'EGP' | 'AED' | 'USD'>('SAR');
   const [items, setItems] = useState<InvoiceItem[]>([
-    { id: '1', description: '', quantity: 1, price: 0 }
+    { id: '1', description: 'ترخيص نظام أتمتة الأعمال وشيت التدفقات النقدية 2026', quantity: 1, price: 1500 },
+    { id: '2', description: 'جلسة استشارية وتخصيص قوالب العقود المعتمدة', quantity: 2, price: 400 },
   ]);
-  const [taxEnabled, setTaxEnabled] = useState(false);
+  const [taxEnabled, setTaxEnabled] = useState(true);
   const [taxRate, setTaxRate] = useState<number | ''>(15);
-  const [notes, setNotes] = useState('');
+  const [discount, setDiscount] = useState<number>(0);
+  const [notes, setNotes] = useState('شكراً لتعاملكم معنا. الدفع عبر التحويل البنكي أو إنستاباي / مدى.');
   const [error, setError] = useState('');
 
-  const addItem = () => setItems([...items, { id: Date.now().toString(), description: '', quantity: 1, price: 0 }]);
+  const currencySymbols: Record<string, string> = {
+    SAR: 'ر.س',
+    EGP: 'ج.م',
+    AED: 'د.إ',
+    USD: '$',
+  };
+
+  const curr = currencySymbols[currency] || 'ر.س';
+
+  const addItem = () => {
+    setItems([...items, { id: Date.now().toString(), description: '', quantity: 1, price: 0 }]);
+  };
   
   const removeItem = (id: string) => {
-    if (items.length > 1) setItems(items.filter(i => i.id !== id));
+    if (items.length > 1) setItems(items.filter((i) => i.id !== id));
   };
 
   const updateItem = (id: string, field: keyof InvoiceItem, value: any) => {
-    setItems(items.map(i => i.id === id ? { ...i, [field]: value } : i));
+    setItems(items.map((i) => (i.id === id ? { ...i, [field]: value } : i)));
   };
 
   const getSubtotal = () => {
     return items.reduce((sum, item) => sum + (Number(item.quantity) || 0) * (Number(item.price) || 0), 0);
   };
 
-  const getTax = () => {
-    if (!taxEnabled || taxRate === '') return 0;
-    return getSubtotal() * (Number(taxRate) / 100);
+  const getDiscountAmount = () => {
+    return (getSubtotal() * (discount || 0)) / 100;
   };
 
-  const getTotal = () => getSubtotal() + getTax();
+  const getTaxableAmount = () => {
+    return Math.max(0, getSubtotal() - getDiscountAmount());
+  };
+
+  const getTax = () => {
+    if (!taxEnabled || taxRate === '') return 0;
+    return getTaxableAmount() * (Number(taxRate) / 100);
+  };
+
+  const getTotal = () => getTaxableAmount() + getTax();
 
   const handlePrint = (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,7 +73,7 @@ export default function InvoiceGenerator() {
       setError('يرجى إدخال اسم الشركة واسم العميل.');
       return;
     }
-    const invalidItems = items.some(i => !i.description || i.quantity === '' || i.price === '');
+    const invalidItems = items.some((i) => !i.description || i.quantity === '' || i.price === '');
     if (invalidItems) {
       setError('يرجى استكمال جميع بيانات بنود الفاتورة.');
       return;
@@ -59,256 +83,406 @@ export default function InvoiceGenerator() {
   };
 
   return (
-    <div className="bg-[#0b1329] text-white p-6 rounded-xl shadow-lg border border-[#f5b731]/20 font-[Cairo] rtl print:bg-white print:text-black print:border-none print:shadow-none print:p-0" dir="rtl" lang="ar">
-      <h2 className="text-2xl font-bold mb-6 text-[#f5b731] flex items-center gap-2 print:hidden">
-        <span>📄</span> مولد الفواتير الإلكترونية
-      </h2>
-
-      {/* Editor Section */}
+    <div className="w-full bg-slate-900/90 text-white p-4 sm:p-6 md:p-8 rounded-2xl shadow-2xl border border-slate-800 font-cairo rtl print:bg-white print:text-black print:border-none print:shadow-none print:p-0" dir="rtl" lang="ar">
+      
+      {/* Interactive Form (Hidden on Print) */}
       <form onSubmit={handlePrint} className="space-y-6 print:hidden">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        {/* Header & Controls */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
           <div>
-            <label className="block text-sm mb-1">اسم الشركة / الفرد *</label>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-mono font-bold mb-2">
+              <span>🧾</span>
+              <span>مولد الفواتير وعروض الأسعار الضريبية (ZATCA / ETA)</span>
+            </div>
+            <h3 className="text-xl sm:text-2xl font-black text-white">
+              أصدر فاتورة أو عرض سعر قانوني في ثوانٍ
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-400 mt-1">
+              متوافقة مع هيئة الزكاة والضريبة (ZATCA) ومصلحة الضرائب المصرية، مع رمز الاستجابة السريع QR.
+            </p>
+          </div>
+
+          {/* Currency Selector */}
+          <div className="flex items-center gap-1.5 bg-slate-950 p-1.5 rounded-xl border border-slate-800 self-start sm:self-auto">
+            {(['SAR', 'AED', 'EGP', 'USD'] as const).map((c) => (
+              <button
+                key={c}
+                type="button"
+                onClick={() => setCurrency(c)}
+                className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
+                  currency === c
+                    ? 'bg-amber-500 text-slate-950 shadow-md'
+                    : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                }`}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Company & Client Details */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 bg-slate-950/60 p-4 sm:p-5 rounded-2xl border border-slate-800/80">
+          <div>
+            <label className="block text-xs font-bold text-slate-300 mb-1">اسم شركتك / المنشأة *</label>
             <input
               type="text"
-              aria-label="اسم الشركة"
               required
               value={companyName}
               onChange={(e) => setCompanyName(e.target.value)}
-              className="w-full min-h-[44px] bg-[#0b1329] border border-gray-700 rounded px-3 py-2 focus:border-[#f5b731] outline-none"
+              className="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white focus:border-amber-400 outline-none"
             />
           </div>
+
           <div>
-            <label className="block text-sm mb-1">اسم العميل *</label>
+            <label className="block text-xs font-bold text-slate-300 mb-1">الرقم الضريبي للمنشأة (ZATCA)</label>
             <input
               type="text"
-              aria-label="اسم العميل"
+              value={taxNumber}
+              onChange={(e) => setTaxNumber(e.target.value)}
+              placeholder="300000000000003"
+              className="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white font-mono focus:border-amber-400 outline-none"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold text-slate-300 mb-1">اسم العميل / الشركة المستقبلة *</label>
+            <input
+              type="text"
               required
               value={clientName}
               onChange={(e) => setClientName(e.target.value)}
-              className="w-full min-h-[44px] bg-[#0b1329] border border-gray-700 rounded px-3 py-2 focus:border-[#f5b731] outline-none"
+              className="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white focus:border-amber-400 outline-none"
             />
           </div>
-          <div>
-            <label className="block text-sm mb-1">رقم الفاتورة</label>
-            <input
-              type="text"
-              aria-label="رقم الفاتورة"
-              required
-              value={invoiceNumber}
-              onChange={(e) => setInvoiceNumber(e.target.value)}
-              className="w-full min-h-[44px] bg-[#0b1329] border border-gray-700 rounded px-3 py-2 focus:border-[#f5b731] outline-none"
-            />
-          </div>
-          <div>
-            <label className="block text-sm mb-1">التاريخ</label>
-            <input
-              type="date"
-              aria-label="التاريخ"
-              required
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              className="w-full min-h-[44px] bg-[#0b1329] border border-gray-700 rounded px-3 py-2 focus:border-[#f5b731] outline-none"
-            />
-          </div>
-        </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-right">
-            <thead>
-              <tr className="border-b border-[#f5b731]/30">
-                <th className="pb-2">البند *</th>
-                <th className="pb-2 w-24">الكمية *</th>
-                <th className="pb-2 w-32">سعر الوحدة *</th>
-                <th className="pb-2 w-32">الإجمالي</th>
-                <th className="pb-2 w-12"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((item, index) => (
-                <tr key={item.id} className="border-b border-gray-800">
-                  <td className="py-2 pr-2">
-                    <input
-                      type="text"
-                      aria-label={`وصف البند ${index + 1}`}
-                      required
-                      value={item.description}
-                      onChange={(e) => updateItem(item.id, 'description', e.target.value)}
-                      className="w-full min-h-[44px] bg-transparent border border-gray-700 rounded px-2"
-                    />
-                  </td>
-                  <td className="py-2 px-2">
-                    <input
-                      type="number"
-                      aria-label={`كمية البند ${index + 1}`}
-                      required
-                      min="1"
-                      value={item.quantity}
-                      onChange={(e) => updateItem(item.id, 'quantity', e.target.value ? Number(e.target.value) : '')}
-                      className="w-full min-h-[44px] bg-transparent border border-gray-700 rounded px-2"
-                    />
-                  </td>
-                  <td className="py-2 px-2">
-                    <input
-                      type="number"
-                      aria-label={`سعر البند ${index + 1}`}
-                      required
-                      min="0"
-                      step="0.01"
-                      value={item.price}
-                      onChange={(e) => updateItem(item.id, 'price', e.target.value ? Number(e.target.value) : '')}
-                      className="w-full min-h-[44px] bg-transparent border border-gray-700 rounded px-2"
-                    />
-                  </td>
-                  <td className="py-2 px-2 text-gray-300">
-                    {((Number(item.quantity) || 0) * (Number(item.price) || 0)).toFixed(2)}
-                  </td>
-                  <td className="py-2 pl-2 text-center">
-                    <button
-                      type="button"
-                      aria-label={`حذف البند ${index + 1}`}
-                      onClick={() => removeItem(item.id)}
-                      disabled={items.length === 1}
-                      className="text-red-400 disabled:opacity-50 min-h-[44px] px-2"
-                    >
-                      ✕
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        
-        <button type="button" onClick={addItem} className="text-[#f5b731] text-sm border border-[#f5b731]/30 px-4 py-2 rounded min-h-[44px]">
-          + إضافة بند
-        </button>
-
-        <div className="flex flex-col md:flex-row gap-6 border-t border-gray-700 pt-6">
-          <div className="flex-1 space-y-4">
-            <div className="flex items-center gap-2">
+          <div>
+            <label className="block text-xs font-bold text-slate-300 mb-1">رقم الفاتورة والتاريخ</label>
+            <div className="grid grid-cols-2 gap-2">
               <input
-                type="checkbox"
-                id="taxEnabled"
-                aria-label="تفعيل الضريبة"
-                checked={taxEnabled}
-                onChange={(e) => setTaxEnabled(e.target.checked)}
-                className="w-5 h-5 accent-[#f5b731]"
+                type="text"
+                required
+                value={invoiceNumber}
+                onChange={(e) => setInvoiceNumber(e.target.value)}
+                className="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-2 py-2 text-xs text-white font-mono focus:border-amber-400 outline-none"
               />
-              <label htmlFor="taxEnabled">إضافة ضريبة (%)</label>
-              {taxEnabled && (
+              <input
+                type="date"
+                required
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-2 py-2 text-xs text-white focus:border-amber-400 outline-none"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Invoice Items Table */}
+        <div className="space-y-3">
+          <div className="overflow-x-auto rounded-xl border border-slate-800">
+            <table className="w-full text-right text-xs">
+              <thead className="bg-slate-950 text-slate-400 font-bold border-b border-slate-800">
+                <tr>
+                  <th className="py-3 px-3">وصف البند / الخدمة *</th>
+                  <th className="py-3 px-3 w-24">الكمية *</th>
+                  <th className="py-3 px-3 w-32">سعر الوحدة ({curr}) *</th>
+                  <th className="py-3 px-3 w-32">الإجمالي</th>
+                  <th className="py-3 px-3 w-12 text-center">حذف</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-800/60 bg-slate-900/40">
+                {items.map((item, index) => (
+                  <tr key={item.id} className="hover:bg-slate-800/30 transition-colors">
+                    <td className="p-2.5">
+                      <input
+                        type="text"
+                        required
+                        value={item.description}
+                        onChange={(e) => updateItem(item.id, 'description', e.target.value)}
+                        placeholder="أدخل تفاصيل البند أو الخدمة..."
+                        className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white focus:border-amber-400 outline-none"
+                      />
+                    </td>
+                    <td className="p-2.5">
+                      <input
+                        type="number"
+                        required
+                        min="1"
+                        value={item.quantity}
+                        onChange={(e) => updateItem(item.id, 'quantity', e.target.value ? Number(e.target.value) : '')}
+                        className="w-full bg-slate-950 border border-slate-800 rounded-lg px-2 py-2 text-xs text-white font-mono text-center focus:border-amber-400 outline-none"
+                      />
+                    </td>
+                    <td className="p-2.5">
+                      <input
+                        type="number"
+                        required
+                        min="0"
+                        step="0.01"
+                        value={item.price}
+                        onChange={(e) => updateItem(item.id, 'price', e.target.value ? Number(e.target.value) : '')}
+                        className="w-full bg-slate-950 border border-slate-800 rounded-lg px-2 py-2 text-xs text-white font-mono text-center focus:border-amber-400 outline-none"
+                      />
+                    </td>
+                    <td className="p-2.5 font-mono font-bold text-amber-400">
+                      {((Number(item.quantity) || 0) * (Number(item.price) || 0)).toLocaleString(undefined, { minimumFractionDigits: 2 })} {curr}
+                    </td>
+                    <td className="p-2.5 text-center">
+                      <button
+                        type="button"
+                        onClick={() => removeItem(item.id)}
+                        disabled={items.length === 1}
+                        className="text-rose-400 hover:text-rose-300 disabled:opacity-20 text-sm px-2 py-1 rounded"
+                      >
+                        ✕
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <button
+            type="button"
+            onClick={addItem}
+            className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold text-xs flex items-center gap-1.5 transition-colors"
+          >
+            <span>+</span>
+            <span>إضافة بند جديد</span>
+          </button>
+        </div>
+
+        {/* Totals & Tax Controls */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-950/80 p-5 rounded-2xl border border-slate-800">
+          
+          {/* Left: Tax & Discount presets */}
+          <div className="space-y-4">
+            {/* Tax Settings */}
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
                 <input
-                  type="number"
-                  aria-label="نسبة الضريبة"
-                  min="0"
-                  max="100"
-                  value={taxRate}
-                  onChange={(e) => setTaxRate(e.target.value ? Number(e.target.value) : '')}
-                  className="w-20 min-h-[44px] bg-[#0b1329] border border-gray-700 rounded px-2 focus:border-[#f5b731]"
+                  type="checkbox"
+                  id="taxEnabled"
+                  checked={taxEnabled}
+                  onChange={(e) => setTaxEnabled(e.target.checked)}
+                  className="w-4 h-4 accent-amber-500 rounded cursor-pointer"
                 />
+                <label htmlFor="taxEnabled" className="text-xs font-bold text-slate-300 cursor-pointer">
+                  تطبيق ضريبة القيمة المضافة (VAT)
+                </label>
+              </div>
+
+              {taxEnabled && (
+                <div className="flex items-center gap-2 pt-1">
+                  {[
+                    { rate: 15, label: '15% (السعودية)' },
+                    { rate: 14, label: '14% (مصر)' },
+                    { rate: 5, label: '5% (الإمارات)' },
+                    { rate: 0, label: '0% (معفاة)' },
+                  ].map((preset) => (
+                    <button
+                      key={preset.rate}
+                      type="button"
+                      onClick={() => setTaxRate(preset.rate)}
+                      className={`px-2.5 py-1 text-[11px] font-bold rounded-lg border transition-all ${
+                        taxRate === preset.rate
+                          ? 'bg-amber-500/20 text-amber-400 border-amber-500/50'
+                          : 'border-slate-800 text-slate-400 hover:text-white'
+                      }`}
+                    >
+                      {preset.label}
+                    </button>
+                  ))}
+                </div>
               )}
             </div>
-            <div>
-              <label className="block text-sm mb-1">ملاحظات</label>
+
+            {/* Discount */}
+            <div className="space-y-1">
+              <label className="block text-xs font-bold text-slate-300">نسبة الخصم التجاري (%)</label>
+              <input
+                type="number"
+                min="0"
+                max="100"
+                value={discount}
+                onChange={(e) => setDiscount(Number(e.target.value) || 0)}
+                className="w-32 bg-slate-900 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-white font-mono focus:border-amber-400 outline-none"
+              />
+            </div>
+
+            {/* Notes */}
+            <div className="space-y-1">
+              <label className="block text-xs font-bold text-slate-300">ملاحظات وشروط الدفع</label>
               <textarea
-                aria-label="ملاحظات"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className="w-full min-h-[88px] bg-[#0b1329] border border-gray-700 rounded px-3 py-2 focus:border-[#f5b731] outline-none resize-none"
-              ></textarea>
+                rows={2}
+                className="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white focus:border-amber-400 outline-none resize-none"
+              />
             </div>
           </div>
-          
-          <div className="flex-1 bg-gray-800/50 p-4 rounded text-lg font-medium space-y-2">
-            <div className="flex justify-between">
-              <span>المجموع الفرعي:</span>
-              <span>{getSubtotal().toFixed(2)}</span>
-            </div>
-            {taxEnabled && (
-              <div className="flex justify-between text-gray-400">
-                <span>الضريبة:</span>
-                <span>{getTax().toFixed(2)}</span>
+
+          {/* Right: Summary & ZATCA QR Preview */}
+          <div className="space-y-3 flex flex-col justify-between">
+            <div className="space-y-2 bg-slate-900 p-4 rounded-xl border border-slate-800/80 text-xs">
+              <div className="flex justify-between text-slate-300">
+                <span>المجموع الفرعي:</span>
+                <span className="font-mono">{getSubtotal().toLocaleString(undefined, { minimumFractionDigits: 2 })} {curr}</span>
               </div>
-            )}
-            <div className="flex justify-between text-[#f5b731] font-bold border-t border-gray-700 pt-2 mt-2">
-              <span>الإجمالي:</span>
-              <span>{getTotal().toFixed(2)}</span>
+              
+              {discount > 0 && (
+                <div className="flex justify-between text-rose-400">
+                  <span>الخصم ({discount}%):</span>
+                  <span className="font-mono">-{getDiscountAmount().toLocaleString(undefined, { minimumFractionDigits: 2 })} {curr}</span>
+                </div>
+              )}
+
+              {taxEnabled && (
+                <div className="flex justify-between text-slate-400">
+                  <span>ضريبة القيمة المضافة ({taxRate}%):</span>
+                  <span className="font-mono">+{getTax().toLocaleString(undefined, { minimumFractionDigits: 2 })} {curr}</span>
+                </div>
+              )}
+
+              <div className="flex justify-between text-amber-400 font-black text-base border-t border-slate-800 pt-2 mt-1">
+                <span>الإجمالي النهائي المستحق:</span>
+                <span className="font-mono">{getTotal().toLocaleString(undefined, { minimumFractionDigits: 2 })} {curr}</span>
+              </div>
             </div>
+
+            {/* ZATCA QR Simulated Badge */}
+            <div className="bg-slate-900/60 p-3 rounded-xl border border-slate-800 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                {/* Visual QR Code Box */}
+                <div className="w-12 h-12 bg-white rounded-lg p-1 shrink-0 flex items-center justify-center shadow">
+                  <svg viewBox="0 0 24 24" className="w-full h-full text-slate-950 fill-current">
+                    <path d="M2 2h8v8H2V2zm2 2v4h4V4H4zm10-2h8v8h-8V2zm2 2v4h4V4h-4zM2 14h8v8H2v-8zm2 2v4h4v-4H4zm10 0h2v2h-2v-2zm4 0h2v2h-2v-2zm-2 2h2v2h-2v-2zm2 2h2v2h-2v-2zm-4 0h2v2h-2v-2zm6-4h2v6h-2v-6z" />
+                  </svg>
+                </div>
+                <div className="text-[11px]">
+                  <span className="text-emerald-400 font-bold block">رمز الاستجابة السريع ZATCA QR</span>
+                  <span className="text-slate-400 block text-[10px]">مشفّر ببيانات البائع والمشتري والضريبة تلقائياً</span>
+                </div>
+              </div>
+              <span className="text-xs text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
+                جاهز للطباعة ✓
+              </span>
+            </div>
+
+            {error && <div className="text-xs text-rose-400 bg-rose-500/10 p-2.5 rounded-lg border border-rose-500/20">{error}</div>}
+
+            <button
+              type="submit"
+              className="w-full py-3 px-6 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm flex items-center justify-center gap-2 transition-all shadow-lg shadow-amber-500/20 cursor-pointer"
+            >
+              <span>🖨️ طباعة الفاتورة أو حفظها كـ PDF فوراً</span>
+              <span>←</span>
+            </button>
           </div>
+
         </div>
 
-        {error && <div className="text-red-400 bg-red-500/10 p-3 rounded">{error}</div>}
-
-        <button type="submit" className="w-full bg-[#f5b731] hover:bg-[#e0a629] text-[#0b1329] font-bold py-3 rounded min-h-[44px]">
-          طباعة / تصدير PDF
-        </button>
       </form>
 
-      {/* Print Preview Section */}
-      <div className="hidden print:block font-sans">
-        <div className="border-b-2 border-black pb-4 mb-6 flex justify-between items-end">
-          <div>
-            <h1 className="text-4xl font-bold mb-2">فاتورة</h1>
-            <h2 className="text-xl font-bold">{companyName || 'اسم الشركة'}</h2>
-          </div>
-          <div className="text-left">
-            <p><strong>رقم الفاتورة:</strong> {invoiceNumber}</p>
-            <p><strong>التاريخ:</strong> {date}</p>
-          </div>
-        </div>
+      {/* High-Resolution Printable A4 Invoice Layout */}
+      <div id="printable-template-canvas" className="hidden print:block font-cairo text-slate-950 p-8 max-w-4xl mx-auto bg-white">
         
-        <div className="mb-8">
-          <h3 className="text-lg font-bold mb-1">فاتورة إلى:</h3>
-          <p className="text-lg">{clientName || 'اسم العميل'}</p>
+        {/* Print Header */}
+        <div className="border-b-2 border-slate-900 pb-6 mb-6 flex justify-between items-start">
+          <div>
+            <div className="text-xs font-bold text-slate-500 mb-1">فاتورة ضريبية إلكترونية مبسطة</div>
+            <h1 className="text-2xl font-black text-slate-950">{companyName}</h1>
+            {taxNumber && <p className="text-xs text-slate-700 mt-1 font-mono">الرقم الضريبي: {taxNumber}</p>}
+          </div>
+
+          <div className="text-left">
+            {/* Visual QR Code in Print */}
+            <div className="w-20 h-20 bg-slate-100 border border-slate-300 rounded p-1 mb-2 inline-block">
+              <svg viewBox="0 0 24 24" className="w-full h-full text-slate-950 fill-current">
+                <path d="M2 2h8v8H2V2zm2 2v4h4V4H4zm10-2h8v8h-8V2zm2 2v4h4V4h-4zM2 14h8v8H2v-8zm2 2v4h4v-4H4zm10 0h2v2h-2v-2zm4 0h2v2h-2v-2zm-2 2h2v2h-2v-2zm2 2h2v2h-2v-2zm-4 0h2v2h-2v-2zm6-4h2v6h-2v-6z" />
+              </svg>
+            </div>
+            <div className="text-xs font-mono">
+              <p><strong>رقم الفاتورة:</strong> {invoiceNumber}</p>
+              <p><strong>التاريخ:</strong> {date}</p>
+            </div>
+          </div>
         </div>
 
-        <table className="w-full text-right mb-8 border-collapse">
+        {/* Customer Information */}
+        <div className="bg-slate-50 p-4 rounded-lg mb-6 border border-slate-200">
+          <div className="text-xs text-slate-500 font-bold mb-1">بيانات العميل / المشتري:</div>
+          <div className="text-base font-bold text-slate-900">{clientName}</div>
+          {clientTaxNumber && <div className="text-xs text-slate-600 font-mono mt-0.5">الرقم الضريبي للعميل: {clientTaxNumber}</div>}
+        </div>
+
+        {/* Items Table */}
+        <table className="w-full text-right mb-6 border-collapse border border-slate-300 text-xs">
           <thead>
-            <tr className="bg-gray-100">
-              <th className="border border-black p-2">البند</th>
-              <th className="border border-black p-2">الكمية</th>
-              <th className="border border-black p-2">سعر الوحدة</th>
-              <th className="border border-black p-2">الإجمالي</th>
+            <tr className="bg-slate-100 text-slate-900 font-bold border-b border-slate-300">
+              <th className="p-2 border border-slate-300">#</th>
+              <th className="p-2 border border-slate-300">البند / الخدمة</th>
+              <th className="p-2 border border-slate-300 text-center w-16">الكمية</th>
+              <th className="p-2 border border-slate-300 text-center w-28">سعر الوحدة ({curr})</th>
+              <th className="p-2 border border-slate-300 text-left w-28">الإجمالي ({curr})</th>
             </tr>
           </thead>
           <tbody>
-            {items.map((item) => (
-              <tr key={item.id}>
-                <td className="border border-black p-2">{item.description}</td>
-                <td className="border border-black p-2">{item.quantity}</td>
-                <td className="border border-black p-2">{item.price}</td>
-                <td className="border border-black p-2">{((Number(item.quantity) || 0) * (Number(item.price) || 0)).toFixed(2)}</td>
+            {items.map((item, idx) => (
+              <tr key={item.id} className="border-b border-slate-200">
+                <td className="p-2 border border-slate-300 text-center font-mono">{idx + 1}</td>
+                <td className="p-2 border border-slate-300 font-medium">{item.description}</td>
+                <td className="p-2 border border-slate-300 text-center font-mono">{item.quantity}</td>
+                <td className="p-2 border border-slate-300 text-center font-mono">{(Number(item.price) || 0).toFixed(2)}</td>
+                <td className="p-2 border border-slate-300 text-left font-mono font-bold">
+                  {((Number(item.quantity) || 0) * (Number(item.price) || 0)).toFixed(2)}
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
 
-        <div className="flex justify-end">
-          <div className="w-64">
-            <div className="flex justify-between mb-2">
-              <span>المجموع الفرعي:</span>
-              <span>{getSubtotal().toFixed(2)}</span>
+        {/* Totals Summary */}
+        <div className="flex justify-end mb-8">
+          <div className="w-72 bg-slate-50 p-4 rounded-lg border border-slate-300 text-xs space-y-1.5">
+            <div className="flex justify-between">
+              <span>المجموع الخاضع للضريبة:</span>
+              <span className="font-mono">{getTaxableAmount().toFixed(2)} {curr}</span>
             </div>
-            {taxEnabled && (
-              <div className="flex justify-between mb-2">
-                <span>الضريبة ({taxRate}%):</span>
-                <span>{getTax().toFixed(2)}</span>
+            {discount > 0 && (
+              <div className="flex justify-between text-rose-600">
+                <span>الخصم ({discount}%):</span>
+                <span className="font-mono">-{getDiscountAmount().toFixed(2)} {curr}</span>
               </div>
             )}
-            <div className="flex justify-between font-bold text-xl border-t-2 border-black pt-2">
-              <span>الإجمالي:</span>
-              <span>{getTotal().toFixed(2)}</span>
+            {taxEnabled && (
+              <div className="flex justify-between text-slate-700">
+                <span>ضريبة القيمة المضافة ({taxRate}%):</span>
+                <span className="font-mono">+{getTax().toFixed(2)} {curr}</span>
+              </div>
+            )}
+            <div className="flex justify-between font-black text-sm border-t-2 border-slate-900 pt-2 text-slate-950">
+              <span>الإجمالي الكلي المستحق:</span>
+              <span className="font-mono">{getTotal().toFixed(2)} {curr}</span>
             </div>
           </div>
         </div>
 
+        {/* Footer Notes */}
         {notes && (
-          <div className="mt-8 border-t border-gray-300 pt-4">
-            <h4 className="font-bold mb-2">ملاحظات:</h4>
+          <div className="border-t border-slate-300 pt-4 text-xs text-slate-600">
+            <span className="font-bold text-slate-800 block mb-1">ملاحظات وشروط:</span>
             <p className="whitespace-pre-wrap">{notes}</p>
           </div>
         )}
+
+        <div className="mt-8 text-center text-[10px] text-slate-400 border-t border-slate-100 pt-3">
+          تم إنشاء هذه الفاتورة إلكترونياً بواسطة منصة رَصين للأصول وإدارة الأعمال (raseen.me)
+        </div>
       </div>
+
     </div>
   );
 }

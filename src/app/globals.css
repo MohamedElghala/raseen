@@ -11,14 +11,14 @@ body {
 }
 
 /* Glass card effect */
-.rawnaq-glass {
+.raseen-glass {
   background: rgba(15, 26, 51, 0.8);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(36, 51, 82, 0.6);
   border-radius: 1rem;
 }
 
-.rawnaq-glass-hover:hover {
+.raseen-glass-hover:hover {
   background: rgba(15, 26, 51, 0.95);
   border-color: rgba(245, 183, 49, 0.3);
   transform: translateY(-2px);
@@ -41,16 +41,16 @@ body {
 
 /* Button styles */
 .btn-gold {
-  @apply bg-rawnaq-gold text-rawnaq-dark font-bold px-6 py-3 rounded-xl
-    hover:bg-rawnaq-gold-hover transition-all duration-300
-    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rawnaq-gold focus-visible:ring-offset-2 focus-visible:ring-offset-rawnaq-dark
+  @apply bg-raseen-gold text-raseen-dark font-bold px-6 py-3 rounded-xl
+    hover:bg-raseen-gold-hover transition-all duration-300
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-raseen-gold focus-visible:ring-offset-2 focus-visible:ring-offset-raseen-dark
     active:scale-95 min-h-[44px];
 }
 
 .btn-outline {
-  @apply border border-rawnaq-border text-slate-300 px-6 py-3 rounded-xl
-    hover:border-rawnaq-gold hover:text-rawnaq-gold transition-all duration-300
-    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rawnaq-gold focus-visible:ring-offset-2 focus-visible:ring-offset-rawnaq-dark
+  @apply border border-raseen-border text-slate-300 px-6 py-3 rounded-xl
+    hover:border-raseen-gold hover:text-raseen-gold transition-all duration-300
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-raseen-gold focus-visible:ring-offset-2 focus-visible:ring-offset-raseen-dark
     min-h-[44px];
 }
 
@@ -79,7 +79,7 @@ body {
     background-color: #ffffff !important;
     color: #0f172a !important;
   }
-  header, footer, nav, button, .lg\:col-span-5, .border-rawnaq-border {
+  header, footer, nav, button, .lg\:col-span-5, .border-raseen-border {
     display: none !important;
   }
   #printable-template-canvas {

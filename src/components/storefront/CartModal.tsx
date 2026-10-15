@@ -86,9 +86,9 @@ export default function CartModal() {
     <div className="fixed inset-0 z-50 flex justify-start bg-black/70 backdrop-blur-sm transition-opacity">
       <div className="absolute inset-0" onClick={handleClose} aria-hidden="true" />
 
-      <div className="relative w-full max-w-md h-full bg-rawnaq-dark border-l border-rawnaq-border shadow-2xl flex flex-col animate-slide-in-right overflow-hidden">
+      <div className="relative w-full max-w-md h-full bg-raseen-dark border-l border-raseen-border shadow-2xl flex flex-col animate-slide-in-right overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-rawnaq-border bg-rawnaq-surface">
+        <div className="flex items-center justify-between p-4 border-b border-raseen-border bg-raseen-surface">
           <h2 className="text-lg font-bold text-white flex items-center gap-2">
             <span>🛒</span>
             <span>
@@ -100,7 +100,7 @@ export default function CartModal() {
           <button
             onClick={handleClose}
             aria-label="إغلاق السلة"
-            className="p-2 text-slate-400 hover:text-white transition-colors rounded-full hover:bg-rawnaq-navy min-h-[44px] min-w-[44px] flex items-center justify-center"
+            className="p-2 text-slate-400 hover:text-white transition-colors rounded-full hover:bg-raseen-navy min-h-[44px] min-w-[44px] flex items-center justify-center"
           >
             ✕
           </button>
@@ -131,15 +131,15 @@ export default function CartModal() {
                   return (
                     <div
                       key={item.id}
-                      className="flex gap-3 p-3 rounded-xl bg-rawnaq-surface border border-rawnaq-border items-center"
+                      className="flex gap-3 p-3 rounded-xl bg-raseen-surface border border-raseen-border items-center"
                     >
-                      <div className="relative w-16 h-14 rounded-lg overflow-hidden bg-rawnaq-navy shrink-0 border border-rawnaq-border">
+                      <div className="relative w-16 h-14 rounded-lg overflow-hidden bg-raseen-navy shrink-0 border border-raseen-border">
                         <Image src={item.imageUrl} alt={item.title} fill className="object-cover" />
                       </div>
                       <div className="flex-1 flex flex-col">
                         <h4 className="text-xs font-bold text-white line-clamp-1">{item.title}</h4>
                         <div className="flex items-center gap-2 mt-1">
-                          <span className="text-rawnaq-gold font-bold text-sm">{itemPrice}</span>
+                          <span className="text-raseen-gold font-bold text-sm">{itemPrice}</span>
                           <span className="text-[10px] text-slate-500 font-mono">({item.fileType})</span>
                         </div>
                       </div>
@@ -166,7 +166,7 @@ export default function CartModal() {
             </div>
           ) : step === 'checkout' ? (
             <div className="flex flex-col gap-4">
-              <div className="bg-rawnaq-surface p-4 rounded-xl border border-rawnaq-border">
+              <div className="bg-raseen-surface p-4 rounded-xl border border-raseen-border">
                 <h3 className="text-white font-bold text-sm mb-3">اختر بوابة الدفع المعتمدة:</h3>
                 <div className="flex flex-col gap-2.5">
                   {[
@@ -178,8 +178,8 @@ export default function CartModal() {
                       key={m.id}
                       className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer border transition-all min-h-[48px] ${
                         paymentMethod === m.id
-                          ? 'border-rawnaq-gold bg-rawnaq-gold/10'
-                          : 'border-rawnaq-border hover:border-slate-500 bg-rawnaq-dark'
+                          ? 'border-raseen-gold bg-raseen-gold/10'
+                          : 'border-raseen-border hover:border-slate-500 bg-raseen-dark'
                       }`}
                     >
                       <input
@@ -197,7 +197,7 @@ export default function CartModal() {
                 </div>
               </div>
 
-              <div className="p-3 bg-rawnaq-surface rounded-xl border border-rawnaq-border text-xs text-slate-400 space-y-1">
+              <div className="p-3 bg-raseen-surface rounded-xl border border-raseen-border text-xs text-slate-400 space-y-1">
                 <div className="flex justify-between">
                   <span>المبلغ المطلوب سداده:</span>
                   <span className="text-white font-bold">{displayTotalPrice}</span>
@@ -225,7 +225,7 @@ export default function CartModal() {
                   {purchasedItems.map((pi) => (
                     <div
                       key={pi.id}
-                      className="p-3 bg-rawnaq-surface border border-rawnaq-border rounded-xl flex items-center justify-between gap-2"
+                      className="p-3 bg-raseen-surface border border-raseen-border rounded-xl flex items-center justify-between gap-2"
                     >
                       <span className="text-xs text-white truncate max-w-[200px]">{pi.title}</span>
                       <button
@@ -260,10 +260,10 @@ export default function CartModal() {
 
         {/* Footer */}
         {step !== 'success' && items.length > 0 && (
-          <div className="p-4 border-t border-rawnaq-border bg-rawnaq-surface flex flex-col gap-3">
+          <div className="p-4 border-t border-raseen-border bg-raseen-surface flex flex-col gap-3">
             <div className="flex items-center justify-between text-white font-bold text-base">
               <span>الإجمالي:</span>
-              <span className="text-rawnaq-gold text-xl font-black">{displayTotalPrice}</span>
+              <span className="text-raseen-gold text-xl font-black">{displayTotalPrice}</span>
             </div>
 
             {step === 'cart' ? (

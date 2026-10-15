@@ -37,26 +37,26 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const categoryProducts = mockProducts.filter((p) => p.category === slug);
 
   return (
-    <main className="min-h-screen bg-rawnaq-dark text-white font-cairo pb-20" dir="rtl" lang="ar">
+    <main className="min-h-screen bg-raseen-dark text-white font-cairo pb-20" dir="rtl" lang="ar">
       
       {/* Category Hero Banner */}
-      <section className="relative w-full py-12 sm:py-16 bg-[#060a14] border-b border-rawnaq-border overflow-hidden">
-        <div className="absolute inset-0 bg-radial-gradient from-rawnaq-gold/10 via-transparent to-transparent pointer-events-none" />
+      <section className="relative w-full py-12 sm:py-16 bg-[#060a14] border-b border-raseen-border overflow-hidden">
+        <div className="absolute inset-0 bg-radial-gradient from-raseen-gold/10 via-transparent to-transparent pointer-events-none" />
         
         <div className="container mx-auto px-4 max-w-6xl relative z-10">
           
           {/* Breadcrumbs */}
           <nav className="flex items-center text-xs text-slate-400 gap-2 mb-6" aria-label="مسار التنقل">
-            <Link href="/" className="hover:text-rawnaq-gold transition-colors">الرئيسية</Link>
+            <Link href="/" className="hover:text-raseen-gold transition-colors">الرئيسية</Link>
             <span>‹</span>
-            <Link href="/#products" className="hover:text-rawnaq-gold transition-colors">السوق الرقمي</Link>
+            <Link href="/#products" className="hover:text-raseen-gold transition-colors">السوق الرقمي</Link>
             <span>‹</span>
-            <span className="text-rawnaq-gold font-bold">{category.name}</span>
+            <span className="text-raseen-gold font-bold">{category.name}</span>
           </nav>
 
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="space-y-3 max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rawnaq-surface border border-rawnaq-border text-xs text-rawnaq-gold font-bold">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-raseen-surface border border-raseen-border text-xs text-raseen-gold font-bold">
                 <span className="text-base">{category.icon}</span>
                 <span>قسم معتمد • {categoryProducts.length} أصل رقمي</span>
               </div>
@@ -79,7 +79,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               {slug === 'business' || slug === 'students' ? (
                 <Link
                   href="/editor"
-                  className="btn-gold !py-2.5 !px-5 text-xs font-bold flex items-center justify-center gap-2 shadow-lg shadow-rawnaq-gold/20"
+                  className="btn-gold !py-2.5 !px-5 text-xs font-bold flex items-center justify-center gap-2 shadow-lg shadow-raseen-gold/20"
                 >
                   <span>فتح محرر الاستوديو المباشر</span>
                   <span>🎨</span>
@@ -93,7 +93,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
       {/* Catalog Grid */}
       <section className="container mx-auto px-4 max-w-6xl py-12">
-        <div className="flex items-center justify-between pb-4 mb-8 border-b border-rawnaq-border">
+        <div className="flex items-center justify-between pb-4 mb-8 border-b border-raseen-border">
           <div className="flex items-center gap-3">
             <span className="text-2xl">{category.icon}</span>
             <div>
@@ -101,7 +101,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               <span className="text-xs text-slate-400">جميع الملفات تشمل تسليماً فورياً وترخيص استخدام موثق</span>
             </div>
           </div>
-          <span className="text-xs font-mono font-bold text-rawnaq-gold bg-rawnaq-surface px-3 py-1.5 rounded-lg border border-rawnaq-border">
+          <span className="text-xs font-mono font-bold text-raseen-gold bg-raseen-surface px-3 py-1.5 rounded-lg border border-raseen-border">
             {categoryProducts.length} ملف جاهز للتحميل
           </span>
         </div>
@@ -113,7 +113,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             ))}
           </div>
         ) : (
-          <div className="text-center py-16 bg-rawnaq-surface rounded-2xl border border-rawnaq-border">
+          <div className="text-center py-16 bg-raseen-surface rounded-2xl border border-raseen-border">
             <span className="text-4xl block mb-2">📦</span>
             <h3 className="text-lg font-bold text-white mb-1">جاري رفع أصول إضافية في هذا القسم</h3>
             <p className="text-xs text-slate-400">يرجى متابعة التحديثات أو التواصل مع الدعم لطلب ملف مخصص.</p>

@@ -9,21 +9,21 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-rawnaq-dark text-slate-200 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto rawnaq-glass p-6 sm:p-10 border border-rawnaq-border/80 rounded-2xl shadow-2xl">
+    <div className="min-h-screen bg-raseen-dark text-slate-200 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto raseen-glass p-6 sm:p-10 border border-raseen-border/80 rounded-2xl shadow-2xl">
         
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-xs text-slate-400 mb-6 font-mono">
-          <Link href="/" className="hover:text-rawnaq-gold transition-colors">الرئيسية</Link>
+          <Link href="/" className="hover:text-raseen-gold transition-colors">الرئيسية</Link>
           <span>/</span>
-          <span className="text-rawnaq-gold">الشروط والأحكام</span>
+          <span className="text-raseen-gold">الشروط والأحكام</span>
         </div>
 
         {/* Title */}
         <h1 className="text-3xl sm:text-4xl font-black text-white mb-2 font-cairo">
           الشروط والأحكام وسياسة الاستخدام
         </h1>
-        <p className="text-xs sm:text-sm text-slate-400 mb-8 border-b border-rawnaq-border/60 pb-4">
+        <p className="text-xs sm:text-sm text-slate-400 mb-8 border-b border-raseen-border/60 pb-4">
           تاريخ السريان: 05 أكتوبر 2026 • تحكم هذه الاتفاقية حقوق وواجبات المشترين والبائعين ومستخدمي منصة "رَصِيـن".
         </p>
 
@@ -32,7 +32,7 @@ export default function TermsPage() {
           
           <section>
             <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
-              <span className="text-rawnaq-gold">1.</span>
+              <span className="text-raseen-gold">1.</span>
               مقدمة وقبول الشروط
             </h2>
             <p>
@@ -42,7 +42,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
-              <span className="text-rawnaq-gold">2.</span>
+              <span className="text-raseen-gold">2.</span>
               تراخيص الأصول الرقمية وحقوق الاستخدام
             </h2>
             <p className="mb-2">
@@ -57,7 +57,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
-              <span className="text-rawnaq-gold">3.</span>
+              <span className="text-raseen-gold">3.</span>
               سياسة الاسترجاع للمنتجات الرقمية
             </h2>
             <p className="mb-2">
@@ -70,7 +70,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
-              <span className="text-rawnaq-gold">4.</span>
+              <span className="text-raseen-gold">4.</span>
               بوابة البائعين ومستحقات الأرباح
             </h2>
             <ul className="list-disc list-inside space-y-1.5 text-slate-400 mr-2">
@@ -82,7 +82,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
-              <span className="text-rawnaq-gold">5.</span>
+              <span className="text-raseen-gold">5.</span>
               إخلاء المسؤولية المهنية والقانونية
             </h2>
             <p>
@@ -90,8 +90,8 @@ export default function TermsPage() {
             </p>
           </section>
 
-          <section className="bg-rawnaq-surface/60 p-5 rounded-xl border border-rawnaq-border">
-            <h2 className="text-lg font-bold text-rawnaq-gold mb-2">القانون والاختصاص القضائي</h2>
+          <section className="bg-raseen-surface/60 p-5 rounded-xl border border-raseen-border">
+            <h2 className="text-lg font-bold text-raseen-gold mb-2">القانون والاختصاص القضائي</h2>
             <p className="text-sm text-slate-300">
               تخضع هذه الشروط والأحكام وتفسر وفقاً للتشريعات والقوانين التجارية المعمول بها في جمهورية مصر العربية ودول مجلس التعاون الخليجي، وتختص المحاكم المعنية بالنظر في أي نزاع ينشأ عنها.
             </p>

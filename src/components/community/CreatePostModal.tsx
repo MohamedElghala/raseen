@@ -74,10 +74,10 @@ export default function CreatePostModal() {
       dir="rtl"
       lang="ar"
     >
-      <div className="relative w-full max-w-2xl bg-rawnaq-navy border border-rawnaq-border rounded-2xl shadow-2xl overflow-hidden my-8">
+      <div className="relative w-full max-w-2xl bg-raseen-navy border border-raseen-border rounded-2xl shadow-2xl overflow-hidden my-8">
         
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-rawnaq-border bg-rawnaq-surface">
+        <div className="flex items-center justify-between p-6 border-b border-raseen-border bg-raseen-surface">
           <div>
             <h2 className="text-xl font-black text-white flex items-center gap-2">
               <span>{postType === 'request' ? '💡' : '💬'}</span>
@@ -89,7 +89,7 @@ export default function CreatePostModal() {
           </div>
           <button
             onClick={closeModal}
-            className="w-9 h-9 rounded-xl bg-rawnaq-dark border border-rawnaq-border text-slate-400 hover:text-white flex items-center justify-center transition-colors"
+            className="w-9 h-9 rounded-xl bg-raseen-dark border border-raseen-border text-slate-400 hover:text-white flex items-center justify-center transition-colors"
             aria-label="إغلاق النافذة"
           >
             ✕
@@ -97,7 +97,7 @@ export default function CreatePostModal() {
         </div>
 
         {/* Tab switch */}
-        <div className="grid grid-cols-2 p-2 bg-rawnaq-dark border-b border-rawnaq-border">
+        <div className="grid grid-cols-2 p-2 bg-raseen-dark border-b border-raseen-border">
           <button
             type="button"
             onClick={() => {
@@ -106,7 +106,7 @@ export default function CreatePostModal() {
             }}
             className={`py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 ${
               postType === 'discussion'
-                ? 'bg-rawnaq-surface text-rawnaq-gold border border-rawnaq-gold/30 shadow'
+                ? 'bg-raseen-surface text-raseen-gold border border-raseen-gold/30 shadow'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
@@ -121,7 +121,7 @@ export default function CreatePostModal() {
             }}
             className={`py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 ${
               postType === 'request'
-                ? 'bg-rawnaq-surface text-amber-400 border border-amber-500/40 shadow'
+                ? 'bg-raseen-surface text-amber-400 border border-amber-500/40 shadow'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
@@ -153,7 +153,7 @@ export default function CreatePostModal() {
                   ? 'مثال: طلب شيت إكسل لحساب تكاليف وعمولات مراكز الأشعة الطبية'
                   : 'مثال: كيف يتم حساب مخصص نهاية الخدمة وفق نظام العمل السعودي في الإكسل؟'
               }
-              className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-rawnaq-gold transition-colors"
+              className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-raseen-gold transition-colors"
               required
             />
           </div>
@@ -167,7 +167,7 @@ export default function CreatePostModal() {
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value as CommunityCategorySlug)}
-                className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-rawnaq-gold transition-colors"
+                className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-raseen-gold transition-colors"
               >
                 <option value="accounting">📊 المالية والمحاسبة والضرائب</option>
                 <option value="legal">⚖️ القانون والعقود والامتثال</option>
@@ -189,7 +189,7 @@ export default function CreatePostModal() {
                   value={bounty}
                   onChange={(e) => setBounty(e.target.value)}
                   placeholder="مثال: 800 ج.م أو 100$"
-                  className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400"
+                  className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400"
                 />
               </div>
               <div>
@@ -199,7 +199,7 @@ export default function CreatePostModal() {
                 <select
                   value={deadline}
                   onChange={(e) => setDeadline(e.target.value)}
-                  className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400"
+                  className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400"
                 >
                   <option value="عاجل (خلال 24 ساعة)">عاجل (خلال 24 ساعة)</option>
                   <option value="خلال 48 ساعة">خلال 48 ساعة</option>
@@ -220,7 +220,7 @@ export default function CreatePostModal() {
               value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder="اشرح المشكلة بدقة، اذكر الدوال أو الشروط المطلوبة، أو حدد المخرجات المتوقعة..."
-              className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl p-4 text-sm text-white focus:outline-none focus:border-rawnaq-gold transition-colors leading-relaxed"
+              className="w-full bg-raseen-dark border border-raseen-border rounded-xl p-4 text-sm text-white focus:outline-none focus:border-raseen-gold transition-colors leading-relaxed"
               required
             ></textarea>
           </div>
@@ -235,13 +235,13 @@ export default function CreatePostModal() {
               value={tagsInput}
               onChange={(e) => setTagsInput(e.target.value)}
               placeholder="مثال: إكسل IFRS ضرائب_مصر"
-              className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-rawnaq-gold transition-colors"
+              className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-raseen-gold transition-colors"
             />
           </div>
 
           {/* Guest Identity if not logged in */}
           {!currentUser && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-rawnaq-border/50">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-raseen-border/50">
               <div>
                 <label className="block text-xs font-bold text-slate-300 mb-1">
                   الاسم الكريم <span className="text-red-400">*</span>
@@ -251,7 +251,7 @@ export default function CreatePostModal() {
                   value={guestName}
                   onChange={(e) => setGuestName(e.target.value)}
                   placeholder="مثال: م. وائل الشريف"
-                  className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-rawnaq-gold"
+                  className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-raseen-gold"
                   required
                 />
               </div>
@@ -264,24 +264,24 @@ export default function CreatePostModal() {
                   value={guestTitle}
                   onChange={(e) => setGuestTitle(e.target.value)}
                   placeholder="مثال: محاسب قانوني / مهندس مدني"
-                  className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-rawnaq-gold"
+                  className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-raseen-gold"
                 />
               </div>
             </div>
           )}
 
           {/* Submit Buttons */}
-          <div className="pt-4 flex items-center justify-end gap-3 border-t border-rawnaq-border">
+          <div className="pt-4 flex items-center justify-end gap-3 border-t border-raseen-border">
             <button
               type="button"
               onClick={closeModal}
-              className="px-5 py-2.5 rounded-xl border border-rawnaq-border text-slate-300 hover:text-white text-xs font-bold transition-colors"
+              className="px-5 py-2.5 rounded-xl border border-raseen-border text-slate-300 hover:text-white text-xs font-bold transition-colors"
             >
               إلغاء
             </button>
             <button
               type="submit"
-              className="btn-gold !px-6 !py-2.5 text-xs font-bold flex items-center gap-2 shadow-lg shadow-rawnaq-gold/10"
+              className="btn-gold !px-6 !py-2.5 text-xs font-bold flex items-center gap-2 shadow-lg shadow-raseen-gold/10"
             >
               <span>{postType === 'request' ? 'نشر طلب النموذج 🚀' : 'نشر النقاش الآن 💬'}</span>
             </button>

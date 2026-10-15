@@ -58,16 +58,16 @@ export default function CommunityPage() {
   }, [posts, selectedCategory, activeTab, searchQuery]);
 
   return (
-    <main className="min-h-screen bg-rawnaq-dark text-white font-cairo py-10" dir="rtl" lang="ar">
+    <main className="min-h-screen bg-raseen-dark text-white font-cairo py-10" dir="rtl" lang="ar">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Hero Section */}
-        <section className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-rawnaq-navy to-rawnaq-dark border border-rawnaq-border p-8 md:p-12 mb-10 shadow-2xl">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-rawnaq-gold/5 rounded-full blur-3xl pointer-events-none"></div>
+        <section className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-raseen-navy to-raseen-dark border border-raseen-border p-8 md:p-12 mb-10 shadow-2xl">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-raseen-gold/5 rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
           <div className="relative z-10 max-w-3xl">
-            <div className="inline-flex items-center gap-2 bg-rawnaq-surface/80 border border-rawnaq-gold/30 rounded-full px-4 py-1.5 text-xs text-rawnaq-gold mb-4 backdrop-blur-md">
+            <div className="inline-flex items-center gap-2 bg-raseen-surface/80 border border-raseen-gold/30 rounded-full px-4 py-1.5 text-xs text-raseen-gold mb-4 backdrop-blur-md">
               <span>🏛️</span>
               <span>مجتمع رَصين المهني | ساحة الخبراء وصناع الأصول التنفيذية</span>
             </div>
@@ -83,7 +83,7 @@ export default function CommunityPage() {
             <div className="flex flex-wrap items-center gap-4">
               <button
                 onClick={() => openCreateModal('discussion')}
-                className="btn-gold !px-6 !py-3 text-sm font-bold flex items-center gap-2 shadow-lg shadow-rawnaq-gold/15"
+                className="btn-gold !px-6 !py-3 text-sm font-bold flex items-center gap-2 shadow-lg shadow-raseen-gold/15"
               >
                 <span>➕</span>
                 <span>طرح سؤال أو نقاش جديد</span>
@@ -100,9 +100,9 @@ export default function CommunityPage() {
           </div>
 
           {/* Quick Metrics Bar */}
-          <div className="mt-10 pt-8 border-t border-rawnaq-border/60 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          <div className="mt-10 pt-8 border-t border-raseen-border/60 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div>
-              <div className="text-2xl font-black text-rawnaq-gold font-mono">1,280+</div>
+              <div className="text-2xl font-black text-raseen-gold font-mono">1,280+</div>
               <div className="text-xs text-slate-400 mt-1">نقاش مهني موثق</div>
             </div>
             <div>
@@ -131,8 +131,8 @@ export default function CommunityPage() {
                 onClick={() => setSelectedCategory(cat.slug)}
                 className={`px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex items-center gap-2 min-h-[44px] ${
                   selectedCategory === cat.slug
-                    ? 'bg-rawnaq-gold text-rawnaq-dark shadow-md shadow-rawnaq-gold/20'
-                    : 'bg-rawnaq-surface border border-rawnaq-border text-slate-300 hover:text-white hover:border-rawnaq-gold/30'
+                    ? 'bg-raseen-gold text-raseen-dark shadow-md shadow-raseen-gold/20'
+                    : 'bg-raseen-surface border border-raseen-border text-slate-300 hover:text-white hover:border-raseen-gold/30'
                 }`}
               >
                 <span>{cat.icon}</span>
@@ -148,7 +148,7 @@ export default function CommunityPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="بحث في النقاشات والوسوم..."
-              className="w-full bg-rawnaq-surface border border-rawnaq-border rounded-xl pr-10 pl-4 py-2.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-rawnaq-gold transition-colors min-h-[44px]"
+              className="w-full bg-raseen-surface border border-raseen-border rounded-xl pr-10 pl-4 py-2.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-raseen-gold transition-colors min-h-[44px]"
             />
             <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm">🔍</span>
             {searchQuery && (
@@ -163,7 +163,7 @@ export default function CommunityPage() {
         </div>
 
         {/* Tab Sub-filters */}
-        <div className="flex items-center justify-between border-b border-rawnaq-border pb-4 mb-8">
+        <div className="flex items-center justify-between border-b border-raseen-border pb-4 mb-8">
           <div className="flex items-center gap-2">
             <button
               onClick={() => setActiveTab('all')}
@@ -210,7 +210,7 @@ export default function CommunityPage() {
           {/* Main Discussions Feed (3 cols) */}
           <div className="lg:col-span-3 space-y-4">
             {filteredPosts.length === 0 ? (
-              <div className="p-12 text-center bg-rawnaq-surface rounded-2xl border border-rawnaq-border">
+              <div className="p-12 text-center bg-raseen-surface rounded-2xl border border-raseen-border">
                 <span className="text-4xl mb-3 block">🔍</span>
                 <h3 className="text-lg font-bold text-white mb-1">لم يتم العثور على نقاشات مطابقة</h3>
                 <p className="text-xs text-slate-400 mb-6">
@@ -230,7 +230,7 @@ export default function CommunityPage() {
                 return (
                   <article
                     key={post.id}
-                    className="p-5 md:p-6 bg-rawnaq-surface rounded-2xl border border-rawnaq-border hover:border-rawnaq-gold/30 hover:shadow-lg hover:shadow-black/40 transition-all group"
+                    className="p-5 md:p-6 bg-raseen-surface rounded-2xl border border-raseen-border hover:border-raseen-gold/30 hover:shadow-lg hover:shadow-black/40 transition-all group"
                   >
                     <div className="flex items-start gap-4">
                       
@@ -239,8 +239,8 @@ export default function CommunityPage() {
                         onClick={() => upvotePost(post.id)}
                         className={`flex flex-col items-center justify-center min-w-[50px] p-2 rounded-xl border transition-all ${
                           isUpvoted
-                            ? 'bg-rawnaq-gold/15 border-rawnaq-gold text-rawnaq-gold shadow-sm'
-                            : 'bg-rawnaq-dark border-rawnaq-border text-slate-400 hover:text-white hover:border-rawnaq-border/80'
+                            ? 'bg-raseen-gold/15 border-raseen-gold text-raseen-gold shadow-sm'
+                            : 'bg-raseen-dark border-raseen-border text-slate-400 hover:text-white hover:border-raseen-border/80'
                         }`}
                         aria-label="تصويت للموضوع"
                       >
@@ -253,7 +253,7 @@ export default function CommunityPage() {
                         
                         {/* Top Meta: Category + Badges + Time */}
                         <div className="flex flex-wrap items-center gap-2 mb-2">
-                          <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-rawnaq-dark border border-rawnaq-border text-slate-300">
+                          <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-raseen-dark border border-raseen-border text-slate-300">
                             {post.category === 'accounting' && '📊 مالية ومحاسبة'}
                             {post.category === 'legal' && '⚖️ قانون وعقود'}
                             {post.category === 'engineering' && '📐 هندسة وBIM'}
@@ -279,7 +279,7 @@ export default function CommunityPage() {
                         </div>
 
                         {/* Title */}
-                        <h2 className="text-base sm:text-lg font-bold text-white group-hover:text-rawnaq-gold transition-colors mb-2 leading-snug">
+                        <h2 className="text-base sm:text-lg font-bold text-white group-hover:text-raseen-gold transition-colors mb-2 leading-snug">
                           <Link href={`/community/${post.id}`}>
                             {post.title}
                           </Link>
@@ -297,7 +297,7 @@ export default function CommunityPage() {
                               <button
                                 key={tag}
                                 onClick={() => setSearchQuery(tag)}
-                                className="text-[10px] font-medium px-2 py-0.5 rounded bg-rawnaq-navy text-slate-400 hover:text-rawnaq-gold border border-rawnaq-border/60 transition-colors"
+                                className="text-[10px] font-medium px-2 py-0.5 rounded bg-raseen-navy text-slate-400 hover:text-raseen-gold border border-raseen-border/60 transition-colors"
                               >
                                 #{tag}
                               </button>
@@ -306,9 +306,9 @@ export default function CommunityPage() {
                         )}
 
                         {/* Footer Meta: Author + Comments */}
-                        <div className="flex items-center justify-between pt-3 border-t border-rawnaq-border/50 text-xs">
+                        <div className="flex items-center justify-between pt-3 border-t border-raseen-border/50 text-xs">
                           <div className="flex items-center gap-2">
-                            <div className="w-6 h-6 rounded-full bg-rawnaq-accent flex items-center justify-center text-[10px] font-black text-rawnaq-gold border border-rawnaq-border">
+                            <div className="w-6 h-6 rounded-full bg-raseen-accent flex items-center justify-center text-[10px] font-black text-raseen-gold border border-raseen-border">
                               {post.author.name.charAt(0)}
                             </div>
                             <span className="font-bold text-white">{post.author.name}</span>
@@ -343,7 +343,7 @@ export default function CommunityPage() {
           <aside className="lg:col-span-1 space-y-6">
 
             {/* Custom Template Request CTA */}
-            <div className="p-6 bg-gradient-to-br from-amber-500/10 to-rawnaq-surface rounded-2xl border border-amber-500/30 text-right">
+            <div className="p-6 bg-gradient-to-br from-amber-500/10 to-raseen-surface rounded-2xl border border-amber-500/30 text-right">
               <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center text-xl mb-3 border border-amber-500/40">
                 💡
               </div>
@@ -355,22 +355,22 @@ export default function CommunityPage() {
               </p>
               <button
                 onClick={() => openCreateModal('request')}
-                className="w-full py-2.5 px-4 rounded-xl bg-amber-500 text-rawnaq-dark font-black text-xs hover:bg-amber-400 transition-colors shadow-md"
+                className="w-full py-2.5 px-4 rounded-xl bg-amber-500 text-raseen-dark font-black text-xs hover:bg-amber-400 transition-colors shadow-md"
               >
                 طلب نموذج مخصص الآن
               </button>
             </div>
 
             {/* Top Contributors Card */}
-            <div className="p-5 bg-rawnaq-surface rounded-2xl border border-rawnaq-border">
+            <div className="p-5 bg-raseen-surface rounded-2xl border border-raseen-border">
               <h3 className="font-bold text-white text-sm mb-4 flex items-center gap-2">
                 <span>🌟</span>
                 <span>أنشط الخبراء وصناع المحتوى</span>
               </h3>
               <ul className="space-y-3">
-                <li className="flex items-center justify-between text-xs pb-3 border-b border-rawnaq-border/50">
+                <li className="flex items-center justify-between text-xs pb-3 border-b border-raseen-border/50">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-rawnaq-dark flex items-center justify-center text-xs font-bold text-rawnaq-gold border border-rawnaq-border">
+                    <div className="w-7 h-7 rounded-full bg-raseen-dark flex items-center justify-center text-xs font-bold text-raseen-gold border border-raseen-border">
                       م
                     </div>
                     <div>
@@ -382,9 +382,9 @@ export default function CommunityPage() {
                     28 حلاً معتمداً
                   </span>
                 </li>
-                <li className="flex items-center justify-between text-xs pb-3 border-b border-rawnaq-border/50">
+                <li className="flex items-center justify-between text-xs pb-3 border-b border-raseen-border/50">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-rawnaq-dark flex items-center justify-center text-xs font-bold text-rawnaq-gold border border-rawnaq-border">
+                    <div className="w-7 h-7 rounded-full bg-raseen-dark flex items-center justify-center text-xs font-bold text-raseen-gold border border-raseen-border">
                       خ
                     </div>
                     <div>
@@ -398,7 +398,7 @@ export default function CommunityPage() {
                 </li>
                 <li className="flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-rawnaq-dark flex items-center justify-center text-xs font-bold text-rawnaq-gold border border-rawnaq-border">
+                    <div className="w-7 h-7 rounded-full bg-raseen-dark flex items-center justify-center text-xs font-bold text-raseen-gold border border-raseen-border">
                       إ
                     </div>
                     <div>
@@ -414,7 +414,7 @@ export default function CommunityPage() {
             </div>
 
             {/* Trending Tags */}
-            <div className="p-5 bg-rawnaq-surface rounded-2xl border border-rawnaq-border">
+            <div className="p-5 bg-raseen-surface rounded-2xl border border-raseen-border">
               <h3 className="font-bold text-white text-sm mb-3 flex items-center gap-2">
                 <span>🏷️</span>
                 <span>الوسوم الأكثر تداولاً</span>
@@ -424,7 +424,7 @@ export default function CommunityPage() {
                   <button
                     key={tag}
                     onClick={() => setSearchQuery(tag)}
-                    className="text-[11px] px-2.5 py-1 rounded-lg bg-rawnaq-dark text-slate-300 hover:text-rawnaq-gold hover:border-rawnaq-gold/40 border border-rawnaq-border transition-colors"
+                    className="text-[11px] px-2.5 py-1 rounded-lg bg-raseen-dark text-slate-300 hover:text-raseen-gold hover:border-raseen-gold/40 border border-raseen-border transition-colors"
                   >
                     #{tag}
                   </button>
@@ -433,7 +433,7 @@ export default function CommunityPage() {
             </div>
 
             {/* Community Guidelines */}
-            <div className="p-4 bg-rawnaq-dark/60 rounded-xl border border-rawnaq-border/70 text-slate-400 text-[11px] leading-relaxed">
+            <div className="p-4 bg-raseen-dark/60 rounded-xl border border-raseen-border/70 text-slate-400 text-[11px] leading-relaxed">
               <span className="font-bold text-slate-300 block mb-1">📜 ميثاق مجتمع رَصين:</span>
               نلتزم بالدقة المهنية، عدم نشر أكواد أو ملفات تنتهك حقوق الملكية، ونشجع على مشاركة الحلول القابلة للتطبيق العملي.
             </div>

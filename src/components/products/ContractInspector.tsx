@@ -56,7 +56,7 @@ export default function ContractInspector({ product }: ContractInspectorProps) {
   ];
 
   return (
-    <div className="mt-8 bg-rawnaq-navy border border-amber-500/30 rounded-2xl overflow-hidden shadow-2xl">
+    <div className="mt-8 bg-raseen-navy border border-amber-500/30 rounded-2xl overflow-hidden shadow-2xl">
       {/* Header Bar */}
       <div className="bg-amber-950/30 border-b border-amber-500/30 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div className="flex items-center gap-3">
@@ -77,7 +77,7 @@ export default function ContractInspector({ product }: ContractInspectorProps) {
         </div>
 
         {/* Jurisdiction Switcher */}
-        <div className="flex items-center gap-2 bg-rawnaq-dark p-1 rounded-xl border border-rawnaq-border text-xs">
+        <div className="flex items-center gap-2 bg-raseen-dark p-1 rounded-xl border border-raseen-border text-xs">
           <span className="text-slate-400 px-2">النظام المطبق:</span>
           <button
             onClick={() => setJurisdiction('eg')}
@@ -108,7 +108,7 @@ export default function ContractInspector({ product }: ContractInspectorProps) {
 
       <div className="grid grid-cols-1 lg:grid-cols-12">
         {/* Clauses List (5 Cols) */}
-        <div className="lg:col-span-5 border-b lg:border-b-0 lg:border-l border-rawnaq-border p-4 space-y-2 bg-rawnaq-surface/40">
+        <div className="lg:col-span-5 border-b lg:border-b-0 lg:border-l border-raseen-border p-4 space-y-2 bg-raseen-surface/40">
           <div className="text-xs font-bold text-slate-400 mb-3">فهرس المواد والبنود التعاقدية (انقر للمعاينة):</div>
           {clauses.map((c) => {
             const isSelected = selectedClause === c.id;
@@ -118,15 +118,15 @@ export default function ContractInspector({ product }: ContractInspectorProps) {
                 onClick={() => setSelectedClause(c.id)}
                 className={`w-full text-right p-3 rounded-xl border transition-all text-xs ${
                   isSelected
-                    ? 'bg-rawnaq-dark border-rawnaq-gold text-white shadow-lg'
-                    : 'bg-rawnaq-dark/50 border-rawnaq-border/70 text-slate-300 hover:bg-rawnaq-dark hover:border-slate-600'
+                    ? 'bg-raseen-dark border-raseen-gold text-white shadow-lg'
+                    : 'bg-raseen-dark/50 border-raseen-border/70 text-slate-300 hover:bg-raseen-dark hover:border-slate-600'
                 }`}
               >
                 <div className="flex items-center justify-between mb-1">
-                  <span className={`font-bold ${isSelected ? 'text-rawnaq-gold' : 'text-slate-200'}`}>
+                  <span className={`font-bold ${isSelected ? 'text-raseen-gold' : 'text-slate-200'}`}>
                     {c.title}
                   </span>
-                  {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-rawnaq-gold" />}
+                  {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-raseen-gold" />}
                 </div>
                 <p className="text-[11px] text-slate-400 line-clamp-2 leading-relaxed">{c.summary}</p>
               </button>
@@ -144,7 +144,7 @@ export default function ContractInspector({ product }: ContractInspectorProps) {
         </div>
 
         {/* Clause Details Preview (7 Cols) */}
-        <div className="lg:col-span-7 p-6 bg-rawnaq-dark flex flex-col justify-between relative overflow-hidden">
+        <div className="lg:col-span-7 p-6 bg-raseen-dark flex flex-col justify-between relative overflow-hidden">
           {/* Watermark */}
           {hasStamp && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-5">
@@ -153,8 +153,8 @@ export default function ContractInspector({ product }: ContractInspectorProps) {
           )}
 
           <div>
-            <div className="flex items-center justify-between pb-3 border-b border-rawnaq-border mb-4 text-xs">
-              <span className="text-rawnaq-gold font-bold font-mono">
+            <div className="flex items-center justify-between pb-3 border-b border-raseen-border mb-4 text-xs">
+              <span className="text-raseen-gold font-bold font-mono">
                 CLAUSE #{selectedClause} OF {clauses.length}
               </span>
               <button
@@ -169,13 +169,13 @@ export default function ContractInspector({ product }: ContractInspectorProps) {
               {clauses.find((c) => c.id === selectedClause)?.title}
             </h4>
 
-            <div className="p-4 rounded-xl bg-rawnaq-surface/80 border border-rawnaq-border text-sm text-slate-200 leading-relaxed font-sans text-justify">
+            <div className="p-4 rounded-xl bg-raseen-surface/80 border border-raseen-border text-sm text-slate-200 leading-relaxed font-sans text-justify">
               {clauses.find((c) => c.id === selectedClause)?.fullText}
             </div>
           </div>
 
           {/* Verification Badge */}
-          <div className="mt-6 pt-4 border-t border-rawnaq-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-slate-400">
+          <div className="mt-6 pt-4 border-t border-raseen-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-slate-400">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
               <span>الصيغة القانونية: <strong>DOCX + PDF قابلة للتعديل والطباعة الفورية</strong></span>

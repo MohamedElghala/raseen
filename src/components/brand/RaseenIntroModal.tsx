@@ -16,7 +16,7 @@ export default function RaseenIntroModal({ isOpen, onClose }: RaseenIntroModalPr
       {/* Close/Skip Button */}
       <button
         onClick={onClose}
-        className="absolute top-6 left-6 z-50 px-4 py-2 bg-rawnaq-surface/80 border border-slate-700 text-slate-300 hover:text-white hover:border-rawnaq-gold rounded-xl text-xs font-bold transition-all flex items-center gap-2"
+        className="absolute top-6 left-6 z-50 px-4 py-2 bg-raseen-surface/80 border border-slate-700 text-slate-300 hover:text-white hover:border-raseen-gold rounded-xl text-xs font-bold transition-all flex items-center gap-2"
       >
         <span>✕ تخطي الانترو (Skip Intro)</span>
       </button>

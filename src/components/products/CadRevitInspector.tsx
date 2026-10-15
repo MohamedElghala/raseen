@@ -15,7 +15,7 @@ export default function CadRevitInspector({ product }: CadRevitInspectorProps) {
   const [viewMode, setViewMode] = useState<'plan' | 'iso'>('plan');
 
   return (
-    <div className="mt-8 bg-rawnaq-navy border border-cyan-500/30 rounded-2xl overflow-hidden shadow-2xl">
+    <div className="mt-8 bg-raseen-navy border border-cyan-500/30 rounded-2xl overflow-hidden shadow-2xl">
       {/* Header Bar */}
       <div className="bg-cyan-950/40 border-b border-cyan-500/30 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div className="flex items-center gap-3">
@@ -35,7 +35,7 @@ export default function CadRevitInspector({ product }: CadRevitInspectorProps) {
           </div>
         </div>
 
-        <div className="flex items-center gap-2 text-xs text-slate-300 font-mono bg-rawnaq-dark px-3 py-1.5 rounded-xl border border-rawnaq-border">
+        <div className="flex items-center gap-2 text-xs text-slate-300 font-mono bg-raseen-dark px-3 py-1.5 rounded-xl border border-raseen-border">
           <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
           <span>DWG • DXF • RFA • RVT</span>
         </div>
@@ -43,7 +43,7 @@ export default function CadRevitInspector({ product }: CadRevitInspectorProps) {
 
       <div className="grid grid-cols-1 lg:grid-cols-12">
         {/* CAD Blueprint Viewport (7 Cols) */}
-        <div className="lg:col-span-7 bg-[#070d19] p-4 md:p-6 border-b lg:border-b-0 lg:border-l border-rawnaq-border flex flex-col justify-between relative overflow-hidden">
+        <div className="lg:col-span-7 bg-[#070d19] p-4 md:p-6 border-b lg:border-b-0 lg:border-l border-raseen-border flex flex-col justify-between relative overflow-hidden">
           {/* Top Controls on Viewport */}
           <div className="flex items-center justify-between mb-4 z-10">
             <div className="flex items-center gap-2">
@@ -164,7 +164,7 @@ export default function CadRevitInspector({ product }: CadRevitInspectorProps) {
         </div>
 
         {/* CAD Specifications & Layer Manager (5 Cols) */}
-        <div className="lg:col-span-5 p-6 bg-rawnaq-dark space-y-6">
+        <div className="lg:col-span-5 p-6 bg-raseen-dark space-y-6">
           {/* Layer Controls */}
           <div>
             <div className="text-xs font-bold text-slate-300 mb-3 flex items-center justify-between">
@@ -175,7 +175,7 @@ export default function CadRevitInspector({ product }: CadRevitInspectorProps) {
             <div className="space-y-2">
               <button
                 onClick={() => setShowWalls(!showWalls)}
-                className="w-full flex items-center justify-between p-2.5 rounded-xl bg-rawnaq-surface border border-rawnaq-border text-xs transition-colors hover:border-slate-500"
+                className="w-full flex items-center justify-between p-2.5 rounded-xl bg-raseen-surface border border-raseen-border text-xs transition-colors hover:border-slate-500"
               >
                 <div className="flex items-center gap-2">
                   <span className="w-3 h-3 rounded-full bg-sky-400" />
@@ -189,7 +189,7 @@ export default function CadRevitInspector({ product }: CadRevitInspectorProps) {
 
               <button
                 onClick={() => setShowDoors(!showDoors)}
-                className="w-full flex items-center justify-between p-2.5 rounded-xl bg-rawnaq-surface border border-rawnaq-border text-xs transition-colors hover:border-slate-500"
+                className="w-full flex items-center justify-between p-2.5 rounded-xl bg-raseen-surface border border-raseen-border text-xs transition-colors hover:border-slate-500"
               >
                 <div className="flex items-center gap-2">
                   <span className="w-3 h-3 rounded-full bg-yellow-400" />
@@ -203,7 +203,7 @@ export default function CadRevitInspector({ product }: CadRevitInspectorProps) {
 
               <button
                 onClick={() => setShowFurniture(!showFurniture)}
-                className="w-full flex items-center justify-between p-2.5 rounded-xl bg-rawnaq-surface border border-rawnaq-border text-xs transition-colors hover:border-slate-500"
+                className="w-full flex items-center justify-between p-2.5 rounded-xl bg-raseen-surface border border-raseen-border text-xs transition-colors hover:border-slate-500"
               >
                 <div className="flex items-center gap-2">
                   <span className="w-3 h-3 rounded-full bg-green-400" />
@@ -217,7 +217,7 @@ export default function CadRevitInspector({ product }: CadRevitInspectorProps) {
 
               <button
                 onClick={() => setShowMep(!showMep)}
-                className="w-full flex items-center justify-between p-2.5 rounded-xl bg-rawnaq-surface border border-rawnaq-border text-xs transition-colors hover:border-slate-500"
+                className="w-full flex items-center justify-between p-2.5 rounded-xl bg-raseen-surface border border-raseen-border text-xs transition-colors hover:border-slate-500"
               >
                 <div className="flex items-center gap-2">
                   <span className="w-3 h-3 rounded-full bg-purple-400" />
@@ -232,8 +232,8 @@ export default function CadRevitInspector({ product }: CadRevitInspectorProps) {
           </div>
 
           {/* Technical Specs Grid */}
-          <div className="p-4 rounded-xl bg-rawnaq-surface/70 border border-rawnaq-border space-y-2.5 text-xs">
-            <div className="font-bold text-white border-b border-rawnaq-border pb-1.5">
+          <div className="p-4 rounded-xl bg-raseen-surface/70 border border-raseen-border space-y-2.5 text-xs">
+            <div className="font-bold text-white border-b border-raseen-border pb-1.5">
               المواصفات والمعايير الهندسية:
             </div>
             <div className="flex justify-between">

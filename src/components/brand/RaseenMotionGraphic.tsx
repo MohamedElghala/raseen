@@ -218,7 +218,7 @@ export default function RaseenMotionGraphic({
         <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
           {/* Orbital Ring 1 (Gold) */}
           <div
-            className={`w-[85%] h-[85%] rounded-full border border-dashed border-rawnaq-gold/25 transition-transform duration-1000 ${
+            className={`w-[85%] h-[85%] rounded-full border border-dashed border-raseen-gold/25 transition-transform duration-1000 ${
               phase === 0 ? 'animate-spin' : 'rotate-45'
             }`}
             style={{ animationDuration: '6s' }}
@@ -252,8 +252,8 @@ export default function RaseenMotionGraphic({
           <div
             className={`absolute w-44 h-44 rounded-full blur-2xl transition-all duration-700 pointer-events-none ${
               phase >= 2
-                ? 'bg-gradient-to-tr from-cyan-500/30 via-rawnaq-gold/30 to-cyan-400/20 scale-125 opacity-100'
-                : 'bg-rawnaq-gold/15 scale-90 opacity-40'
+                ? 'bg-gradient-to-tr from-cyan-500/30 via-raseen-gold/30 to-cyan-400/20 scale-125 opacity-100'
+                : 'bg-raseen-gold/15 scale-90 opacity-40'
             }`}
           />
 
@@ -326,7 +326,7 @@ export default function RaseenMotionGraphic({
             <span className="px-2 py-0.5 rounded bg-black/60 border border-cyan-500/30 text-cyan-300 backdrop-blur-sm">
               ▲ R / ر // FUSION ACTIVE
             </span>
-            <span className="px-2 py-0.5 rounded bg-black/60 border border-rawnaq-gold/30 text-rawnaq-gold backdrop-blur-sm">
+            <span className="px-2 py-0.5 rounded bg-black/60 border border-raseen-gold/30 text-raseen-gold backdrop-blur-sm">
               HOLO-ASSET // 100% READY
             </span>
           </div>
@@ -359,7 +359,7 @@ export default function RaseenMotionGraphic({
           </p>
 
           {/* Phase Status Pill */}
-          <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rawnaq-surface/80 border border-cyan-500/30 text-[11px] text-cyan-300">
+          <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-raseen-surface/80 border border-cyan-500/30 text-[11px] text-cyan-300">
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
             <span>
               {phase === 0 && 'مرحلة 1: الدوران ثلاثي الأبعاد والتسارع (3D Spin)'}
@@ -373,12 +373,12 @@ export default function RaseenMotionGraphic({
 
       {/* Interactive Controls Bar (Only in Showcase Mode) */}
       {mode === 'showcase' && (
-        <div className="mt-6 w-full max-w-xl p-4 bg-rawnaq-surface/90 border border-rawnaq-border rounded-2xl backdrop-blur-md">
+        <div className="mt-6 w-full max-w-xl p-4 bg-raseen-surface/90 border border-raseen-border rounded-2xl backdrop-blur-md">
           <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
             {/* Play/Replay Button */}
             <button
               onClick={restartMotion}
-              className="px-4 py-2 bg-rawnaq-gold text-rawnaq-dark font-bold rounded-xl hover:bg-rawnaq-gold-hover transition-all flex items-center gap-1.5 shadow-md shadow-rawnaq-gold/20"
+              className="px-4 py-2 bg-raseen-gold text-raseen-dark font-bold rounded-xl hover:bg-raseen-gold-hover transition-all flex items-center gap-1.5 shadow-md shadow-raseen-gold/20"
             >
               <span>↺</span>
               <span>إعادة تشغيل الحركة من البداية</span>
@@ -397,14 +397,14 @@ export default function RaseenMotionGraphic({
             </button>
 
             {/* Speed Selector */}
-            <div className="flex items-center gap-1 bg-rawnaq-dark px-2 py-1 rounded-xl border border-rawnaq-border">
+            <div className="flex items-center gap-1 bg-raseen-dark px-2 py-1 rounded-xl border border-raseen-border">
               <span className="text-slate-400 text-[11px]">السرعة:</span>
               {[0.75, 1, 1.5].map((s) => (
                 <button
                   key={s}
                   onClick={() => setSpeed(s)}
                   className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                    speed === s ? 'bg-rawnaq-gold text-rawnaq-dark' : 'text-slate-400 hover:text-white'
+                    speed === s ? 'bg-raseen-gold text-raseen-dark' : 'text-slate-400 hover:text-white'
                   }`}
                 >
                   {s}x
@@ -414,7 +414,7 @@ export default function RaseenMotionGraphic({
           </div>
 
           {/* Layer Switches */}
-          <div className="mt-3 pt-3 border-t border-rawnaq-border/60 flex flex-wrap gap-2 text-[11px]">
+          <div className="mt-3 pt-3 border-t border-raseen-border/60 flex flex-wrap gap-2 text-[11px]">
             <span className="text-slate-400 self-center">الطبقات:</span>
             <button
               onClick={() =>
@@ -446,7 +446,7 @@ export default function RaseenMotionGraphic({
               }
               className={`px-2.5 py-1 rounded-lg border transition-all ${
                 activeLayers.spin3D
-                  ? 'border-rawnaq-gold/40 text-rawnaq-gold bg-rawnaq-gold/10'
+                  ? 'border-raseen-gold/40 text-raseen-gold bg-raseen-gold/10'
                   : 'border-slate-800 text-slate-500'
               }`}
             >

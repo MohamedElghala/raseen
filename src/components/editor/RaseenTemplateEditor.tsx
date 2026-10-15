@@ -205,18 +205,18 @@ export default function RaseenTemplateEditor() {
   const grandTotal = subtotal + vatAmount;
 
   return (
-    <div className="min-h-screen bg-rawnaq-dark text-slate-100 py-6 md:py-10">
+    <div className="min-h-screen bg-raseen-dark text-slate-100 py-6 md:py-10">
       {/* Top Header & Breadcrumbs */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-rawnaq-border pb-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-raseen-border pb-6">
           <div>
             <div className="flex items-center gap-2 text-xs text-slate-400 mb-2">
-              <Link href="/" className="hover:text-rawnaq-gold transition-colors">الرئيسية</Link>
+              <Link href="/" className="hover:text-raseen-gold transition-colors">الرئيسية</Link>
               <span>/</span>
-              <span className="text-rawnaq-gold font-bold">محرر القوالب الذكي (Canva Studio)</span>
+              <span className="text-raseen-gold font-bold">محرر القوالب الذكي (Canva Studio)</span>
             </div>
             <h1 className="text-2xl md:text-3xl font-black text-white flex items-center gap-3">
-              <span className="p-2 rounded-xl bg-gradient-to-br from-rawnaq-gold/20 to-amber-500/10 border border-rawnaq-gold/40 text-rawnaq-gold">
+              <span className="p-2 rounded-xl bg-gradient-to-br from-raseen-gold/20 to-amber-500/10 border border-raseen-gold/40 text-raseen-gold">
                 🎨
               </span>
               <span>استوديو رَصين لتخصيص القوالب</span>
@@ -241,7 +241,7 @@ export default function RaseenTemplateEditor() {
 
             <button
               onClick={handleExportPDF}
-              className="btn-gold flex items-center gap-2 text-sm shadow-xl shadow-rawnaq-gold/20 hover:scale-105 active:scale-95 transition-all"
+              className="btn-gold flex items-center gap-2 text-sm shadow-xl shadow-raseen-gold/20 hover:scale-105 active:scale-95 transition-all"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
@@ -261,18 +261,18 @@ export default function RaseenTemplateEditor() {
                 onClick={() => setSelectedTemplate(tmpl.id)}
                 className={`p-3.5 rounded-xl text-right transition-all flex flex-col justify-between border ${
                   isSelected
-                    ? 'bg-rawnaq-surface border-rawnaq-gold ring-1 ring-rawnaq-gold shadow-lg shadow-rawnaq-gold/10'
-                    : 'bg-rawnaq-dark/60 border-rawnaq-border/80 hover:border-slate-600 hover:bg-rawnaq-surface/50'
+                    ? 'bg-raseen-surface border-raseen-gold ring-1 ring-raseen-gold shadow-lg shadow-raseen-gold/10'
+                    : 'bg-raseen-dark/60 border-raseen-border/80 hover:border-slate-600 hover:bg-raseen-surface/50'
                 }`}
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-2xl">{tmpl.icon}</span>
                   {isSelected && (
-                    <span className="w-2 h-2 rounded-full bg-rawnaq-gold animate-pulse" />
+                    <span className="w-2 h-2 rounded-full bg-raseen-gold animate-pulse" />
                   )}
                 </div>
                 <div>
-                  <h3 className={`font-bold text-sm ${isSelected ? 'text-rawnaq-gold' : 'text-slate-200'}`}>
+                  <h3 className={`font-bold text-sm ${isSelected ? 'text-raseen-gold' : 'text-slate-200'}`}>
                     {tmpl.name}
                   </h3>
                   <p className="text-[11px] text-slate-400 mt-0.5 line-clamp-1">
@@ -292,15 +292,15 @@ export default function RaseenTemplateEditor() {
           {/* ========================================================= */}
           {/* Controls Panel (5 Columns on Desktop) */}
           {/* ========================================================= */}
-          <div className="lg:col-span-5 bg-rawnaq-surface border border-rawnaq-border rounded-2xl p-5 md:p-6 shadow-xl space-y-6">
+          <div className="lg:col-span-5 bg-raseen-surface border border-raseen-border rounded-2xl p-5 md:p-6 shadow-xl space-y-6">
             
             {/* Control Tabs */}
-            <div className="flex rounded-xl bg-rawnaq-dark/80 p-1 border border-rawnaq-border">
+            <div className="flex rounded-xl bg-raseen-dark/80 p-1 border border-raseen-border">
               <button
                 onClick={() => setActiveTab('content')}
                 className={`flex-1 py-2 text-xs md:text-sm font-bold rounded-lg transition-all ${
                   activeTab === 'content'
-                    ? 'bg-rawnaq-gold text-rawnaq-dark shadow'
+                    ? 'bg-raseen-gold text-raseen-dark shadow'
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
@@ -310,7 +310,7 @@ export default function RaseenTemplateEditor() {
                 onClick={() => setActiveTab('style')}
                 className={`flex-1 py-2 text-xs md:text-sm font-bold rounded-lg transition-all ${
                   activeTab === 'style'
-                    ? 'bg-rawnaq-gold text-rawnaq-dark shadow'
+                    ? 'bg-raseen-gold text-raseen-dark shadow'
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
@@ -331,10 +331,10 @@ export default function RaseenTemplateEditor() {
             {/* TAB 1: Content Fields */}
             {activeTab === 'content' && (
               <div className="space-y-4 animate-fade-in-up">
-                <div className="border-b border-rawnaq-border/60 pb-3 mb-2 flex items-center justify-between">
+                <div className="border-b border-raseen-border/60 pb-3 mb-2 flex items-center justify-between">
                   <h3 className="font-bold text-sm text-white flex items-center gap-2">
                     <span>بيانات قالب:</span>
-                    <span className="text-rawnaq-gold font-black">{TEMPLATES.find(t => t.id === selectedTemplate)?.name}</span>
+                    <span className="text-raseen-gold font-black">{TEMPLATES.find(t => t.id === selectedTemplate)?.name}</span>
                   </h3>
                   <button
                     onClick={() => {
@@ -357,7 +357,7 @@ export default function RaseenTemplateEditor() {
                     type="text"
                     value={selectedTemplate === 'certificate' ? formData.certRecipient : formData.title}
                     onChange={(e) => handleInputChange(selectedTemplate === 'certificate' ? 'certRecipient' : 'title', e.target.value)}
-                    className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-rawnaq-gold transition-colors"
+                    className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-raseen-gold transition-colors"
                   />
                 </div>
 
@@ -369,7 +369,7 @@ export default function RaseenTemplateEditor() {
                     type="text"
                     value={selectedTemplate === 'certificate' ? formData.certCourse : formData.subtitle}
                     onChange={(e) => handleInputChange(selectedTemplate === 'certificate' ? 'certCourse' : 'subtitle', e.target.value)}
-                    className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-rawnaq-gold transition-colors"
+                    className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-raseen-gold transition-colors"
                   />
                 </div>
 
@@ -383,7 +383,7 @@ export default function RaseenTemplateEditor() {
                           type="email"
                           value={formData.email}
                           onChange={(e) => handleInputChange('email', e.target.value)}
-                          className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3 py-2 text-xs text-white"
+                          className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3 py-2 text-xs text-white"
                         />
                       </div>
                       <div>
@@ -392,7 +392,7 @@ export default function RaseenTemplateEditor() {
                           type="text"
                           value={formData.phone}
                           onChange={(e) => handleInputChange('phone', e.target.value)}
-                          className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3 py-2 text-xs text-white"
+                          className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3 py-2 text-xs text-white"
                         />
                       </div>
                     </div>
@@ -402,7 +402,7 @@ export default function RaseenTemplateEditor() {
                         type="text"
                         value={formData.address}
                         onChange={(e) => handleInputChange('address', e.target.value)}
-                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3.5 py-2.5 text-sm text-white"
+                        className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3.5 py-2.5 text-sm text-white"
                       />
                     </div>
                     <div>
@@ -411,7 +411,7 @@ export default function RaseenTemplateEditor() {
                         rows={4}
                         value={formData.summary}
                         onChange={(e) => handleInputChange('summary', e.target.value)}
-                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl p-3 text-xs leading-relaxed text-white focus:outline-none focus:border-rawnaq-gold"
+                        className="w-full bg-raseen-dark border border-raseen-border rounded-xl p-3 text-xs leading-relaxed text-white focus:outline-none focus:border-raseen-gold"
                       />
                     </div>
                   </>
@@ -426,7 +426,7 @@ export default function RaseenTemplateEditor() {
                           type="text"
                           value={formData.invoiceNumber}
                           onChange={(e) => handleInputChange('invoiceNumber', e.target.value)}
-                          className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3 py-2 text-xs text-white font-mono"
+                          className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3 py-2 text-xs text-white font-mono"
                         />
                       </div>
                       <div>
@@ -435,7 +435,7 @@ export default function RaseenTemplateEditor() {
                           type="text"
                           value={formData.clientVat}
                           onChange={(e) => handleInputChange('clientVat', e.target.value)}
-                          className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3 py-2 text-xs text-white font-mono"
+                          className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3 py-2 text-xs text-white font-mono"
                         />
                       </div>
                     </div>
@@ -446,19 +446,19 @@ export default function RaseenTemplateEditor() {
                         type="text"
                         value={formData.clientName}
                         onChange={(e) => handleInputChange('clientName', e.target.value)}
-                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3.5 py-2.5 text-sm text-white"
+                        className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3.5 py-2.5 text-sm text-white"
                       />
                     </div>
 
                     {/* Invoice Item 1 */}
-                    <div className="p-3 rounded-xl bg-rawnaq-dark/60 border border-rawnaq-border/70 space-y-2">
-                      <div className="text-xs font-bold text-rawnaq-gold">البند الأول</div>
+                    <div className="p-3 rounded-xl bg-raseen-dark/60 border border-raseen-border/70 space-y-2">
+                      <div className="text-xs font-bold text-raseen-gold">البند الأول</div>
                       <input
                         type="text"
                         placeholder="وصف الخدمة أو المنتج"
                         value={formData.item1Name}
                         onChange={(e) => handleInputChange('item1Name', e.target.value)}
-                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-lg px-3 py-1.5 text-xs text-white"
+                        className="w-full bg-raseen-dark border border-raseen-border rounded-lg px-3 py-1.5 text-xs text-white"
                       />
                       <div className="grid grid-cols-2 gap-2">
                         <div>
@@ -467,7 +467,7 @@ export default function RaseenTemplateEditor() {
                             type="number"
                             value={formData.item1Price}
                             onChange={(e) => handleInputChange('item1Price', Number(e.target.value))}
-                            className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-lg px-2 py-1 text-xs text-white"
+                            className="w-full bg-raseen-dark border border-raseen-border rounded-lg px-2 py-1 text-xs text-white"
                           />
                         </div>
                         <div>
@@ -476,21 +476,21 @@ export default function RaseenTemplateEditor() {
                             type="number"
                             value={formData.item1Qty}
                             onChange={(e) => handleInputChange('item1Qty', Number(e.target.value))}
-                            className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-lg px-2 py-1 text-xs text-white"
+                            className="w-full bg-raseen-dark border border-raseen-border rounded-lg px-2 py-1 text-xs text-white"
                           />
                         </div>
                       </div>
                     </div>
 
                     {/* Invoice Item 2 */}
-                    <div className="p-3 rounded-xl bg-rawnaq-dark/60 border border-rawnaq-border/70 space-y-2">
-                      <div className="text-xs font-bold text-rawnaq-gold">البند الثاني</div>
+                    <div className="p-3 rounded-xl bg-raseen-dark/60 border border-raseen-border/70 space-y-2">
+                      <div className="text-xs font-bold text-raseen-gold">البند الثاني</div>
                       <input
                         type="text"
                         placeholder="وصف الخدمة أو المنتج"
                         value={formData.item2Name}
                         onChange={(e) => handleInputChange('item2Name', e.target.value)}
-                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-lg px-3 py-1.5 text-xs text-white"
+                        className="w-full bg-raseen-dark border border-raseen-border rounded-lg px-3 py-1.5 text-xs text-white"
                       />
                       <div className="grid grid-cols-2 gap-2">
                         <div>
@@ -499,7 +499,7 @@ export default function RaseenTemplateEditor() {
                             type="number"
                             value={formData.item2Price}
                             onChange={(e) => handleInputChange('item2Price', Number(e.target.value))}
-                            className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-lg px-2 py-1 text-xs text-white"
+                            className="w-full bg-raseen-dark border border-raseen-border rounded-lg px-2 py-1 text-xs text-white"
                           />
                         </div>
                         <div>
@@ -508,7 +508,7 @@ export default function RaseenTemplateEditor() {
                             type="number"
                             value={formData.item2Qty}
                             onChange={(e) => handleInputChange('item2Qty', Number(e.target.value))}
-                            className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-lg px-2 py-1 text-xs text-white"
+                            className="w-full bg-raseen-dark border border-raseen-border rounded-lg px-2 py-1 text-xs text-white"
                           />
                         </div>
                       </div>
@@ -524,7 +524,7 @@ export default function RaseenTemplateEditor() {
                         type="text"
                         value={formData.postHeadline}
                         onChange={(e) => handleInputChange('postHeadline', e.target.value)}
-                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3.5 py-2.5 text-sm text-white"
+                        className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3.5 py-2.5 text-sm text-white"
                       />
                     </div>
                     <div>
@@ -533,7 +533,7 @@ export default function RaseenTemplateEditor() {
                         rows={3}
                         value={formData.postSubtext}
                         onChange={(e) => handleInputChange('postSubtext', e.target.value)}
-                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl p-3 text-xs text-white"
+                        className="w-full bg-raseen-dark border border-raseen-border rounded-xl p-3 text-xs text-white"
                       />
                     </div>
                     <div>
@@ -542,7 +542,7 @@ export default function RaseenTemplateEditor() {
                         type="text"
                         value={formData.postCta}
                         onChange={(e) => handleInputChange('postCta', e.target.value)}
-                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3.5 py-2.5 text-sm text-white"
+                        className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3.5 py-2.5 text-sm text-white"
                       />
                     </div>
                   </>
@@ -557,7 +557,7 @@ export default function RaseenTemplateEditor() {
                           type="text"
                           value={formData.organization}
                           onChange={(e) => handleInputChange('organization', e.target.value)}
-                          className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3 py-2 text-xs text-white"
+                          className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3 py-2 text-xs text-white"
                         />
                       </div>
                       <div>
@@ -566,7 +566,7 @@ export default function RaseenTemplateEditor() {
                           type="text"
                           value={formData.clientName}
                           onChange={(e) => handleInputChange('clientName', e.target.value)}
-                          className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3 py-2 text-xs text-white"
+                          className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3 py-2 text-xs text-white"
                         />
                       </div>
                     </div>
@@ -576,7 +576,7 @@ export default function RaseenTemplateEditor() {
                         rows={3}
                         value={formData.summary}
                         onChange={(e) => handleInputChange('summary', e.target.value)}
-                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl p-3 text-xs text-white"
+                        className="w-full bg-raseen-dark border border-raseen-border rounded-xl p-3 text-xs text-white"
                       />
                     </div>
                   </>
@@ -590,7 +590,7 @@ export default function RaseenTemplateEditor() {
                         type="text"
                         value={formData.certIssuer}
                         onChange={(e) => handleInputChange('certIssuer', e.target.value)}
-                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3.5 py-2.5 text-sm text-white"
+                        className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3.5 py-2.5 text-sm text-white"
                       />
                     </div>
                     <div>
@@ -599,7 +599,7 @@ export default function RaseenTemplateEditor() {
                         type="text"
                         value={formData.certScore}
                         onChange={(e) => handleInputChange('certScore', e.target.value)}
-                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3.5 py-2.5 text-sm text-white"
+                        className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3.5 py-2.5 text-sm text-white"
                       />
                     </div>
                   </>
@@ -613,7 +613,7 @@ export default function RaseenTemplateEditor() {
                         rows={3}
                         value={formData.deckProblem}
                         onChange={(e) => handleInputChange('deckProblem', e.target.value)}
-                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl p-3 text-xs text-white"
+                        className="w-full bg-raseen-dark border border-raseen-border rounded-xl p-3 text-xs text-white"
                       />
                     </div>
                     <div>
@@ -622,7 +622,7 @@ export default function RaseenTemplateEditor() {
                         rows={3}
                         value={formData.deckSolution}
                         onChange={(e) => handleInputChange('deckSolution', e.target.value)}
-                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl p-3 text-xs text-white"
+                        className="w-full bg-raseen-dark border border-raseen-border rounded-xl p-3 text-xs text-white"
                       />
                     </div>
                     <div>
@@ -631,7 +631,7 @@ export default function RaseenTemplateEditor() {
                         type="text"
                         value={formData.deckMarket}
                         onChange={(e) => handleInputChange('deckMarket', e.target.value)}
-                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3.5 py-2.5 text-xs text-white"
+                        className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3.5 py-2.5 text-xs text-white"
                       />
                     </div>
                     <div>
@@ -640,7 +640,7 @@ export default function RaseenTemplateEditor() {
                         type="text"
                         value={formData.deckAsk}
                         onChange={(e) => handleInputChange('deckAsk', e.target.value)}
-                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3.5 py-2.5 text-xs text-white"
+                        className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3.5 py-2.5 text-xs text-white"
                       />
                     </div>
                   </>
@@ -655,7 +655,7 @@ export default function RaseenTemplateEditor() {
                           type="text"
                           value={formData.clientName}
                           onChange={(e) => handleInputChange('clientName', e.target.value)}
-                          className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3 py-2 text-xs text-white"
+                          className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3 py-2 text-xs text-white"
                         />
                       </div>
                       <div>
@@ -664,7 +664,7 @@ export default function RaseenTemplateEditor() {
                           type="text"
                           value={formData.quoteValidity}
                           onChange={(e) => handleInputChange('quoteValidity', e.target.value)}
-                          className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3 py-2 text-xs text-white"
+                          className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3 py-2 text-xs text-white"
                         />
                       </div>
                     </div>
@@ -674,7 +674,7 @@ export default function RaseenTemplateEditor() {
                         rows={2}
                         value={formData.quoteTerms}
                         onChange={(e) => handleInputChange('quoteTerms', e.target.value)}
-                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl p-3 text-xs text-white"
+                        className="w-full bg-raseen-dark border border-raseen-border rounded-xl p-3 text-xs text-white"
                       />
                     </div>
                   </>
@@ -689,7 +689,7 @@ export default function RaseenTemplateEditor() {
                           type="text"
                           value={formData.organization}
                           onChange={(e) => handleInputChange('organization', e.target.value)}
-                          className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3 py-2 text-xs text-white"
+                          className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3 py-2 text-xs text-white"
                         />
                       </div>
                       <div>
@@ -698,7 +698,7 @@ export default function RaseenTemplateEditor() {
                           type="text"
                           value={formData.clientName}
                           onChange={(e) => handleInputChange('clientName', e.target.value)}
-                          className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3 py-2 text-xs text-white"
+                          className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3 py-2 text-xs text-white"
                         />
                       </div>
                     </div>
@@ -708,7 +708,7 @@ export default function RaseenTemplateEditor() {
                         type="text"
                         value={formData.ndaTerm}
                         onChange={(e) => handleInputChange('ndaTerm', e.target.value)}
-                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3 py-2 text-xs text-white"
+                        className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3 py-2 text-xs text-white"
                       />
                     </div>
                     <div>
@@ -717,7 +717,7 @@ export default function RaseenTemplateEditor() {
                         rows={3}
                         value={formData.ndaScope}
                         onChange={(e) => handleInputChange('ndaScope', e.target.value)}
-                        className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl p-3 text-xs text-white"
+                        className="w-full bg-raseen-dark border border-raseen-border rounded-xl p-3 text-xs text-white"
                       />
                     </div>
                   </>
@@ -742,8 +742,8 @@ export default function RaseenTemplateEditor() {
                           onClick={() => setActiveTheme(key)}
                           className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${
                             isSelected
-                              ? 'bg-rawnaq-dark border-rawnaq-gold ring-1 ring-rawnaq-gold'
-                              : 'bg-rawnaq-dark/40 border-rawnaq-border/70 hover:border-slate-600'
+                              ? 'bg-raseen-dark border-raseen-gold ring-1 ring-raseen-gold'
+                              : 'bg-raseen-dark/40 border-raseen-border/70 hover:border-slate-600'
                           }`}
                         >
                           <div className="flex items-center gap-3">
@@ -754,7 +754,7 @@ export default function RaseenTemplateEditor() {
                             <span className="font-bold text-sm text-white">{t.name}</span>
                           </div>
                           {isSelected ? (
-                            <span className="text-xs px-2 py-0.5 rounded bg-rawnaq-gold/20 text-rawnaq-gold font-bold">
+                            <span className="text-xs px-2 py-0.5 rounded bg-raseen-gold/20 text-raseen-gold font-bold">
                               نشط
                             </span>
                           ) : (
@@ -777,7 +777,7 @@ export default function RaseenTemplateEditor() {
                       className={`p-3 rounded-xl border text-center font-bold text-xs transition-all ${
                         previewMode === 'paper'
                           ? 'bg-white text-slate-900 border-white'
-                          : 'bg-rawnaq-dark text-slate-400 border-rawnaq-border'
+                          : 'bg-raseen-dark text-slate-400 border-raseen-border'
                       }`}
                     >
                       📄 ورقة بيضاء (A4 Print Ready)
@@ -786,8 +786,8 @@ export default function RaseenTemplateEditor() {
                       onClick={() => setPreviewMode('dark')}
                       className={`p-3 rounded-xl border text-center font-bold text-xs transition-all ${
                         previewMode === 'dark'
-                          ? 'bg-slate-900 text-rawnaq-gold border-rawnaq-gold'
-                          : 'bg-rawnaq-dark text-slate-400 border-rawnaq-border'
+                          ? 'bg-slate-900 text-raseen-gold border-raseen-gold'
+                          : 'bg-raseen-dark text-slate-400 border-raseen-border'
                       }`}
                     >
                       🌙 النمط الليلي الفاخر
@@ -836,13 +836,13 @@ export default function RaseenTemplateEditor() {
             )}
 
             {/* Bottom Actions Summary */}
-            <div className="pt-4 border-t border-rawnaq-border/70 flex items-center justify-between">
+            <div className="pt-4 border-t border-raseen-border/70 flex items-center justify-between">
               <span className="text-xs text-slate-400">
                 المستند مُهيأ ومحمي بختم رَصين الرقمي
               </span>
               <button
                 onClick={handleExportPDF}
-                className="text-xs font-bold text-rawnaq-gold hover:underline flex items-center gap-1"
+                className="text-xs font-bold text-raseen-gold hover:underline flex items-center gap-1"
               >
                 <span>طباعة / حفظ PDF</span>
                 <span>🖨️</span>
@@ -857,7 +857,7 @@ export default function RaseenTemplateEditor() {
             <div className="sticky top-24">
               
               {/* Canvas Header Bar */}
-              <div className="bg-rawnaq-surface border border-rawnaq-border rounded-t-2xl p-3 flex items-center justify-between text-xs text-slate-400">
+              <div className="bg-raseen-surface border border-raseen-border rounded-t-2xl p-3 flex items-center justify-between text-xs text-slate-400">
                 <div className="flex items-center gap-2">
                   <span className="w-3 h-3 rounded-full bg-red-500/70 inline-block" />
                   <span className="w-3 h-3 rounded-full bg-amber-500/70 inline-block" />
@@ -865,12 +865,12 @@ export default function RaseenTemplateEditor() {
                   <span className="font-mono text-slate-300 ml-2">Live_A4_Canvas.preview</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-[11px] bg-rawnaq-dark px-2 py-0.5 rounded border border-rawnaq-border">
+                  <span className="text-[11px] bg-raseen-dark px-2 py-0.5 rounded border border-raseen-border">
                     {previewMode === 'paper' ? 'A4 Paper (Print)' : 'Dark Hologram'}
                   </span>
                   <button
                     onClick={handleExportPDF}
-                    className="text-rawnaq-gold hover:text-white font-bold"
+                    className="text-raseen-gold hover:text-white font-bold"
                   >
                     تصدير ➔
                   </button>
@@ -880,7 +880,7 @@ export default function RaseenTemplateEditor() {
               {/* Rendered Live Canvas */}
               <div
                 id="printable-template-canvas"
-                className={`border-x border-b border-rawnaq-border rounded-b-2xl p-6 sm:p-10 shadow-2xl transition-colors duration-300 min-h-[640px] flex flex-col justify-between ${
+                className={`border-x border-b border-raseen-border rounded-b-2xl p-6 sm:p-10 shadow-2xl transition-colors duration-300 min-h-[640px] flex flex-col justify-between ${
                   previewMode === 'paper'
                     ? 'bg-white text-slate-900'
                     : 'bg-[#0b1329] text-slate-100'
@@ -1395,7 +1395,7 @@ export default function RaseenTemplateEditor() {
       {/* Exporting Modal with Animated Raseen Loader */}
       {isExporting && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center animate-fade-in-up">
-          <div className="bg-rawnaq-surface border border-rawnaq-gold/40 p-8 rounded-3xl max-w-md w-full shadow-2xl">
+          <div className="bg-raseen-surface border border-raseen-gold/40 p-8 rounded-3xl max-w-md w-full shadow-2xl">
             <RaseenLogoLoader
               label="جاري تجميع المستند وتنسيق الطباعة..."
               sublabel="يتم تجهيز مخرجات عالية الدقة A4 بدعم الألوان وخط القاهرة المعتمد"
@@ -1408,7 +1408,7 @@ export default function RaseenTemplateEditor() {
       {/* Canva Modal */}
       {showCanvaModal && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in-up">
-          <div className="bg-rawnaq-surface border border-cyan-400/40 p-6 md:p-8 rounded-3xl max-w-lg w-full shadow-2xl relative text-right">
+          <div className="bg-raseen-surface border border-cyan-400/40 p-6 md:p-8 rounded-3xl max-w-lg w-full shadow-2xl relative text-right">
             <button
               onClick={() => setShowCanvaModal(false)}
               className="absolute top-5 left-5 text-slate-400 hover:text-white"

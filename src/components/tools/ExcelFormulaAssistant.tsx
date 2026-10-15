@@ -52,7 +52,7 @@ export default function ExcelFormulaAssistant() {
 
   return (
     <div className="space-y-6 text-right">
-      <div className="flex items-center justify-between pb-3 border-b border-rawnaq-border">
+      <div className="flex items-center justify-between pb-3 border-b border-raseen-border">
         <div>
           <h3 className="text-lg font-bold text-white flex items-center gap-2">
             <span>📗</span>
@@ -72,7 +72,7 @@ export default function ExcelFormulaAssistant() {
           className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${
             formulaType === 'xlookup'
               ? 'bg-emerald-500 text-slate-950 border-emerald-400'
-              : 'bg-rawnaq-dark text-slate-300 border-rawnaq-border hover:border-slate-500'
+              : 'bg-raseen-dark text-slate-300 border-raseen-border hover:border-slate-500'
           }`}
         >
           🔍 البحث المتقدم (=XLOOKUP)
@@ -83,7 +83,7 @@ export default function ExcelFormulaAssistant() {
           className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${
             formulaType === 'sumifs'
               ? 'bg-emerald-500 text-slate-950 border-emerald-400'
-              : 'bg-rawnaq-dark text-slate-300 border-rawnaq-border hover:border-slate-500'
+              : 'bg-raseen-dark text-slate-300 border-raseen-border hover:border-slate-500'
           }`}
         >
           ➕ الجمع الشرطي (=SUMIFS)
@@ -94,7 +94,7 @@ export default function ExcelFormulaAssistant() {
           className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${
             formulaType === 'pmt'
               ? 'bg-emerald-500 text-slate-950 border-emerald-400'
-              : 'bg-rawnaq-dark text-slate-300 border-rawnaq-border hover:border-slate-500'
+              : 'bg-raseen-dark text-slate-300 border-raseen-border hover:border-slate-500'
           }`}
         >
           💳 أقساط القروض (=PMT)
@@ -105,7 +105,7 @@ export default function ExcelFormulaAssistant() {
           className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${
             formulaType === 'iferror'
               ? 'bg-emerald-500 text-slate-950 border-emerald-400'
-              : 'bg-rawnaq-dark text-slate-300 border-rawnaq-border hover:border-slate-500'
+              : 'bg-raseen-dark text-slate-300 border-raseen-border hover:border-slate-500'
           }`}
         >
           🛡️ معالجة الأخطاء (=IFERROR)
@@ -116,7 +116,7 @@ export default function ExcelFormulaAssistant() {
           className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${
             formulaType === 'textjoin'
               ? 'bg-emerald-500 text-slate-950 border-emerald-400'
-              : 'bg-rawnaq-dark text-slate-300 border-rawnaq-border hover:border-slate-500'
+              : 'bg-raseen-dark text-slate-300 border-raseen-border hover:border-slate-500'
           }`}
         >
           🔗 دمج النصوص (=TEXTJOIN)
@@ -124,7 +124,7 @@ export default function ExcelFormulaAssistant() {
       </div>
 
       {/* Dynamic Fields */}
-      <div className="p-4 rounded-xl bg-rawnaq-dark border border-rawnaq-border space-y-4">
+      <div className="p-4 rounded-xl bg-raseen-dark border border-raseen-border space-y-4">
         {formulaType === 'xlookup' && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
             <div>
@@ -133,7 +133,7 @@ export default function ExcelFormulaAssistant() {
                 type="text"
                 value={lookupVal}
                 onChange={(e) => setLookupVal(e.target.value)}
-                className="w-full bg-rawnaq-navy border border-rawnaq-border rounded-lg p-2 text-white font-mono"
+                className="w-full bg-raseen-navy border border-raseen-border rounded-lg p-2 text-white font-mono"
               />
             </div>
             <div>
@@ -142,7 +142,7 @@ export default function ExcelFormulaAssistant() {
                 type="text"
                 value={lookupArray}
                 onChange={(e) => setLookupArray(e.target.value)}
-                className="w-full bg-rawnaq-navy border border-rawnaq-border rounded-lg p-2 text-white font-mono"
+                className="w-full bg-raseen-navy border border-raseen-border rounded-lg p-2 text-white font-mono"
               />
             </div>
             <div>
@@ -151,7 +151,7 @@ export default function ExcelFormulaAssistant() {
                 type="text"
                 value={returnArray}
                 onChange={(e) => setReturnArray(e.target.value)}
-                className="w-full bg-rawnaq-navy border border-rawnaq-border rounded-lg p-2 text-white font-mono"
+                className="w-full bg-raseen-navy border border-raseen-border rounded-lg p-2 text-white font-mono"
               />
             </div>
             <div>
@@ -160,7 +160,7 @@ export default function ExcelFormulaAssistant() {
                 type="text"
                 value={ifNotFound}
                 onChange={(e) => setIfNotFound(e.target.value)}
-                className="w-full bg-rawnaq-navy border border-rawnaq-border rounded-lg p-2 text-white"
+                className="w-full bg-raseen-navy border border-raseen-border rounded-lg p-2 text-white"
               />
             </div>
           </div>
@@ -174,7 +174,7 @@ export default function ExcelFormulaAssistant() {
                 type="text"
                 value={sumRange}
                 onChange={(e) => setSumRange(e.target.value)}
-                className="w-full bg-rawnaq-navy border border-rawnaq-border rounded-lg p-2 text-white font-mono"
+                className="w-full bg-raseen-navy border border-raseen-border rounded-lg p-2 text-white font-mono"
               />
             </div>
             <div>
@@ -183,7 +183,7 @@ export default function ExcelFormulaAssistant() {
                 type="text"
                 value={criteriaRange}
                 onChange={(e) => setCriteriaRange(e.target.value)}
-                className="w-full bg-rawnaq-navy border border-rawnaq-border rounded-lg p-2 text-white font-mono"
+                className="w-full bg-raseen-navy border border-raseen-border rounded-lg p-2 text-white font-mono"
               />
             </div>
             <div>
@@ -192,7 +192,7 @@ export default function ExcelFormulaAssistant() {
                 type="text"
                 value={criteriaVal}
                 onChange={(e) => setCriteriaVal(e.target.value)}
-                className="w-full bg-rawnaq-navy border border-rawnaq-border rounded-lg p-2 text-white font-mono"
+                className="w-full bg-raseen-navy border border-raseen-border rounded-lg p-2 text-white font-mono"
               />
             </div>
           </div>
@@ -206,7 +206,7 @@ export default function ExcelFormulaAssistant() {
                 type="text"
                 value={rate}
                 onChange={(e) => setRate(e.target.value)}
-                className="w-full bg-rawnaq-navy border border-rawnaq-border rounded-lg p-2 text-white font-mono"
+                className="w-full bg-raseen-navy border border-raseen-border rounded-lg p-2 text-white font-mono"
               />
             </div>
             <div>
@@ -215,7 +215,7 @@ export default function ExcelFormulaAssistant() {
                 type="text"
                 value={periods}
                 onChange={(e) => setPeriods(e.target.value)}
-                className="w-full bg-rawnaq-navy border border-rawnaq-border rounded-lg p-2 text-white font-mono"
+                className="w-full bg-raseen-navy border border-raseen-border rounded-lg p-2 text-white font-mono"
               />
             </div>
             <div>
@@ -224,7 +224,7 @@ export default function ExcelFormulaAssistant() {
                 type="text"
                 value={loanAmount}
                 onChange={(e) => setLoanAmount(e.target.value)}
-                className="w-full bg-rawnaq-navy border border-rawnaq-border rounded-lg p-2 text-white font-mono"
+                className="w-full bg-raseen-navy border border-raseen-border rounded-lg p-2 text-white font-mono"
               />
             </div>
           </div>
@@ -251,7 +251,7 @@ export default function ExcelFormulaAssistant() {
             <span>{copied ? '✓ تم النسخ للحافظة!' : 'نسخ المعادلة 📋'}</span>
           </button>
         </div>
-        <div className="p-3 rounded-lg bg-rawnaq-dark text-white font-mono text-sm overflow-x-auto border border-rawnaq-border/80 text-left" dir="ltr">
+        <div className="p-3 rounded-lg bg-raseen-dark text-white font-mono text-sm overflow-x-auto border border-raseen-border/80 text-left" dir="ltr">
           {formula}
         </div>
       </div>

@@ -34,8 +34,8 @@ export default function DiscussionDetailPage({
 
   if (!post) {
     return (
-      <main className="min-h-screen bg-rawnaq-dark text-white font-cairo flex items-center justify-center p-4" dir="rtl" lang="ar">
-        <div className="bg-rawnaq-surface p-8 rounded-2xl border border-rawnaq-border text-center max-w-md w-full">
+      <main className="min-h-screen bg-raseen-dark text-white font-cairo flex items-center justify-center p-4" dir="rtl" lang="ar">
+        <div className="bg-raseen-surface p-8 rounded-2xl border border-raseen-border text-center max-w-md w-full">
           <span className="text-4xl mb-3 block">⚠️</span>
           <h1 className="text-xl font-bold mb-2">الموضوع غير موجود</h1>
           <p className="text-xs text-slate-400 mb-6">
@@ -81,14 +81,14 @@ export default function DiscussionDetailPage({
   };
 
   return (
-    <main className="min-h-screen bg-rawnaq-dark text-white font-cairo py-10" dir="rtl" lang="ar">
+    <main className="min-h-screen bg-raseen-dark text-white font-cairo py-10" dir="rtl" lang="ar">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-xs text-slate-400 mb-6" aria-label="مسار التنقل">
-          <Link href="/" className="hover:text-rawnaq-gold transition-colors">الرئيسية</Link>
+          <Link href="/" className="hover:text-raseen-gold transition-colors">الرئيسية</Link>
           <span>/</span>
-          <Link href="/community" className="hover:text-rawnaq-gold transition-colors">مجتمع رَصين</Link>
+          <Link href="/community" className="hover:text-raseen-gold transition-colors">مجتمع رَصين</Link>
           <span>/</span>
           <span className="text-slate-300 font-bold truncate max-w-xs">{post.title}</span>
         </nav>
@@ -110,12 +110,12 @@ export default function DiscussionDetailPage({
         )}
 
         {/* Main Post Card */}
-        <article className="bg-rawnaq-surface border border-rawnaq-border rounded-2xl p-6 md:p-8 mb-8 shadow-xl">
+        <article className="bg-raseen-surface border border-raseen-border rounded-2xl p-6 md:p-8 mb-8 shadow-xl">
           
           {/* Post Header */}
-          <div className="flex flex-wrap items-center justify-between gap-4 mb-6 pb-6 border-b border-rawnaq-border/70">
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-6 pb-6 border-b border-raseen-border/70">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-rawnaq-accent flex items-center justify-center font-black text-lg text-rawnaq-gold border border-rawnaq-border">
+              <div className="w-12 h-12 rounded-full bg-raseen-accent flex items-center justify-center font-black text-lg text-raseen-gold border border-raseen-border">
                 {post.author.name.charAt(0)}
               </div>
               <div>
@@ -124,7 +124,7 @@ export default function DiscussionDetailPage({
                   {post.author.verified && (
                     <span className="text-cyan-400 text-sm" title="خبير معتمد في رَصين">✓</span>
                   )}
-                  <span className="text-[10px] px-2 py-0.5 rounded bg-rawnaq-navy text-slate-300 border border-rawnaq-border">
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-raseen-navy text-slate-300 border border-raseen-border">
                     {post.author.role === 'expert' ? 'خبير معتمد' : post.author.role === 'creator' ? 'صانع محتوى' : 'عضو'}
                   </span>
                 </div>
@@ -161,7 +161,7 @@ export default function DiscussionDetailPage({
 
           {/* Custom Request Bounty Box if applicable */}
           {post.isCustomRequest && post.bounty && (
-            <div className="mb-8 p-6 rounded-2xl bg-gradient-to-r from-amber-500/10 via-rawnaq-navy to-amber-500/5 border border-amber-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="mb-8 p-6 rounded-2xl bg-gradient-to-r from-amber-500/10 via-raseen-navy to-amber-500/5 border border-amber-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
                 <div className="text-xs font-bold text-amber-400 mb-1 flex items-center gap-1.5">
                   <span>💰</span>
@@ -179,7 +179,7 @@ export default function DiscussionDetailPage({
                   const replyBox = document.getElementById('reply-box');
                   replyBox?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="btn-gold !px-6 !py-2.5 text-xs font-bold shrink-0 shadow-lg shadow-rawnaq-gold/15"
+                className="btn-gold !px-6 !py-2.5 text-xs font-bold shrink-0 shadow-lg shadow-raseen-gold/15"
               >
                 تقديم عرض لتنفيذ النموذج 🤝
               </button>
@@ -188,17 +188,17 @@ export default function DiscussionDetailPage({
 
           {/* Linked Product Banner if applicable */}
           {relatedProduct && (
-            <div className="mb-8 p-4 rounded-xl bg-rawnaq-navy/90 border border-rawnaq-gold/30 flex items-center justify-between gap-4">
+            <div className="mb-8 p-4 rounded-xl bg-raseen-navy/90 border border-raseen-gold/30 flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <span className="text-2xl">📦</span>
                 <div>
-                  <div className="text-xs text-rawnaq-gold font-bold">أصل معتمد ذو صلة في المتجر:</div>
+                  <div className="text-xs text-raseen-gold font-bold">أصل معتمد ذو صلة في المتجر:</div>
                   <div className="text-sm font-bold text-white">{relatedProduct.title}</div>
                 </div>
               </div>
               <Link
                 href={`/product/${relatedProduct.id}`}
-                className="px-4 py-2 rounded-lg bg-rawnaq-gold text-rawnaq-dark text-xs font-bold hover:bg-rawnaq-gold-hover transition-colors shrink-0"
+                className="px-4 py-2 rounded-lg bg-raseen-gold text-raseen-dark text-xs font-bold hover:bg-raseen-gold-hover transition-colors shrink-0"
               >
                 معاينة الأصل في السوق ←
               </Link>
@@ -211,7 +211,7 @@ export default function DiscussionDetailPage({
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="text-xs font-medium px-3 py-1 rounded-lg bg-rawnaq-dark text-slate-300 border border-rawnaq-border"
+                  className="text-xs font-medium px-3 py-1 rounded-lg bg-raseen-dark text-slate-300 border border-raseen-border"
                 >
                   #{tag}
                 </span>
@@ -220,14 +220,14 @@ export default function DiscussionDetailPage({
           )}
 
           {/* Action Bar */}
-          <div className="flex items-center justify-between pt-6 border-t border-rawnaq-border/70">
+          <div className="flex items-center justify-between pt-6 border-t border-raseen-border/70">
             <div className="flex items-center gap-3">
               <button
                 onClick={() => upvotePost(post.id)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold border transition-all ${
                   isUpvoted
-                    ? 'bg-rawnaq-gold/15 border-rawnaq-gold text-rawnaq-gold'
-                    : 'bg-rawnaq-dark border-rawnaq-border text-slate-300 hover:text-white'
+                    ? 'bg-raseen-gold/15 border-raseen-gold text-raseen-gold'
+                    : 'bg-raseen-dark border-raseen-border text-slate-300 hover:text-white'
                 }`}
                 aria-label="تصويت للموضوع"
               >
@@ -237,7 +237,7 @@ export default function DiscussionDetailPage({
 
               <button
                 onClick={handleCopyLink}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs text-slate-400 hover:text-white bg-rawnaq-dark border border-rawnaq-border transition-colors"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs text-slate-400 hover:text-white bg-raseen-dark border border-raseen-border transition-colors"
                 title="مشاركة الرابط"
               >
                 <span>🔗</span>
@@ -264,7 +264,7 @@ export default function DiscussionDetailPage({
           </div>
 
           {comments.length === 0 ? (
-            <div className="p-8 text-center bg-rawnaq-surface/50 rounded-2xl border border-rawnaq-border text-slate-400 text-xs">
+            <div className="p-8 text-center bg-raseen-surface/50 rounded-2xl border border-raseen-border text-slate-400 text-xs">
               لا توجد ردود حتى الآن. كن أول من يشارك خبرته ويقدم حلاً معتمداً!
             </div>
           ) : (
@@ -276,8 +276,8 @@ export default function DiscussionDetailPage({
                   key={comment.id}
                   className={`p-6 rounded-2xl border transition-all ${
                     comment.isSolution
-                      ? 'bg-gradient-to-br from-green-500/10 to-rawnaq-surface border-green-500/50 shadow-lg shadow-green-500/5'
-                      : 'bg-rawnaq-surface border-rawnaq-border'
+                      ? 'bg-gradient-to-br from-green-500/10 to-raseen-surface border-green-500/50 shadow-lg shadow-green-500/5'
+                      : 'bg-raseen-surface border-raseen-border'
                   }`}
                 >
                   {/* Solution Badge Header */}
@@ -291,7 +291,7 @@ export default function DiscussionDetailPage({
                   {/* Author Header */}
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-full bg-rawnaq-dark flex items-center justify-center font-bold text-xs text-rawnaq-gold border border-rawnaq-border">
+                      <div className="w-9 h-9 rounded-full bg-raseen-dark flex items-center justify-center font-bold text-xs text-raseen-gold border border-raseen-border">
                         {comment.author.name.charAt(0)}
                       </div>
                       <div>
@@ -320,8 +320,8 @@ export default function DiscussionDetailPage({
                         onClick={() => upvoteComment(comment.id)}
                         className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-mono border transition-all ${
                           isCommentUpvoted
-                            ? 'bg-rawnaq-gold/15 text-rawnaq-gold border-rawnaq-gold'
-                            : 'bg-rawnaq-dark text-slate-400 border-rawnaq-border hover:text-white'
+                            ? 'bg-raseen-gold/15 text-raseen-gold border-raseen-gold'
+                            : 'bg-raseen-dark text-slate-400 border-raseen-border hover:text-white'
                         }`}
                       >
                         <span>▲</span>
@@ -340,7 +340,7 @@ export default function DiscussionDetailPage({
           )}
 
           {/* Add Reply Box */}
-          <div id="reply-box" className="p-6 bg-rawnaq-surface rounded-2xl border border-rawnaq-border shadow-xl">
+          <div id="reply-box" className="p-6 bg-raseen-surface rounded-2xl border border-raseen-border shadow-xl">
             <h3 className="font-bold text-white text-base mb-2 flex items-center gap-2">
               <span>✍️</span>
               <span>شارك خبرتك أو قدّم عرضك</span>
@@ -355,7 +355,7 @@ export default function DiscussionDetailPage({
                 value={commentContent}
                 onChange={(e) => setCommentContent(e.target.value)}
                 placeholder="اكتب ردك التخصصي، الدوال المقترحة، أو تفاصيل العرض بالتفصيل..."
-                className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl p-4 text-sm text-white focus:outline-none focus:border-rawnaq-gold transition-colors leading-relaxed"
+                className="w-full bg-raseen-dark border border-raseen-border rounded-xl p-4 text-sm text-white focus:outline-none focus:border-raseen-gold transition-colors leading-relaxed"
                 required
               ></textarea>
 
@@ -368,7 +368,7 @@ export default function DiscussionDetailPage({
                       value={guestName}
                       onChange={(e) => setGuestName(e.target.value)}
                       placeholder="اسمك الكريم"
-                      className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-rawnaq-gold"
+                      className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-raseen-gold"
                     />
                   </div>
                   <div>
@@ -378,7 +378,7 @@ export default function DiscussionDetailPage({
                       value={guestTitle}
                       onChange={(e) => setGuestTitle(e.target.value)}
                       placeholder="مثال: محاسب قانوني"
-                      className="w-full bg-rawnaq-dark border border-rawnaq-border rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-rawnaq-gold"
+                      className="w-full bg-raseen-dark border border-raseen-border rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-raseen-gold"
                     />
                   </div>
                 </div>
@@ -387,7 +387,7 @@ export default function DiscussionDetailPage({
               <div className="flex items-center justify-end">
                 <button
                   type="submit"
-                  className="btn-gold !px-6 !py-2.5 text-xs font-bold flex items-center gap-2 shadow-md shadow-rawnaq-gold/10"
+                  className="btn-gold !px-6 !py-2.5 text-xs font-bold flex items-center gap-2 shadow-md shadow-raseen-gold/10"
                 >
                   <span>نشر الرد الآن 💬</span>
                 </button>

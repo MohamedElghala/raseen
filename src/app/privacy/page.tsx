@@ -9,21 +9,21 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-rawnaq-dark text-slate-200 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto rawnaq-glass p-6 sm:p-10 border border-rawnaq-border/80 rounded-2xl shadow-2xl">
+    <div className="min-h-screen bg-raseen-dark text-slate-200 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto raseen-glass p-6 sm:p-10 border border-raseen-border/80 rounded-2xl shadow-2xl">
         
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-xs text-slate-400 mb-6 font-mono">
-          <Link href="/" className="hover:text-rawnaq-gold transition-colors">الرئيسية</Link>
+          <Link href="/" className="hover:text-raseen-gold transition-colors">الرئيسية</Link>
           <span>/</span>
-          <span className="text-rawnaq-gold">سياسة الخصوصية</span>
+          <span className="text-raseen-gold">سياسة الخصوصية</span>
         </div>
 
         {/* Title */}
         <h1 className="text-3xl sm:text-4xl font-black text-white mb-2 font-cairo">
           سياسة الخصوصية وحماية البيانات
         </h1>
-        <p className="text-xs sm:text-sm text-slate-400 mb-8 border-b border-rawnaq-border/60 pb-4">
+        <p className="text-xs sm:text-sm text-slate-400 mb-8 border-b border-raseen-border/60 pb-4">
           آخر تحديث: 05 أكتوبر 2026 • تلتزم منصة "رَصِيـن" بحماية خصوصية بياناتك وفقاً لأعلى المعايير الأمنية العالمية ومبادئ Google OAuth.
         </p>
 
@@ -32,7 +32,7 @@ export default function PrivacyPage() {
           
           <section>
             <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
-              <span className="text-rawnaq-gold">1.</span>
+              <span className="text-raseen-gold">1.</span>
               البيانات التي نجمعها
             </h2>
             <p className="mb-2">
@@ -47,7 +47,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
-              <span className="text-rawnaq-gold">2.</span>
+              <span className="text-raseen-gold">2.</span>
               كيف نستخدم معلوماتك؟
             </h2>
             <ul className="list-disc list-inside space-y-1.5 text-slate-400 mr-2">
@@ -61,7 +61,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
-              <span className="text-rawnaq-gold">3.</span>
+              <span className="text-raseen-gold">3.</span>
               حماية البيانات وعدم مشاركتها
             </h2>
             <p className="mb-2">
@@ -74,7 +74,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
-              <span className="text-rawnaq-gold">4.</span>
+              <span className="text-raseen-gold">4.</span>
               ملفات تعريف الارتباط (Cookies)
             </h2>
             <p>
@@ -84,7 +84,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
-              <span className="text-rawnaq-gold">5.</span>
+              <span className="text-raseen-gold">5.</span>
               حقوق المستخدم وحذف البيانات
             </h2>
             <p>
@@ -92,8 +92,8 @@ export default function PrivacyPage() {
             </p>
           </section>
 
-          <section className="bg-rawnaq-surface/60 p-5 rounded-xl border border-rawnaq-border">
-            <h2 className="text-lg font-bold text-rawnaq-gold mb-2">التواصل معنا</h2>
+          <section className="bg-raseen-surface/60 p-5 rounded-xl border border-raseen-border">
+            <h2 className="text-lg font-bold text-raseen-gold mb-2">التواصل معنا</h2>
             <p className="text-sm text-slate-300">
               لأي استفسارات أو طلبات تتعلق بالخصوصية وحماية البيانات، يسعدنا تواصلك معنا مباشرة عبر البريد الإلكتروني:
             </p>

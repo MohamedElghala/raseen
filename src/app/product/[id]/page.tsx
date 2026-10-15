@@ -38,8 +38,8 @@ export default function ProductDetailPage() {
 
   if (!product) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-rawnaq-dark text-white font-cairo px-4" dir="rtl" lang="ar">
-        <h1 className="text-4xl font-bold text-rawnaq-gold mb-4">404 - المنتج غير موجود</h1>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-raseen-dark text-white font-cairo px-4" dir="rtl" lang="ar">
+        <h1 className="text-4xl font-bold text-raseen-gold mb-4">404 - المنتج غير موجود</h1>
         <p className="text-slate-400 mb-8">عذراً، المنتج الذي تبحث عنه غير متوفر أو تم حذفه.</p>
         <button
           onClick={() => router.push('/')}
@@ -57,13 +57,13 @@ export default function ProductDetailPage() {
     : null;
 
   return (
-    <main className="min-h-screen bg-rawnaq-dark text-white font-cairo pb-20" dir="rtl" lang="ar">
+    <main className="min-h-screen bg-raseen-dark text-white font-cairo pb-20" dir="rtl" lang="ar">
       <div className="container mx-auto px-4 py-8">
 
         {/* Breadcrumb & Back button */}
         <div className="flex items-center justify-between mb-8">
           <nav className="flex items-center text-sm text-slate-400 flex-wrap gap-2">
-            <Link href="/" className="hover:text-rawnaq-gold transition-colors">الرئيسية</Link>
+            <Link href="/" className="hover:text-raseen-gold transition-colors">الرئيسية</Link>
             <span>‹</span>
             <span className="text-slate-300">{product.category}</span>
             <span>‹</span>
@@ -78,9 +78,9 @@ export default function ProductDetailPage() {
         </div>
 
         {/* Product Details Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 bg-rawnaq-navy p-6 md:p-8 rounded-2xl border border-rawnaq-border mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 bg-raseen-navy p-6 md:p-8 rounded-2xl border border-raseen-border mb-16">
           {/* Visuals */}
-          <div className="relative aspect-[3/2] w-full rounded-xl overflow-hidden border border-rawnaq-border bg-rawnaq-dark">
+          <div className="relative aspect-[3/2] w-full rounded-xl overflow-hidden border border-raseen-border bg-raseen-dark">
             <Image
               src={product.imageUrl}
               alt={product.title}
@@ -94,13 +94,13 @@ export default function ProductDetailPage() {
           {/* Info */}
           <div className="flex flex-col">
             <div className="mb-4">
-              <span className="inline-block px-3 py-1 bg-rawnaq-dark border border-rawnaq-border text-rawnaq-gold rounded-full text-xs font-semibold mb-3">
+              <span className="inline-block px-3 py-1 bg-raseen-dark border border-raseen-border text-raseen-gold rounded-full text-xs font-semibold mb-3">
                 {product.category}
               </span>
               <h1 className="text-2xl md:text-3xl font-bold text-white mb-4 leading-tight">{product.title}</h1>
 
               <div className="flex items-center gap-4 mb-6 text-sm flex-wrap">
-                <div className="flex items-center text-rawnaq-gold gap-1">
+                <div className="flex items-center text-raseen-gold gap-1">
                   <span>⭐</span>
                   <span className="font-bold">{product.rating}</span>
                   <span className="text-slate-400">({reviews.length} تقييم)</span>
@@ -120,7 +120,7 @@ export default function ProductDetailPage() {
               {product.description}
             </p>
 
-            <div className="bg-rawnaq-surface p-4 rounded-xl border border-rawnaq-border mb-6 space-y-2 text-sm">
+            <div className="bg-raseen-surface p-4 rounded-xl border border-raseen-border mb-6 space-y-2 text-sm">
               <div className="flex items-center justify-between">
                 <span className="text-slate-400">نوع الترخيص:</span>
                 <span className="text-white font-semibold">
@@ -129,7 +129,7 @@ export default function ProductDetailPage() {
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-slate-400">صيغة الملف:</span>
-                <span className="text-rawnaq-gold font-semibold uppercase">{product.fileType}</span>
+                <span className="text-raseen-gold font-semibold uppercase">{product.fileType}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-slate-400">البائع والمطور:</span>
@@ -141,7 +141,7 @@ export default function ProductDetailPage() {
               <div className="flex flex-wrap items-center gap-2 mb-6">
                 <span className="text-slate-400 text-xs">الوسوم:</span>
                 {product.tags.map((tag: string) => (
-                  <span key={tag} className="px-2.5 py-1 bg-rawnaq-dark text-slate-300 text-xs rounded-md border border-rawnaq-border">
+                  <span key={tag} className="px-2.5 py-1 bg-raseen-dark text-slate-300 text-xs rounded-md border border-raseen-border">
                     #{tag}
                   </span>
                 ))}
@@ -167,17 +167,17 @@ export default function ProductDetailPage() {
               </div>
             )}
 
-            <div className="flex items-center justify-between mt-auto pt-6 border-t border-rawnaq-border">
+            <div className="flex items-center justify-between mt-auto pt-6 border-t border-raseen-border">
               <div>
                 {displayOriginalPrice && (
                   <div className="text-slate-500 line-through text-xs mb-1">{displayOriginalPrice}</div>
                 )}
-                <div className="text-3xl font-black text-rawnaq-gold">{displayPrice}</div>
+                <div className="text-3xl font-black text-raseen-gold">{displayPrice}</div>
               </div>
 
               <button
                 onClick={() => addItem(product)}
-                className="btn-gold flex items-center gap-2 !px-8 shadow-lg shadow-rawnaq-gold/20"
+                className="btn-gold flex items-center gap-2 !px-8 shadow-lg shadow-raseen-gold/20"
                 aria-label="أضف للسلة"
               >
                 <span>أضف للسلة</span>
@@ -211,16 +211,16 @@ export default function ProductDetailPage() {
 
         {/* Reviews Section */}
         <div className="mb-16">
-          <h2 className="text-2xl font-bold text-white mb-6 border-b border-rawnaq-border pb-4">
+          <h2 className="text-2xl font-bold text-white mb-6 border-b border-raseen-border pb-4">
             تقييمات المشترين ({reviews.length})
           </h2>
           {reviews.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {reviews.map((review) => (
-                <div key={review.id} className="bg-rawnaq-surface p-5 rounded-xl border border-rawnaq-border">
+                <div key={review.id} className="bg-raseen-surface p-5 rounded-xl border border-raseen-border">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-rawnaq-accent rounded-full flex items-center justify-center font-bold text-rawnaq-gold border border-rawnaq-border">
+                      <div className="w-10 h-10 bg-raseen-accent rounded-full flex items-center justify-center font-bold text-raseen-gold border border-raseen-border">
                         {review.userName.charAt(0)}
                       </div>
                       <div>
@@ -228,7 +228,7 @@ export default function ProductDetailPage() {
                         <div className="text-xs text-slate-500">{review.date}</div>
                       </div>
                     </div>
-                    <div className="text-rawnaq-gold text-sm">
+                    <div className="text-raseen-gold text-sm">
                       {'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}
                     </div>
                   </div>
@@ -237,7 +237,7 @@ export default function ProductDetailPage() {
               ))}
             </div>
           ) : (
-            <div className="p-8 text-center bg-rawnaq-surface rounded-xl border border-rawnaq-border text-slate-400">
+            <div className="p-8 text-center bg-raseen-surface rounded-xl border border-raseen-border text-slate-400">
               لا توجد تقييمات لهذا المنتج بعد. كن أول من يقيّم بعد الشراء!
             </div>
           )}
@@ -246,7 +246,7 @@ export default function ProductDetailPage() {
         {/* Related Products */}
         {relatedProducts.length > 0 && (
           <div>
-            <h2 className="text-2xl font-bold text-white mb-6 border-b border-rawnaq-border pb-4">منتجات مشابهة</h2>
+            <h2 className="text-2xl font-bold text-white mb-6 border-b border-raseen-border pb-4">منتجات مشابهة</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {relatedProducts.map((rp) => (
                 <ProductCard key={rp.id} product={rp} />

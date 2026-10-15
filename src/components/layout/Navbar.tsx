@@ -48,13 +48,13 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 rawnaq-glass border-x-0 border-t-0 rounded-none border-b border-rawnaq-border">
+    <header className="sticky top-0 z-50 raseen-glass border-x-0 border-t-0 rounded-none border-b border-raseen-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 md:h-20">
 
           {/* Official 3D Sovereign Aerodynamic Monogram Logo */}
           <Link href="/" className="flex items-center gap-3 shrink-0 group" aria-label="الرئيسية - رَصين">
-            <div className="relative w-11 h-11 rounded-xl bg-rawnaq-surface border border-rawnaq-gold/40 flex items-center justify-center p-1 group-hover:border-rawnaq-gold transition-all duration-300 shadow-lg shadow-black/50 overflow-hidden">
+            <div className="relative w-11 h-11 rounded-xl bg-raseen-surface border border-raseen-gold/40 flex items-center justify-center p-1 group-hover:border-raseen-gold transition-all duration-300 shadow-lg shadow-black/50 overflow-hidden">
               <Image 
                 src="/brand/raseen_monogram.jpg" 
                 alt="شعار رَصين" 
@@ -79,7 +79,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-slate-300 hover:text-rawnaq-gold transition-colors font-medium px-4 py-2 rounded-lg hover:bg-rawnaq-accent/30"
+                className="text-slate-300 hover:text-raseen-gold transition-colors font-medium px-4 py-2 rounded-lg hover:bg-raseen-accent/30"
               >
                 {link.icon} {link.label}
               </Link>
@@ -93,7 +93,7 @@ export default function Navbar() {
             <select
               value={currency}
               onChange={(e) => setCurrency(e.target.value as Currency)}
-              className="bg-rawnaq-surface border border-rawnaq-border text-slate-300 rounded-lg px-2 py-1.5 text-xs md:text-sm focus:outline-none focus:ring-1 focus:ring-rawnaq-gold min-h-[44px] cursor-pointer"
+              className="bg-raseen-surface border border-raseen-border text-slate-300 rounded-lg px-2 py-1.5 text-xs md:text-sm focus:outline-none focus:ring-1 focus:ring-raseen-gold min-h-[44px] cursor-pointer"
               aria-label="تغيير العملة"
             >
               <option value="EGP">🇪🇬 EGP</option>
@@ -105,14 +105,14 @@ export default function Navbar() {
             {/* Cart Button */}
             <button
               onClick={() => toggleCart()}
-              className="relative p-2 text-slate-300 hover:text-rawnaq-gold transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg hover:bg-rawnaq-accent/30"
+              className="relative p-2 text-slate-300 hover:text-raseen-gold transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg hover:bg-raseen-accent/30"
               aria-label={`سلة المشتريات (${cartCount} عنصر)`}
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.076.721-.506 1.393-1.235 1.393H4.366a1.25 1.25 0 01-1.235-1.393l1.263-12A1.25 1.25 0 015.63 8.507h12.74c.648 0 1.18.493 1.236 1.143z" />
               </svg>
               {cartCount > 0 && (
-                <span className="absolute -top-0.5 -left-0.5 bg-rawnaq-gold text-rawnaq-dark text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                <span className="absolute -top-0.5 -left-0.5 bg-raseen-gold text-raseen-dark text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center">
                   {cartCount}
                 </span>
               )}
@@ -151,7 +151,7 @@ export default function Navbar() {
             {/* Hamburger */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 text-slate-300 hover:text-rawnaq-gold transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
+              className="md:hidden p-2 text-slate-300 hover:text-raseen-gold transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
               aria-label="القائمة الرئيسية"
               aria-expanded={isMobileMenuOpen}
             >
@@ -171,26 +171,26 @@ export default function Navbar() {
 
       {/* Mobile Drawer */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-rawnaq-dark/95 backdrop-blur-lg border-t border-rawnaq-border animate-fade-in-up">
+        <div className="md:hidden bg-raseen-dark/95 backdrop-blur-lg border-t border-raseen-border animate-fade-in-up">
           <div className="px-4 pt-2 pb-6 space-y-3">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="block text-slate-200 hover:text-rawnaq-gold font-medium py-3 border-b border-rawnaq-border/50 min-h-[44px]"
+                className="block text-slate-200 hover:text-raseen-gold font-medium py-3 border-b border-raseen-border/50 min-h-[44px]"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.icon} {link.label}
               </Link>
             ))}
 
-            <div className="pt-2 pb-1 border-b border-rawnaq-border/50">
-              <span className="text-[11px] font-bold text-rawnaq-gold block mb-2">أركان الأصول الرقمية:</span>
+            <div className="pt-2 pb-1 border-b border-raseen-border/50">
+              <span className="text-[11px] font-bold text-raseen-gold block mb-2">أركان الأصول الرقمية:</span>
               <div className="grid grid-cols-2 gap-2 text-xs">
                 <Link
                   href="/category/accounting"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2.5 rounded-lg bg-rawnaq-surface border border-rawnaq-border hover:border-emerald-500/50 text-slate-200 flex items-center gap-1.5"
+                  className="p-2.5 rounded-lg bg-raseen-surface border border-raseen-border hover:border-emerald-500/50 text-slate-200 flex items-center gap-1.5"
                 >
                   <span>📊</span>
                   <span>الشيتات المالية</span>
@@ -198,7 +198,7 @@ export default function Navbar() {
                 <Link
                   href="/category/business"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2.5 rounded-lg bg-rawnaq-surface border border-rawnaq-border hover:border-blue-500/50 text-slate-200 flex items-center gap-1.5"
+                  className="p-2.5 rounded-lg bg-raseen-surface border border-raseen-border hover:border-blue-500/50 text-slate-200 flex items-center gap-1.5"
                 >
                   <span>⚖️</span>
                   <span>العقود القانونية</span>
@@ -206,7 +206,7 @@ export default function Navbar() {
                 <Link
                   href="/editor"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2.5 rounded-lg bg-rawnaq-surface border border-rawnaq-border hover:border-cyan-500/50 text-slate-200 flex items-center gap-1.5"
+                  className="p-2.5 rounded-lg bg-raseen-surface border border-raseen-border hover:border-cyan-500/50 text-slate-200 flex items-center gap-1.5"
                 >
                   <span>🎨</span>
                   <span>استوديو Canva</span>
@@ -214,7 +214,7 @@ export default function Navbar() {
                 <Link
                   href="/category/engineering"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2.5 rounded-lg bg-rawnaq-surface border border-rawnaq-border hover:border-purple-500/50 text-slate-200 flex items-center gap-1.5"
+                  className="p-2.5 rounded-lg bg-raseen-surface border border-raseen-border hover:border-purple-500/50 text-slate-200 flex items-center gap-1.5"
                 >
                   <span>📐</span>
                   <span>المكتبات الهندسية</span>

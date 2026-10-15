@@ -67,14 +67,14 @@ export default function QuickStoreWizard({ onFinish }: QuickStoreWizardProps) {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto bg-rawnaq-navy border border-rawnaq-border rounded-3xl p-6 sm:p-10 shadow-2xl font-cairo text-right relative overflow-hidden" dir="rtl">
+    <div className="w-full max-w-4xl mx-auto bg-raseen-navy border border-raseen-border rounded-3xl p-6 sm:p-10 shadow-2xl font-cairo text-right relative overflow-hidden" dir="rtl">
       
       {/* Ambient background glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-32 bg-rawnaq-gold/10 blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-32 bg-raseen-gold/10 blur-3xl pointer-events-none" />
 
       {/* Header */}
       <div className="text-center mb-8 relative z-10">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rawnaq-gold/10 border border-rawnaq-gold/30 text-rawnaq-gold text-xs font-bold mb-3">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-raseen-gold/10 border border-raseen-gold/30 text-raseen-gold text-xs font-bold mb-3">
           <span>⚡ معالج إطلاق المتاجر السريع في 5 دقائق</span>
         </div>
         <h2 className="text-2xl sm:text-3xl font-black text-white mb-2">
@@ -86,17 +86,17 @@ export default function QuickStoreWizard({ onFinish }: QuickStoreWizardProps) {
 
         {/* Progress Tracker */}
         <div className="flex items-center justify-center gap-2 sm:gap-4 mt-6">
-          <div className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${step >= 1 ? 'bg-rawnaq-gold text-slate-950 shadow-md' : 'bg-rawnaq-surface text-slate-400'}`}>
+          <div className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${step >= 1 ? 'bg-raseen-gold text-slate-950 shadow-md' : 'bg-raseen-surface text-slate-400'}`}>
             <span>1</span>
             <span>هوية المتجر</span>
           </div>
           <span className="text-slate-600">←</span>
-          <div className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${step >= 2 ? 'bg-rawnaq-gold text-slate-950 shadow-md' : 'bg-rawnaq-surface text-slate-400'}`}>
+          <div className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${step >= 2 ? 'bg-raseen-gold text-slate-950 shadow-md' : 'bg-raseen-surface text-slate-400'}`}>
             <span>2</span>
             <span>رفع أول أصل وتسعيره</span>
           </div>
           <span className="text-slate-600">←</span>
-          <div className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${step === 3 ? 'bg-emerald-500 text-slate-950 shadow-md' : 'bg-rawnaq-surface text-slate-400'}`}>
+          <div className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${step === 3 ? 'bg-emerald-500 text-slate-950 shadow-md' : 'bg-raseen-surface text-slate-400'}`}>
             <span>3</span>
             <span>المتجر جاهز للبيع! 🎉</span>
           </div>
@@ -108,7 +108,7 @@ export default function QuickStoreWizard({ onFinish }: QuickStoreWizardProps) {
         <form onSubmit={handleStep1Submit} className="space-y-5 relative z-10">
           <div>
             <label className="block text-sm font-bold text-slate-200 mb-2">
-              اسم المتجر أو علامتك التجارية <span className="text-rawnaq-gold">*</span>
+              اسم المتجر أو علامتك التجارية <span className="text-raseen-gold">*</span>
             </label>
             <input
               type="text"
@@ -119,7 +119,7 @@ export default function QuickStoreWizard({ onFinish }: QuickStoreWizardProps) {
                 setStoreSlug(e.target.value.trim().toLowerCase().replace(/[^a-z0-9\u0600-\u06FF]/g, '-'));
               }}
               placeholder="مثال: ستوديو أصول المحاسبة، أو المهندس أحمد للتصميم"
-              className="w-full h-12 px-4 rounded-xl bg-rawnaq-surface border border-rawnaq-border text-white placeholder-slate-500 focus:outline-none focus:border-rawnaq-gold text-sm"
+              className="w-full h-12 px-4 rounded-xl bg-raseen-surface border border-raseen-border text-white placeholder-slate-500 focus:outline-none focus:border-raseen-gold text-sm"
             />
           </div>
 
@@ -128,8 +128,8 @@ export default function QuickStoreWizard({ onFinish }: QuickStoreWizardProps) {
               <label className="block text-sm font-bold text-slate-200 mb-2">
                 الرابط المخصص المباشر لمتجرك
               </label>
-              <div className="flex items-center h-12 px-3 rounded-xl bg-rawnaq-surface border border-rawnaq-border text-xs text-slate-400" dir="ltr">
-                <span className="text-rawnaq-gold font-mono font-bold">raseen.me/@</span>
+              <div className="flex items-center h-12 px-3 rounded-xl bg-raseen-surface border border-raseen-border text-xs text-slate-400" dir="ltr">
+                <span className="text-raseen-gold font-mono font-bold">raseen.me/@</span>
                 <input
                   type="text"
                   value={storeSlug}
@@ -147,7 +147,7 @@ export default function QuickStoreWizard({ onFinish }: QuickStoreWizardProps) {
               <select
                 value={storeCategory}
                 onChange={(e) => setStoreCategory(e.target.value)}
-                className="w-full h-12 px-4 rounded-xl bg-rawnaq-surface border border-rawnaq-border text-white text-sm focus:outline-none focus:border-rawnaq-gold"
+                className="w-full h-12 px-4 rounded-xl bg-raseen-surface border border-raseen-border text-white text-sm focus:outline-none focus:border-raseen-gold"
               >
                 <option value="شيتات إكسل ومحاسبة">📊 شيتات إكسل ومحاسبة وماليات</option>
                 <option value="عقود قانونية وإدارية">⚖️ صياغة عقود وقوالب قانونية</option>
@@ -167,7 +167,7 @@ export default function QuickStoreWizard({ onFinish }: QuickStoreWizardProps) {
               value={storeBio}
               onChange={(e) => setStoreBio(e.target.value)}
               placeholder="نقدم نماذج عملية ومجربة تسهم في تسريع أعمال الشركات وأصحاب الأعمال الناشئة..."
-              className="w-full p-3 rounded-xl bg-rawnaq-surface border border-rawnaq-border text-white placeholder-slate-500 focus:outline-none focus:border-rawnaq-gold text-xs leading-relaxed"
+              className="w-full p-3 rounded-xl bg-raseen-surface border border-raseen-border text-white placeholder-slate-500 focus:outline-none focus:border-raseen-gold text-xs leading-relaxed"
             />
           </div>
 
@@ -188,7 +188,7 @@ export default function QuickStoreWizard({ onFinish }: QuickStoreWizardProps) {
         <form onSubmit={handleStep2Submit} className="space-y-5 relative z-10">
           <div>
             <label className="block text-sm font-bold text-slate-200 mb-2">
-              عنوان المنتج أو الأصل الأول <span className="text-rawnaq-gold">*</span>
+              عنوان المنتج أو الأصل الأول <span className="text-raseen-gold">*</span>
             </label>
             <input
               type="text"
@@ -196,7 +196,7 @@ export default function QuickStoreWizard({ onFinish }: QuickStoreWizardProps) {
               value={assetTitle}
               onChange={(e) => setAssetTitle(e.target.value)}
               placeholder="مثال: شيت ميزان المراجعة والقوائم المالية المؤتمت 2026"
-              className="w-full h-12 px-4 rounded-xl bg-rawnaq-surface border border-rawnaq-border text-white placeholder-slate-500 focus:outline-none focus:border-rawnaq-gold text-sm"
+              className="w-full h-12 px-4 rounded-xl bg-raseen-surface border border-raseen-border text-white placeholder-slate-500 focus:outline-none focus:border-raseen-gold text-sm"
             />
           </div>
 
@@ -208,7 +208,7 @@ export default function QuickStoreWizard({ onFinish }: QuickStoreWizardProps) {
               <select
                 value={assetType}
                 onChange={(e) => setAssetType(e.target.value)}
-                className="w-full h-12 px-3 rounded-xl bg-rawnaq-surface border border-rawnaq-border text-white text-xs focus:outline-none focus:border-rawnaq-gold"
+                className="w-full h-12 px-3 rounded-xl bg-raseen-surface border border-raseen-border text-white text-xs focus:outline-none focus:border-raseen-gold"
               >
                 <option value="excel">ملف Excel (.xlsx)</option>
                 <option value="word-pdf">عقد أو مستند (DOCX / PDF)</option>
@@ -222,7 +222,7 @@ export default function QuickStoreWizard({ onFinish }: QuickStoreWizardProps) {
               <label className="block text-sm font-bold text-slate-200 mb-2">
                 سعر البيع
               </label>
-              <div className="flex items-center h-12 rounded-xl bg-rawnaq-surface border border-rawnaq-border overflow-hidden">
+              <div className="flex items-center h-12 rounded-xl bg-raseen-surface border border-raseen-border overflow-hidden">
                 <input
                   type="number"
                   min="50"
@@ -234,7 +234,7 @@ export default function QuickStoreWizard({ onFinish }: QuickStoreWizardProps) {
                 <select
                   value={currency}
                   onChange={(e: any) => setCurrency(e.target.value)}
-                  className="bg-rawnaq-dark text-rawnaq-gold text-xs px-2 h-full border-r border-rawnaq-border font-bold focus:outline-none"
+                  className="bg-raseen-dark text-raseen-gold text-xs px-2 h-full border-r border-raseen-border font-bold focus:outline-none"
                 >
                   <option value="EGP">ج.م (مصر)</option>
                   <option value="SAR">ر.س (السعودية)</option>
@@ -251,13 +251,13 @@ export default function QuickStoreWizard({ onFinish }: QuickStoreWizardProps) {
                 value={instapayHandle}
                 onChange={(e) => setInstapayHandle(e.target.value)}
                 placeholder="username@instapay أو رقم الهاتف"
-                className="w-full h-12 px-3 rounded-xl bg-rawnaq-surface border border-rawnaq-border text-white placeholder-slate-500 text-xs focus:outline-none focus:border-rawnaq-gold font-mono"
+                className="w-full h-12 px-3 rounded-xl bg-raseen-surface border border-raseen-border text-white placeholder-slate-500 text-xs focus:outline-none focus:border-raseen-gold font-mono"
               />
             </div>
           </div>
 
           {/* Drag & Drop Simulation */}
-          <div className="border-2 border-dashed border-rawnaq-border hover:border-rawnaq-gold/50 rounded-2xl p-6 text-center bg-rawnaq-surface/40 transition-colors cursor-pointer">
+          <div className="border-2 border-dashed border-raseen-border hover:border-raseen-gold/50 rounded-2xl p-6 text-center bg-raseen-surface/40 transition-colors cursor-pointer">
             <span className="text-3xl block mb-2">📂</span>
             <span className="text-xs font-bold text-slate-200 block mb-1">
               اسحب وأفلت الملف هنا أو انقر للتصفح (حتى 100 ميجابايت)
@@ -313,10 +313,10 @@ export default function QuickStoreWizard({ onFinish }: QuickStoreWizardProps) {
           </p>
 
           {/* Store Box Card */}
-          <div className="bg-rawnaq-surface border border-rawnaq-gold/40 rounded-2xl p-6 text-right max-w-xl mx-auto shadow-xl">
-            <div className="flex items-center justify-between border-b border-rawnaq-border pb-4 mb-4">
+          <div className="bg-raseen-surface border border-raseen-gold/40 rounded-2xl p-6 text-right max-w-xl mx-auto shadow-xl">
+            <div className="flex items-center justify-between border-b border-raseen-border pb-4 mb-4">
               <div>
-                <span className="text-xs text-rawnaq-gold font-bold block mb-1">{storeCategory}</span>
+                <span className="text-xs text-raseen-gold font-bold block mb-1">{storeCategory}</span>
                 <h4 className="text-lg font-black text-white">{storeName || 'متجري الرقمي'}</h4>
               </div>
               <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-mono font-bold">
@@ -331,7 +331,7 @@ export default function QuickStoreWizard({ onFinish }: QuickStoreWizardProps) {
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-400">سعر البيع:</span>
-                <span className="font-black text-rawnaq-gold text-sm">{assetPrice} {currency}</span>
+                <span className="font-black text-raseen-gold text-sm">{assetPrice} {currency}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-400">طرق الدفع المفعلة:</span>
@@ -344,12 +344,12 @@ export default function QuickStoreWizard({ onFinish }: QuickStoreWizardProps) {
             </div>
 
             {/* Store URL & Share */}
-            <div className="p-3 bg-rawnaq-dark rounded-xl border border-rawnaq-border flex items-center justify-between gap-2" dir="ltr">
-              <span className="text-xs font-mono text-rawnaq-gold truncate">{storeUrl}</span>
+            <div className="p-3 bg-raseen-dark rounded-xl border border-raseen-border flex items-center justify-between gap-2" dir="ltr">
+              <span className="text-xs font-mono text-raseen-gold truncate">{storeUrl}</span>
               <button
                 type="button"
                 onClick={copyStoreLink}
-                className="px-4 py-1.5 bg-rawnaq-surface hover:bg-rawnaq-gold hover:text-slate-950 text-white rounded-lg text-xs font-bold transition-colors shrink-0"
+                className="px-4 py-1.5 bg-raseen-surface hover:bg-raseen-gold hover:text-slate-950 text-white rounded-lg text-xs font-bold transition-colors shrink-0"
               >
                 {copied ? 'تم النسخ! ✓' : 'نسخ الرابط 📋'}
               </button>

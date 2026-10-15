@@ -61,10 +61,10 @@ export default function ToolsPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-rawnaq-dark text-white font-cairo py-12" dir="rtl" lang="ar">
+    <main className="min-h-screen bg-raseen-dark text-white font-cairo py-12" dir="rtl" lang="ar">
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="text-center mb-12">
-          <span className="inline-block px-3 py-1 bg-rawnaq-surface text-rawnaq-gold border border-rawnaq-border rounded-full text-xs font-semibold mb-3">
+          <span className="inline-block px-3 py-1 bg-raseen-surface text-raseen-gold border border-raseen-border rounded-full text-xs font-semibold mb-3">
             أدوات مجانية للجميع
           </span>
           <h1 className="text-3xl md:text-4xl font-black gold-gradient-text mb-4">الأدوات التفاعلية الذكية</h1>
@@ -77,16 +77,16 @@ export default function ToolsPage() {
           {tools.map((tool) => (
             <div
               key={tool.id}
-              className="bg-rawnaq-navy border border-rawnaq-border rounded-2xl overflow-hidden transition-all duration-300 shadow-lg"
+              className="bg-raseen-navy border border-raseen-border rounded-2xl overflow-hidden transition-all duration-300 shadow-lg"
             >
               <button
                 onClick={() => toggleSection(tool.id)}
-                className="w-full flex items-center justify-between p-6 bg-rawnaq-navy hover:bg-rawnaq-surface transition-colors focus:outline-none min-h-[44px]"
+                className="w-full flex items-center justify-between p-6 bg-raseen-navy hover:bg-raseen-surface transition-colors focus:outline-none min-h-[44px]"
                 aria-expanded={openSection === tool.id}
                 aria-controls={`sect-${tool.id}`}
               >
                 <div className="flex items-center gap-4 text-right">
-                  <span className="w-12 h-12 bg-rawnaq-dark rounded-xl flex items-center justify-center text-2xl border border-rawnaq-border shrink-0">
+                  <span className="w-12 h-12 bg-raseen-dark rounded-xl flex items-center justify-center text-2xl border border-raseen-border shrink-0">
                     {tool.icon}
                   </span>
                   <div>
@@ -94,13 +94,13 @@ export default function ToolsPage() {
                     <p className="text-xs text-slate-400 hidden sm:block mt-1">{tool.desc}</p>
                   </div>
                 </div>
-                <span className="text-rawnaq-gold text-xl font-bold px-2">
+                <span className="text-raseen-gold text-xl font-bold px-2">
                   {openSection === tool.id ? '▲' : '▼'}
                 </span>
               </button>
 
               {openSection === tool.id && (
-                <div id={`sect-${tool.id}`} className="p-6 border-t border-rawnaq-border/50 bg-rawnaq-surface/50 animate-fade-in-up">
+                <div id={`sect-${tool.id}`} className="p-6 border-t border-raseen-border/50 bg-raseen-surface/50 animate-fade-in-up">
                   {tool.component}
                 </div>
               )}

@@ -37,12 +37,12 @@ export default function FilterBar({
   totalProducts,
 }: FilterBarProps) {
   return (
-    <div className="w-full bg-rawnaq-dark border-b border-rawnaq-border py-6 px-4">
+    <div className="w-full bg-raseen-dark border-b border-raseen-border py-6 px-4">
       <div className="max-w-7xl mx-auto flex flex-col gap-6">
         
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold text-white">تصفح المنتجات</h2>
-          <div className="px-3 py-1 rounded-full bg-rawnaq-surface border border-rawnaq-border text-rawnaq-gold text-sm font-medium">
+          <div className="px-3 py-1 rounded-full bg-raseen-surface border border-raseen-border text-raseen-gold text-sm font-medium">
             {totalProducts} منتج متاح
           </div>
         </div>
@@ -58,8 +58,8 @@ export default function FilterBar({
                 aria-pressed={selectedCategory === cat.id}
                 className={`min-h-[44px] whitespace-nowrap px-5 py-2 rounded-full border transition-colors flex items-center gap-2 text-sm md:text-base font-medium
                   ${selectedCategory === cat.id 
-                    ? 'bg-rawnaq-gold text-rawnaq-dark border-rawnaq-gold' 
-                    : 'bg-rawnaq-surface text-slate-300 border-rawnaq-border hover:border-rawnaq-gold hover:text-white'
+                    ? 'bg-raseen-gold text-raseen-dark border-raseen-gold' 
+                    : 'bg-raseen-surface text-slate-300 border-raseen-border hover:border-raseen-gold hover:text-white'
                   }`}
               >
                 {cat.icon && <span>{cat.icon}</span>}
@@ -78,8 +78,8 @@ export default function FilterBar({
                 aria-pressed={selectedFileType === type.id}
                 className={`min-h-[44px] whitespace-nowrap px-4 py-2 rounded-full border transition-colors flex items-center gap-2 text-sm font-medium
                   ${selectedFileType === type.id 
-                    ? 'bg-rawnaq-gold text-rawnaq-dark border-rawnaq-gold' 
-                    : 'bg-rawnaq-surface text-slate-300 border-rawnaq-border hover:border-rawnaq-gold hover:text-white'
+                    ? 'bg-raseen-gold text-raseen-dark border-raseen-gold' 
+                    : 'bg-raseen-surface text-slate-300 border-raseen-border hover:border-raseen-gold hover:text-white'
                   }`}
               >
                 {type.icon && <span>{type.icon}</span>}

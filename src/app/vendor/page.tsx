@@ -32,9 +32,9 @@ export default function VendorDashboardPage() {
 
   if (!user || user.role !== 'vendor') {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-rawnaq-dark text-white font-cairo px-4" dir="rtl" lang="ar">
-        <div className="bg-rawnaq-navy p-8 rounded-2xl border border-rawnaq-border text-center max-w-md w-full shadow-2xl">
-          <div className="w-16 h-16 bg-rawnaq-accent rounded-full flex items-center justify-center text-3xl mx-auto mb-4 border border-rawnaq-border text-rawnaq-gold">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-raseen-dark text-white font-cairo px-4" dir="rtl" lang="ar">
+        <div className="bg-raseen-navy p-8 rounded-2xl border border-raseen-border text-center max-w-md w-full shadow-2xl">
+          <div className="w-16 h-16 bg-raseen-accent rounded-full flex items-center justify-center text-3xl mx-auto mb-4 border border-raseen-border text-raseen-gold">
             🏪
           </div>
           <h1 className="text-2xl font-bold text-white mb-2">بوابة البائعين وصناع المحتوى</h1>
@@ -115,7 +115,7 @@ export default function VendorDashboardPage() {
   };
 
   return (
-    <main className="min-h-screen bg-rawnaq-dark text-white font-cairo py-10" dir="rtl" lang="ar">
+    <main className="min-h-screen bg-raseen-dark text-white font-cairo py-10" dir="rtl" lang="ar">
       <div className="container mx-auto px-4">
 
         {successNotice && (
@@ -125,14 +125,14 @@ export default function VendorDashboardPage() {
         )}
 
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 bg-rawnaq-navy p-6 rounded-2xl border border-rawnaq-border">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 bg-raseen-navy p-6 rounded-2xl border border-raseen-border">
           <div>
-            <h1 className="text-3xl font-black text-rawnaq-gold mb-1">لوحة تحكم البائع</h1>
+            <h1 className="text-3xl font-black text-raseen-gold mb-1">لوحة تحكم البائع</h1>
             <p className="text-slate-400 text-sm">مرحباً {user.name}، إدارة أصولك الرقمية ونظام الصرف الأسبوعي الآلي (85%).</p>
           </div>
           <button
             onClick={() => setActiveTab('upload')}
-            className="btn-gold flex items-center gap-2 !px-6 shadow-lg shadow-rawnaq-gold/20"
+            className="btn-gold flex items-center gap-2 !px-6 shadow-lg shadow-raseen-gold/20"
           >
             <span>+</span>
             <span>رفع منتج جديد</span>
@@ -140,11 +140,11 @@ export default function VendorDashboardPage() {
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex flex-wrap gap-2 mb-8 bg-rawnaq-surface p-1.5 rounded-xl border border-rawnaq-border w-full max-w-2xl">
+        <div className="flex flex-wrap gap-2 mb-8 bg-raseen-surface p-1.5 rounded-xl border border-raseen-border w-full max-w-2xl">
           <button
             onClick={() => setActiveTab('overview')}
             className={`flex-1 py-2.5 text-sm font-bold rounded-lg transition-all min-h-[44px] ${
-              activeTab === 'overview' ? 'bg-rawnaq-gold text-rawnaq-dark' : 'text-slate-400 hover:text-white'
+              activeTab === 'overview' ? 'bg-raseen-gold text-raseen-dark' : 'text-slate-400 hover:text-white'
             }`}
           >
             نظرة عامة
@@ -152,7 +152,7 @@ export default function VendorDashboardPage() {
           <button
             onClick={() => setActiveTab('products')}
             className={`flex-1 py-2.5 text-sm font-bold rounded-lg transition-all min-h-[44px] ${
-              activeTab === 'products' ? 'bg-rawnaq-gold text-rawnaq-dark' : 'text-slate-400 hover:text-white'
+              activeTab === 'products' ? 'bg-raseen-gold text-raseen-dark' : 'text-slate-400 hover:text-white'
             }`}
           >
             منتجاتي ({vendorProducts.length})
@@ -160,7 +160,7 @@ export default function VendorDashboardPage() {
           <button
             onClick={() => setActiveTab('upload')}
             className={`flex-1 py-2.5 text-sm font-bold rounded-lg transition-all min-h-[44px] ${
-              activeTab === 'upload' ? 'bg-rawnaq-gold text-rawnaq-dark' : 'text-slate-400 hover:text-white'
+              activeTab === 'upload' ? 'bg-raseen-gold text-raseen-dark' : 'text-slate-400 hover:text-white'
             }`}
           >
             رفع منتج
@@ -168,7 +168,7 @@ export default function VendorDashboardPage() {
           <button
             onClick={() => setActiveTab('wizard')}
             className={`flex-1 py-2.5 text-xs sm:text-sm font-bold rounded-lg transition-all min-h-[44px] flex items-center justify-center gap-1.5 ${
-              activeTab === 'wizard' ? 'bg-gradient-to-r from-rawnaq-gold to-yellow-500 text-slate-950 shadow' : 'text-rawnaq-gold hover:text-white bg-rawnaq-gold/10'
+              activeTab === 'wizard' ? 'bg-gradient-to-r from-raseen-gold to-yellow-500 text-slate-950 shadow' : 'text-raseen-gold hover:text-white bg-raseen-gold/10'
             }`}
           >
             <span>⚡</span>
@@ -177,12 +177,12 @@ export default function VendorDashboardPage() {
         </div>
 
         {/* Content Area */}
-        <div className="bg-rawnaq-navy p-6 md:p-8 rounded-2xl border border-rawnaq-border min-h-[500px]">
+        <div className="bg-raseen-navy p-6 md:p-8 rounded-2xl border border-raseen-border min-h-[500px]">
 
           {activeTab === 'overview' && (
             <div className="space-y-8">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="bg-rawnaq-surface p-6 rounded-xl border border-rawnaq-border">
+                <div className="bg-raseen-surface p-6 rounded-xl border border-raseen-border">
                   <div className="text-slate-400 text-sm mb-2 flex items-center justify-between">
                     <span>إجمالي المبيعات</span>
                     <span>💰</span>
@@ -191,7 +191,7 @@ export default function VendorDashboardPage() {
                   <div className="text-xs text-slate-500 mt-2">منذ بداية الشهر الحالي</div>
                 </div>
 
-                <div className="bg-rawnaq-surface p-6 rounded-xl border border-green-500/20">
+                <div className="bg-raseen-surface p-6 rounded-xl border border-green-500/20">
                   <div className="text-slate-400 text-sm mb-2 flex items-center justify-between">
                     <span className="text-green-400 font-bold">صافي أرباحك (85%)</span>
                     <span>📈</span>
@@ -200,7 +200,7 @@ export default function VendorDashboardPage() {
                   <div className="text-xs text-slate-500 mt-2">مستحقات معتمدة ومؤكدة</div>
                 </div>
 
-                <div className="bg-rawnaq-surface p-6 rounded-xl border border-rawnaq-border">
+                <div className="bg-raseen-surface p-6 rounded-xl border border-raseen-border">
                   <div className="text-slate-400 text-sm mb-2 flex items-center justify-between">
                     <span>عمولة المنصة (15%)</span>
                     <span>🏢</span>
@@ -209,18 +209,18 @@ export default function VendorDashboardPage() {
                   <div className="text-xs text-slate-500 mt-2">شاملة بوابات الدفع والتخزين</div>
                 </div>
 
-                <div className="bg-rawnaq-surface p-6 rounded-xl border border-rawnaq-border">
+                <div className="bg-raseen-surface p-6 rounded-xl border border-raseen-border">
                   <div className="text-slate-400 text-sm mb-2 flex items-center justify-between">
                     <span>المنتجات النشطة</span>
                     <span>📦</span>
                   </div>
-                  <div className="text-2xl font-black text-rawnaq-gold">{vendorProducts.length} منتجات</div>
+                  <div className="text-2xl font-black text-raseen-gold">{vendorProducts.length} منتجات</div>
                   <div className="text-xs text-slate-500 mt-2">متوفرة للتنزيل الفوري</div>
                 </div>
               </div>
 
               {/* Payout Banner */}
-              <div className="bg-gradient-to-r from-rawnaq-surface via-rawnaq-accent to-rawnaq-surface p-6 rounded-xl border border-rawnaq-gold/30 flex items-center justify-between flex-wrap gap-4">
+              <div className="bg-gradient-to-r from-raseen-surface via-raseen-accent to-raseen-surface p-6 rounded-xl border border-raseen-gold/30 flex items-center justify-between flex-wrap gap-4">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-lg">⚡</span>
@@ -231,11 +231,11 @@ export default function VendorDashboardPage() {
                   </p>
                 </div>
                 <div className="flex items-center gap-4 text-center">
-                  <div className="bg-rawnaq-dark px-4 py-2 rounded-xl border border-rawnaq-border">
-                    <div className="text-rawnaq-gold font-bold text-lg">الخميس القادم</div>
+                  <div className="bg-raseen-dark px-4 py-2 rounded-xl border border-raseen-border">
+                    <div className="text-raseen-gold font-bold text-lg">الخميس القادم</div>
                     <div className="text-xs text-slate-400">تلقائياً وبدون تدخل</div>
                   </div>
-                  <div className="bg-rawnaq-dark px-4 py-2 rounded-xl border border-rawnaq-border">
+                  <div className="bg-raseen-dark px-4 py-2 rounded-xl border border-raseen-border">
                     <div className="text-white font-bold text-lg">2,450 ج.م</div>
                     <div className="text-xs text-green-400">المبلغ الجاهز للصرف</div>
                   </div>
@@ -250,7 +250,7 @@ export default function VendorDashboardPage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-right border-collapse min-w-[600px]">
                   <thead>
-                    <tr className="border-b border-rawnaq-border text-slate-400 text-sm">
+                    <tr className="border-b border-raseen-border text-slate-400 text-sm">
                       <th className="pb-4 font-normal px-3">اسم المنتج</th>
                       <th className="pb-4 font-normal px-3">السعر</th>
                       <th className="pb-4 font-normal px-3">المبيعات</th>
@@ -260,9 +260,9 @@ export default function VendorDashboardPage() {
                   </thead>
                   <tbody>
                     {vendorProducts.map((p) => (
-                      <tr key={p.id} className="border-b border-rawnaq-border/50 hover:bg-rawnaq-surface/50 transition-colors">
+                      <tr key={p.id} className="border-b border-raseen-border/50 hover:bg-raseen-surface/50 transition-colors">
                         <td className="py-4 px-3 font-bold text-white">{p.title}</td>
-                        <td className="py-4 px-3 text-rawnaq-gold font-mono">{p.price} ج.م</td>
+                        <td className="py-4 px-3 text-raseen-gold font-mono">{p.price} ج.م</td>
                         <td className="py-4 px-3 text-slate-300">{p.sales} مبيعة</td>
                         <td className="py-4 px-3">
                           <span className={`px-2.5 py-1 text-xs rounded-full border ${
@@ -277,7 +277,7 @@ export default function VendorDashboardPage() {
                           <div className="flex items-center justify-center gap-2">
                             <button
                               onClick={() => alert(`تعديل المنتج "${p.title}"`)}
-                              className="px-3 py-1.5 bg-rawnaq-dark text-slate-300 hover:text-white rounded-lg border border-rawnaq-border hover:border-rawnaq-gold text-xs transition-colors min-h-[36px]"
+                              className="px-3 py-1.5 bg-raseen-dark text-slate-300 hover:text-white rounded-lg border border-raseen-border hover:border-raseen-gold text-xs transition-colors min-h-[36px]"
                               aria-label={`تعديل ${p.title}`}
                             >
                               ✏️ تعديل
@@ -314,7 +314,7 @@ export default function VendorDashboardPage() {
                       type="text"
                       value={formData.title}
                       onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                      className={`w-full bg-rawnaq-surface border ${errors.title ? 'border-red-500' : 'border-rawnaq-border'} rounded-xl px-4 py-3 text-white focus:outline-none focus:border-rawnaq-gold min-h-[44px]`}
+                      className={`w-full bg-raseen-surface border ${errors.title ? 'border-red-500' : 'border-raseen-border'} rounded-xl px-4 py-3 text-white focus:outline-none focus:border-raseen-gold min-h-[44px]`}
                       placeholder="مثال: شيت تحليل مالي شامل بالإكسل"
                     />
                     {errors.title && <span className="text-red-400 text-xs mt-1 block">{errors.title}</span>}
@@ -325,7 +325,7 @@ export default function VendorDashboardPage() {
                     <select
                       value={formData.category}
                       onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                      className={`w-full bg-rawnaq-surface border ${errors.category ? 'border-red-500' : 'border-rawnaq-border'} rounded-xl px-4 py-3 text-white focus:outline-none focus:border-rawnaq-gold min-h-[44px]`}
+                      className={`w-full bg-raseen-surface border ${errors.category ? 'border-red-500' : 'border-raseen-border'} rounded-xl px-4 py-3 text-white focus:outline-none focus:border-raseen-gold min-h-[44px]`}
                     >
                       <option value="">اختر الفئة</option>
                       <option value="business">شركات ورواد أعمال (🏢)</option>
@@ -343,7 +343,7 @@ export default function VendorDashboardPage() {
                   <textarea
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    className={`w-full bg-rawnaq-surface border ${errors.description ? 'border-red-500' : 'border-rawnaq-border'} rounded-xl px-4 py-3 text-white focus:outline-none focus:border-rawnaq-gold min-h-[110px] resize-y`}
+                    className={`w-full bg-raseen-surface border ${errors.description ? 'border-red-500' : 'border-raseen-border'} rounded-xl px-4 py-3 text-white focus:outline-none focus:border-raseen-gold min-h-[110px] resize-y`}
                     placeholder="اشرح ماذا يتضمن الملف، كيفية استخدامه، ولمن موجه بالتحديد..."
                   />
                   {errors.description && <span className="text-red-400 text-xs mt-1 block">{errors.description}</span>}
@@ -356,7 +356,7 @@ export default function VendorDashboardPage() {
                       type="number"
                       value={formData.price}
                       onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                      className={`w-full bg-rawnaq-surface border ${errors.price ? 'border-red-500' : 'border-rawnaq-border'} rounded-xl px-4 py-3 text-white focus:outline-none focus:border-rawnaq-gold min-h-[44px]`}
+                      className={`w-full bg-raseen-surface border ${errors.price ? 'border-red-500' : 'border-raseen-border'} rounded-xl px-4 py-3 text-white focus:outline-none focus:border-raseen-gold min-h-[44px]`}
                       placeholder="الحد الأدنى 50"
                       min="50"
                     />
@@ -368,7 +368,7 @@ export default function VendorDashboardPage() {
                     <select
                       value={formData.fileType}
                       onChange={(e) => setFormData({ ...formData, fileType: e.target.value })}
-                      className={`w-full bg-rawnaq-surface border ${errors.fileType ? 'border-red-500' : 'border-rawnaq-border'} rounded-xl px-4 py-3 text-white focus:outline-none focus:border-rawnaq-gold min-h-[44px]`}
+                      className={`w-full bg-raseen-surface border ${errors.fileType ? 'border-red-500' : 'border-raseen-border'} rounded-xl px-4 py-3 text-white focus:outline-none focus:border-raseen-gold min-h-[44px]`}
                     >
                       <option value="">اختر نوع الملف</option>
                       <option value="excel">شيت إكسل (.xlsx)</option>
@@ -386,7 +386,7 @@ export default function VendorDashboardPage() {
                     <select
                       value={formData.licenseType}
                       onChange={(e) => setFormData({ ...formData, licenseType: e.target.value })}
-                      className={`w-full bg-rawnaq-surface border ${errors.licenseType ? 'border-red-500' : 'border-rawnaq-border'} rounded-xl px-4 py-3 text-white focus:outline-none focus:border-rawnaq-gold min-h-[44px]`}
+                      className={`w-full bg-raseen-surface border ${errors.licenseType ? 'border-red-500' : 'border-raseen-border'} rounded-xl px-4 py-3 text-white focus:outline-none focus:border-raseen-gold min-h-[44px]`}
                     >
                       <option value="personal">استخدام شخصي فقط</option>
                       <option value="commercial">استخدام تجاري ومشاريع</option>
@@ -395,12 +395,12 @@ export default function VendorDashboardPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-rawnaq-border">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-raseen-border">
                   <div>
                     <label className="block text-sm font-bold text-slate-300 mb-2">ملف المنتج الرقمي (التنزيل الفوري)</label>
                     <input
                       type="file"
-                      className="w-full text-xs text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-rawnaq-surface file:text-rawnaq-gold file:cursor-pointer cursor-pointer bg-rawnaq-dark border border-rawnaq-border rounded-xl min-h-[44px] p-2"
+                      className="w-full text-xs text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-raseen-surface file:text-raseen-gold file:cursor-pointer cursor-pointer bg-raseen-dark border border-raseen-border rounded-xl min-h-[44px] p-2"
                     />
                   </div>
                   <div>
@@ -408,7 +408,7 @@ export default function VendorDashboardPage() {
                     <input
                       type="file"
                       accept="image/*"
-                      className="w-full text-xs text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-rawnaq-surface file:text-rawnaq-gold file:cursor-pointer cursor-pointer bg-rawnaq-dark border border-rawnaq-border rounded-xl min-h-[44px] p-2"
+                      className="w-full text-xs text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-raseen-surface file:text-raseen-gold file:cursor-pointer cursor-pointer bg-raseen-dark border border-raseen-border rounded-xl min-h-[44px] p-2"
                     />
                   </div>
                 </div>
@@ -442,7 +442,7 @@ export default function VendorDashboardPage() {
       {/* Confirmation Modal */}
       {showConfirmModal && (
         <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in-up">
-          <div className="bg-rawnaq-navy border border-rawnaq-border rounded-2xl p-6 max-w-md w-full shadow-2xl">
+          <div className="bg-raseen-navy border border-raseen-border rounded-2xl p-6 max-w-md w-full shadow-2xl">
             <h3 className="text-xl font-bold text-white mb-2">تأكيد حذف المنتج</h3>
             <p className="text-slate-400 text-sm mb-6">
               هل أنت متأكد من حذف هذا المنتج؟ لن يتمكن المشترون الجدد من شرائه.

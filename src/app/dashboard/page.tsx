@@ -61,9 +61,9 @@ export default function BuyerDashboardPage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-rawnaq-dark text-white font-cairo px-4" dir="rtl" lang="ar">
-        <div className="bg-rawnaq-navy p-8 rounded-2xl border border-rawnaq-border text-center max-w-md w-full shadow-2xl">
-          <div className="w-16 h-16 bg-rawnaq-accent rounded-full flex items-center justify-center text-3xl mx-auto mb-4 border border-rawnaq-border text-rawnaq-gold">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-raseen-dark text-white font-cairo px-4" dir="rtl" lang="ar">
+        <div className="bg-raseen-navy p-8 rounded-2xl border border-raseen-border text-center max-w-md w-full shadow-2xl">
+          <div className="w-16 h-16 bg-raseen-accent rounded-full flex items-center justify-center text-3xl mx-auto mb-4 border border-raseen-border text-raseen-gold">
             👤
           </div>
           <h1 className="text-2xl font-bold text-white mb-2">يرجى تسجيل الدخول</h1>
@@ -82,7 +82,7 @@ export default function BuyerDashboardPage() {
   }
 
   return (
-    <main className="min-h-screen bg-rawnaq-dark text-white font-cairo py-10" dir="rtl" lang="ar">
+    <main className="min-h-screen bg-raseen-dark text-white font-cairo py-10" dir="rtl" lang="ar">
       <div className="container mx-auto px-4">
 
         {downloadAlert && (
@@ -92,11 +92,11 @@ export default function BuyerDashboardPage() {
         )}
 
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 bg-rawnaq-navy p-6 rounded-2xl border border-rawnaq-border">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 bg-raseen-navy p-6 rounded-2xl border border-raseen-border">
           <div>
             <div className="flex items-center gap-3 mb-1">
-              <span className="text-3xl font-black text-rawnaq-gold">مرحباً، {user.name}</span>
-              <span className="text-xs bg-rawnaq-dark text-slate-300 px-2 py-0.5 rounded-full border border-rawnaq-border">
+              <span className="text-3xl font-black text-raseen-gold">مرحباً، {user.name}</span>
+              <span className="text-xs bg-raseen-dark text-slate-300 px-2 py-0.5 rounded-full border border-raseen-border">
                 {user.role === 'vendor' ? 'حساب بائع' : 'حساب مشتري'}
               </span>
             </div>
@@ -122,9 +122,9 @@ export default function BuyerDashboardPage() {
 
           {/* Sidebar */}
           <div className="lg:col-span-1 space-y-4">
-            <div className="bg-rawnaq-navy p-6 rounded-2xl border border-rawnaq-border">
-              <div className="flex items-center gap-4 mb-6 pb-6 border-b border-rawnaq-border">
-                <div className="w-12 h-12 bg-rawnaq-accent rounded-full flex items-center justify-center font-bold text-lg text-rawnaq-gold border border-rawnaq-border">
+            <div className="bg-raseen-navy p-6 rounded-2xl border border-raseen-border">
+              <div className="flex items-center gap-4 mb-6 pb-6 border-b border-raseen-border">
+                <div className="w-12 h-12 bg-raseen-accent rounded-full flex items-center justify-center font-bold text-lg text-raseen-gold border border-raseen-border">
                   {user.name.charAt(0)}
                 </div>
                 <div className="overflow-hidden">
@@ -137,8 +137,8 @@ export default function BuyerDashboardPage() {
                   onClick={() => setActiveTab('purchases')}
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-bold min-h-[44px] ${
                     activeTab === 'purchases'
-                      ? 'bg-rawnaq-gold text-rawnaq-dark'
-                      : 'text-slate-400 hover:bg-rawnaq-dark hover:text-white'
+                      ? 'bg-raseen-gold text-raseen-dark'
+                      : 'text-slate-400 hover:bg-raseen-dark hover:text-white'
                   }`}
                 >
                   <span>📦</span>
@@ -148,8 +148,8 @@ export default function BuyerDashboardPage() {
                   onClick={() => setActiveTab('wishlist')}
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-bold min-h-[44px] ${
                     activeTab === 'wishlist'
-                      ? 'bg-rawnaq-gold text-rawnaq-dark'
-                      : 'text-slate-400 hover:bg-rawnaq-dark hover:text-white'
+                      ? 'bg-raseen-gold text-raseen-dark'
+                      : 'text-slate-400 hover:bg-raseen-dark hover:text-white'
                   }`}
                 >
                   <span>❤️</span>
@@ -159,7 +159,7 @@ export default function BuyerDashboardPage() {
             </div>
 
             {user.role !== 'vendor' && (
-              <div className="bg-gradient-to-br from-rawnaq-accent to-rawnaq-navy p-6 rounded-2xl border border-rawnaq-border text-center">
+              <div className="bg-gradient-to-br from-raseen-accent to-raseen-navy p-6 rounded-2xl border border-raseen-border text-center">
                 <h3 className="font-bold text-white mb-2">هل تصنع أدوات أو شيتات رقمية؟</h3>
                 <p className="text-xs text-slate-400 mb-4 leading-relaxed">
                   انضم إلى منصة رَصين كبائع وحقق دخلاً ممتازاً مع عمولة 85% لك وصرف أسبوعي فوري.
@@ -176,7 +176,7 @@ export default function BuyerDashboardPage() {
 
           {/* Main Content */}
           <div className="lg:col-span-3">
-            <div className="bg-rawnaq-navy p-6 rounded-2xl border border-rawnaq-border min-h-[450px]">
+            <div className="bg-raseen-navy p-6 rounded-2xl border border-raseen-border min-h-[450px]">
 
               {activeTab === 'purchases' && (
                 <div>
@@ -188,10 +188,10 @@ export default function BuyerDashboardPage() {
                     {MOCK_PURCHASES.map((item) => (
                       <div
                         key={item.id}
-                        className="flex flex-col sm:flex-row items-center justify-between p-4 bg-rawnaq-surface rounded-xl border border-rawnaq-border gap-4 hover:border-rawnaq-border/80 transition-all"
+                        className="flex flex-col sm:flex-row items-center justify-between p-4 bg-raseen-surface rounded-xl border border-raseen-border gap-4 hover:border-raseen-border/80 transition-all"
                       >
                         <div className="flex items-center gap-4 w-full sm:w-auto">
-                          <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 border border-rawnaq-border bg-rawnaq-dark">
+                          <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 border border-raseen-border bg-raseen-dark">
                             <Image src={item.image} alt={item.title} fill className="object-cover" />
                           </div>
                           <div>
@@ -199,12 +199,12 @@ export default function BuyerDashboardPage() {
                             <div className="flex items-center gap-3 text-xs text-slate-400">
                               <span>تاريخ الشراء: {item.date}</span>
                               <span>•</span>
-                              <span className="text-rawnaq-gold font-mono">{item.fileType}</span>
+                              <span className="text-raseen-gold font-mono">{item.fileType}</span>
                             </div>
                           </div>
                         </div>
 
-                        <div className="flex items-center justify-between sm:justify-end gap-6 w-full sm:w-auto mt-2 sm:mt-0 pt-4 sm:pt-0 border-t border-rawnaq-border sm:border-0">
+                        <div className="flex items-center justify-between sm:justify-end gap-6 w-full sm:w-auto mt-2 sm:mt-0 pt-4 sm:pt-0 border-t border-raseen-border sm:border-0">
                           <div className="text-xs text-slate-400 text-center">
                             التحميلات المتبقية
                             <div className="font-bold text-white text-sm">{item.remainingDownloads} / {item.maxDownloads}</div>
@@ -229,12 +229,12 @@ export default function BuyerDashboardPage() {
 
               {activeTab === 'wishlist' && (
                 <div>
-                  <div className="flex items-center justify-between mb-6 pb-4 border-b border-rawnaq-border">
+                  <div className="flex items-center justify-between mb-6 pb-4 border-b border-raseen-border">
                     <h2 className="text-xl font-bold text-white flex items-center gap-2">
                       <span>❤️</span>
                       <span>قائمة الأصول المفضلة ({favoriteProducts.length})</span>
                     </h2>
-                    <Link href="/#products" className="text-xs text-rawnaq-gold hover:underline">
+                    <Link href="/#products" className="text-xs text-raseen-gold hover:underline">
                       + تصفح المزيد من الأصول
                     </Link>
                   </div>

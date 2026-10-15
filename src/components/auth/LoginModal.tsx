@@ -125,15 +125,15 @@ export default function LoginModal() {
         aria-hidden="true"
       />
       
-      <div className="relative w-full max-w-md bg-[#0a1224] border border-rawnaq-border/90 rounded-2xl shadow-2xl overflow-hidden animate-fade-in-up">
+      <div className="relative w-full max-w-md bg-[#0a1224] border border-raseen-border/90 rounded-2xl shadow-2xl overflow-hidden animate-fade-in-up">
         
         {/* Header tabs */}
-        <div className="flex border-b border-rawnaq-border/60 bg-rawnaq-dark/40">
+        <div className="flex border-b border-raseen-border/60 bg-raseen-dark/40">
           <button 
             type="button"
             onClick={() => { setTab('login'); setError(''); setSuccess(''); }}
             className={`flex-1 py-3.5 text-center font-bold text-sm transition-colors min-h-[44px]
-              ${tab === 'login' ? 'text-rawnaq-gold border-b-2 border-rawnaq-gold bg-rawnaq-surface/40' : 'text-slate-400 hover:text-white'}`}
+              ${tab === 'login' ? 'text-raseen-gold border-b-2 border-raseen-gold bg-raseen-surface/40' : 'text-slate-400 hover:text-white'}`}
           >
             تسجيل الدخول
           </button>
@@ -141,7 +141,7 @@ export default function LoginModal() {
             type="button"
             onClick={() => { setTab('register'); setError(''); setSuccess(''); }}
             className={`flex-1 py-3.5 text-center font-bold text-sm transition-colors min-h-[44px]
-              ${tab === 'register' ? 'text-rawnaq-gold border-b-2 border-rawnaq-gold bg-rawnaq-surface/40' : 'text-slate-400 hover:text-white'}`}
+              ${tab === 'register' ? 'text-raseen-gold border-b-2 border-raseen-gold bg-raseen-surface/40' : 'text-slate-400 hover:text-white'}`}
           >
             إنشاء حساب جديد
           </button>
@@ -161,13 +161,13 @@ export default function LoginModal() {
           {/* Account Role Selector */}
           <div className="mb-5">
             <span className="text-xs text-slate-400 font-bold block mb-2">نوع الحساب المطلوب:</span>
-            <div className="grid grid-cols-2 gap-2 p-1 bg-rawnaq-surface/80 rounded-xl border border-rawnaq-border">
+            <div className="grid grid-cols-2 gap-2 p-1 bg-raseen-surface/80 rounded-xl border border-raseen-border">
               <button
                 type="button"
                 onClick={() => setRole('buyer')}
                 className={`py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 min-h-[38px] ${
                   role === 'buyer' 
-                    ? 'bg-rawnaq-gold text-rawnaq-dark shadow' 
+                    ? 'bg-raseen-gold text-raseen-dark shadow' 
                     : 'text-slate-300 hover:text-white'
                 }`}
               >
@@ -179,7 +179,7 @@ export default function LoginModal() {
                 onClick={() => setRole('vendor')}
                 className={`py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 min-h-[38px] ${
                   role === 'vendor' 
-                    ? 'bg-rawnaq-gold text-rawnaq-dark shadow' 
+                    ? 'bg-raseen-gold text-raseen-dark shadow' 
                     : 'text-slate-300 hover:text-white'
                 }`}
               >
@@ -210,7 +210,7 @@ export default function LoginModal() {
 
             <div className="relative my-3 text-center">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-rawnaq-border/60"></div>
+                <div className="w-full border-t border-raseen-border/60"></div>
               </div>
               <span className="relative px-3 bg-[#0a1224] text-[11px] text-slate-400">أو بالبريد الإلكتروني المباشر</span>
             </div>
@@ -238,7 +238,7 @@ export default function LoginModal() {
                   type="text" 
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="min-h-[42px] w-full px-3.5 rounded-lg bg-rawnaq-surface border border-rawnaq-border text-white placeholder-slate-500 focus:outline-none focus:border-rawnaq-gold transition-colors text-xs sm:text-sm"
+                  className="min-h-[42px] w-full px-3.5 rounded-lg bg-raseen-surface border border-raseen-border text-white placeholder-slate-500 focus:outline-none focus:border-raseen-gold transition-colors text-xs sm:text-sm"
                   placeholder="محمد حلمي"
                   required
                 />
@@ -252,7 +252,7 @@ export default function LoginModal() {
                 type="email" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="min-h-[42px] w-full px-3.5 rounded-lg bg-rawnaq-surface border border-rawnaq-border text-white placeholder-slate-500 focus:outline-none focus:border-rawnaq-gold transition-colors text-left text-xs sm:text-sm"
+                className="min-h-[42px] w-full px-3.5 rounded-lg bg-raseen-surface border border-raseen-border text-white placeholder-slate-500 focus:outline-none focus:border-raseen-gold transition-colors text-left text-xs sm:text-sm"
                 placeholder="name@domain.com"
                 dir="ltr"
                 required
@@ -266,7 +266,7 @@ export default function LoginModal() {
                 type="password" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="min-h-[42px] w-full px-3.5 rounded-lg bg-rawnaq-surface border border-rawnaq-border text-white placeholder-slate-500 focus:outline-none focus:border-rawnaq-gold transition-colors text-left text-xs sm:text-sm"
+                className="min-h-[42px] w-full px-3.5 rounded-lg bg-raseen-surface border border-raseen-border text-white placeholder-slate-500 focus:outline-none focus:border-raseen-gold transition-colors text-left text-xs sm:text-sm"
                 placeholder="••••••••"
                 dir="ltr"
                 required
@@ -302,7 +302,7 @@ export default function LoginModal() {
                   type="password" 
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="min-h-[42px] w-full px-3.5 rounded-lg bg-rawnaq-surface border border-rawnaq-border text-white placeholder-slate-500 focus:outline-none focus:border-rawnaq-gold transition-colors text-left text-xs sm:text-sm"
+                  className="min-h-[42px] w-full px-3.5 rounded-lg bg-raseen-surface border border-raseen-border text-white placeholder-slate-500 focus:outline-none focus:border-raseen-gold transition-colors text-left text-xs sm:text-sm"
                   placeholder="••••••••"
                   dir="ltr"
                   required
@@ -313,11 +313,11 @@ export default function LoginModal() {
             <button 
               type="submit"
               disabled={isLoading}
-              className="mt-2 w-full min-h-[44px] bg-rawnaq-gold hover:bg-[#e0a629] text-rawnaq-dark font-black rounded-xl transition-all shadow-md flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed text-xs sm:text-sm cursor-pointer"
+              className="mt-2 w-full min-h-[44px] bg-raseen-gold hover:bg-[#e0a629] text-raseen-dark font-black rounded-xl transition-all shadow-md flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed text-xs sm:text-sm cursor-pointer"
             >
               {isLoading ? (
                 <>
-                  <svg className="animate-spin h-4 w-4 text-rawnaq-dark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                  <svg className="animate-spin h-4 w-4 text-raseen-dark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                   جاري التحقق والمزامنة مع السيرفر...
                 </>
               ) : (
@@ -327,11 +327,11 @@ export default function LoginModal() {
           </form>
 
           {/* Guest Mode - Clear, Restricted, Professional */}
-          <div className="mt-4 pt-3 border-t border-rawnaq-border/50 text-center">
+          <div className="mt-4 pt-3 border-t border-raseen-border/50 text-center">
             <button 
               onClick={handleGuestBrowsing}
               type="button"
-              className="text-xs text-slate-400 hover:text-rawnaq-gold transition-colors font-medium underline underline-offset-4"
+              className="text-xs text-slate-400 hover:text-raseen-gold transition-colors font-medium underline underline-offset-4"
             >
               المتابعة بالتصفح كزائر (بدون حساب)
             </button>
