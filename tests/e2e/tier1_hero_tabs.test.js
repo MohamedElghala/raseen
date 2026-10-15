@@ -39,8 +39,8 @@ suite.test('HERO-1.2: Default active tab is search catalog with active visual in
   assert(html.includes('aria-label="ابحث عن المنتجات والأصول الرقمية"'), 'Search input must have accessible aria-label');
   assert(html.includes('placeholder="ابحث في أكثر من 1,400 أصل'), 'Search input must have comprehensive placeholder');
 
-  // Active tab styling (amber gradient indicator) on search tab
-  assert(html.includes('from-amber-500 to-amber-600 text-slate-950'), 'Active tab must have amber gradient highlighting');
+  // Active tab styling (slate/glass pill indicator) on search tab
+  assert(html.includes('bg-slate-800/90 text-white border border-amber-400/40'), 'Active tab must have slate/glass pill highlighting');
 });
 
 // Test 3: Tab Triggers and Freemium Badges

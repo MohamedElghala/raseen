@@ -48,7 +48,7 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 raseen-glass border-x-0 border-t-0 rounded-none border-b border-raseen-border">
+    <header className="sticky top-0 z-50 bg-slate-950/85 backdrop-blur-xl border-b border-slate-800/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 md:h-20">
 
@@ -79,7 +79,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-slate-300 hover:text-raseen-gold transition-colors font-medium px-4 py-2 rounded-lg hover:bg-raseen-accent/30"
+                className="text-slate-300 hover:text-white transition-colors font-medium px-4 py-2 rounded-lg hover:bg-slate-800/60"
               >
                 {link.icon} {link.label}
               </Link>

@@ -36,7 +36,11 @@ export default function HomePage() {
       const matchesCategory =
         selectedCategory === 'all' || product.category === selectedCategory;
       const matchesType =
-        selectedFileType === 'all' || product.fileType === selectedFileType;
+        selectedFileType === 'all'
+          ? true
+          : selectedFileType === 'free'
+          ? product.price === 0
+          : product.fileType === selectedFileType;
       return matchesSearch && matchesCategory && matchesType;
     });
   }, [searchTerm, selectedCategory, selectedFileType]);

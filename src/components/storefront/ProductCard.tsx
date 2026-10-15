@@ -64,11 +64,16 @@ export default function ProductCard({ product }: ProductCardProps) {
           {product.category === 'individuals' && '👤 أفراد'}
         </div>
 
-        {discountPercent > 0 && (
+        {product.price === 0 ? (
+          <div className="absolute top-3 left-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 px-2.5 py-1 rounded-md text-xs font-black shadow-lg shadow-emerald-500/20 flex items-center gap-1">
+            <span>🎁</span>
+            <span>هدية مجانية</span>
+          </div>
+        ) : discountPercent > 0 ? (
           <div className="absolute top-3 left-3 bg-red-500/90 backdrop-blur-md px-2 py-1 rounded-md text-xs font-bold text-white shadow-sm">
             وفر {discountPercent}%
           </div>
-        )}
+        ) : null}
 
         {(product.fileType === 'canva' || product.tags.some(t => t.toLowerCase() === 'canva')) && (
           <div className="absolute bottom-3 left-3 bg-cyan-950/85 border border-cyan-400/50 text-cyan-300 backdrop-blur-md px-2.5 py-0.5 rounded-md text-[11px] font-black flex items-center gap-1 shadow-md shadow-cyan-950/50">
@@ -117,7 +122,11 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         <div className="flex items-center justify-between mt-2 pt-3 border-t border-raseen-border/50 gap-2">
           <div className="flex flex-col">
-            <span className="text-lg sm:text-xl font-black text-raseen-gold">{displayPrice}</span>
+            {product.price === 0 ? (
+              <span className="text-lg sm:text-xl font-black text-emerald-400">مجاناً 100%</span>
+            ) : (
+              <span className="text-lg sm:text-xl font-black text-raseen-gold">{displayPrice}</span>
+            )}
             {displayOriginal && (
               <span className="text-xs text-slate-500 line-through">{displayOriginal}</span>
             )}
@@ -133,11 +142,15 @@ export default function ProductCard({ product }: ProductCardProps) {
             </span>
             <button
               onClick={handleBuyClick}
-              aria-label={`شراء ${product.title} الآن`}
-              className="btn-gold !px-3.5 !py-2 text-xs font-bold flex items-center gap-1.5 shadow-md shadow-raseen-gold/10"
+              aria-label={product.price === 0 ? `تحميل ${product.title} مجاناً` : `شراء ${product.title} الآن`}
+              className={`!px-3.5 !py-2 text-xs font-bold flex items-center gap-1.5 shadow-md ${
+                product.price === 0
+                  ? 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-emerald-500/20 rounded-xl transition-all'
+                  : 'btn-gold shadow-raseen-gold/10'
+              }`}
             >
-              <span>شراء</span>
-              <span>🛒</span>
+              <span>{product.price === 0 ? 'تحميل مجاني' : 'شراء'}</span>
+              <span>{product.price === 0 ? '📥' : '🛒'}</span>
             </button>
           </div>
         </div>

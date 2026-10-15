@@ -60,16 +60,18 @@ export default function Hero({ onSearch }: HeroProps) {
           <span>التحديث السحابي 2.0 • أدوات ZATCA الضريبية وحاسبة التعادل متاحة الآن مجاناً</span>
         </div>
 
-        {/* Cinematic Headline */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 leading-tight tracking-tight drop-shadow-2xl font-cairo print:hidden">
-          منظومة إدارة وتمكين الأعمال الذكية
-          <span className="gold-gradient-text block mt-1 sm:mt-2 drop-shadow-[0_8px_25px_rgba(245,183,49,0.35)]">
+        {/* Cinematic Headline - Refined & Comfortable Typographic Hierarchy */}
+        <div className="space-y-3 mb-4 sm:mb-6 print:hidden">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-100 tracking-tight leading-tight font-cairo">
+            منظومة إدارة وتمكين الأعمال الذكية
+          </h1>
+          <p className="text-base sm:text-xl md:text-2xl font-bold gold-gradient-text leading-relaxed max-w-4xl mx-auto">
             أدوات تفاعلية وشيتات احترافية تختصر سنوات من جهدك
-          </span>
-        </h1>
+          </p>
+        </div>
 
         {/* Subtitle */}
-        <p className="text-slate-300 text-xs sm:text-sm md:text-base max-w-3xl mb-6 sm:mb-8 leading-relaxed font-normal opacity-90 drop-shadow print:hidden">
+        <p className="text-slate-300/90 text-xs sm:text-sm md:text-base max-w-2xl mb-8 leading-7 sm:leading-8 font-normal print:hidden">
           الترسانة التنفيذية الأولى لرواد الأعمال والمستشارين والشركات: نماذج إكسل محاسبية مؤتمتة، عقود قانونية موثقة، قوالب كانفا حرة، ومكتبات كاد وريفت معمارية — مع أدوات فحص وتوليد فواتير حية 100% مجاناً.
         </p>
 
@@ -81,7 +83,7 @@ export default function Hero({ onSearch }: HeroProps) {
               onClick={() => setActiveTab('search')}
               className={`px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2 transition-all cursor-pointer ${
                 activeTab === 'search'
-                  ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-lg shadow-amber-500/20'
+                  ? 'bg-slate-800/90 text-white border border-amber-400/40 shadow-sm shadow-black/40 backdrop-blur-md'
                   : 'text-slate-400 hover:text-white hover:bg-slate-900'
               }`}
             >
@@ -93,7 +95,7 @@ export default function Hero({ onSearch }: HeroProps) {
               onClick={() => setActiveTab('invoice')}
               className={`px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2 transition-all cursor-pointer ${
                 activeTab === 'invoice'
-                  ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-lg shadow-amber-500/20'
+                  ? 'bg-slate-800/90 text-white border border-amber-400/40 shadow-sm shadow-black/40 backdrop-blur-md'
                   : 'text-slate-400 hover:text-white hover:bg-slate-900'
               }`}
             >
@@ -106,7 +108,7 @@ export default function Hero({ onSearch }: HeroProps) {
               onClick={() => setActiveTab('breakeven')}
               className={`px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2 transition-all cursor-pointer ${
                 activeTab === 'breakeven'
-                  ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-lg shadow-amber-500/20'
+                  ? 'bg-slate-800/90 text-white border border-amber-400/40 shadow-sm shadow-black/40 backdrop-blur-md'
                   : 'text-slate-400 hover:text-white hover:bg-slate-900'
               }`}
             >
@@ -119,7 +121,7 @@ export default function Hero({ onSearch }: HeroProps) {
               onClick={() => setActiveTab('audit')}
               className={`px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2 transition-all cursor-pointer ${
                 activeTab === 'audit'
-                  ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-lg shadow-amber-500/20'
+                  ? 'bg-slate-800/90 text-white border border-amber-400/40 shadow-sm shadow-black/40 backdrop-blur-md'
                   : 'text-slate-400 hover:text-white hover:bg-slate-900'
               }`}
             >

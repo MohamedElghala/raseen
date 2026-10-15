@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { useCommunityStore } from '@/store/communityStore';
 import { CommunityCategorySlug, CommunityPost } from '@/lib/communityTypes';
 import CreatePostModal from '@/components/community/CreatePostModal';
+import { BLOG_POSTS, BlogPost } from '@/lib/blogData';
 
 const CATEGORIES: { slug: CommunityCategorySlug; label: string; icon: string }[] = [
   { slug: 'all', label: 'جميع الأقسام', icon: '🌐' },
@@ -16,6 +17,8 @@ const CATEGORIES: { slug: CommunityCategorySlug; label: string; icon: string }[]
 ];
 
 export default function CommunityPage() {
+  const [activeView, setActiveView] = useState<'discussions' | 'blog'>('discussions');
+  const [expandedArticleId, setExpandedArticleId] = useState<string | null>('post-1');
   const posts = useCommunityStore((s) => s.posts);
   const selectedCategory = useCommunityStore((s) => s.selectedCategory);
   const setSelectedCategory = useCommunityStore((s) => s.setSelectedCategory);
@@ -120,11 +123,172 @@ export default function CommunityPage() {
           </div>
         </section>
 
-        {/* Search & Main Category Filters */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
-          
-          {/* Categories Pill Bar */}
-          <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none">
+        {/* View Switcher: Discussions vs Knowledge Hub Blog */}
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
+          <button
+            onClick={() => setActiveView('discussions')}
+            className={`px-6 py-3 rounded-2xl font-bold text-xs sm:text-sm flex items-center gap-2.5 transition-all shadow-lg ${
+              activeView === 'discussions'
+                ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-amber-500/20 scale-[1.02]'
+                : 'bg-raseen-surface border border-raseen-border text-slate-300 hover:text-white hover:bg-slate-900'
+            }`}
+          >
+            <span>💬</span>
+            <span>ساحة النقاشات والطلبات (1,280+ نقاش)</span>
+          </button>
+
+          <button
+            onClick={() => setActiveView('blog')}
+            className={`px-6 py-3 rounded-2xl font-bold text-xs sm:text-sm flex items-center gap-2.5 transition-all shadow-lg ${
+              activeView === 'blog'
+                ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 shadow-cyan-500/20 scale-[1.02]'
+                : 'bg-raseen-surface border border-raseen-border text-slate-300 hover:text-white hover:bg-slate-900'
+            }`}
+          >
+            <span>📚</span>
+            <span>المدونة الهندسية والمعرفية والسيو (أدلة حصرية)</span>
+          </button>
+        </div>
+
+        {activeView === 'blog' ? (
+          <div className="space-y-8">
+            <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-xl">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6 mb-8">
+                <div>
+                  <div className="text-xs font-mono text-cyan-400 font-bold mb-1">RASEEN EDITORIAL & TECHNICAL KNOWLEDGE BASE</div>
+                  <h2 className="text-2xl sm:text-3xl font-black text-white">المدونة الهندسية والريادية المتخصصة</h2>
+                  <p className="text-xs sm:text-sm text-slate-400 mt-1">
+                    أدلة عملية ومقالات سيو معمقة للمهندسين والمحاسبين ورواد الأعمال، مع نماذج مجانية وتشويقية قابلة للتطبيق الفوري.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="px-3 py-1.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-bold font-mono">
+                    {BLOG_POSTS.length} أدلة تفصيلية
+                  </span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 gap-8">
+                {BLOG_POSTS.map((article) => {
+                  const isExpanded = expandedArticleId === article.id;
+                  return (
+                    <article
+                      key={article.id}
+                      className="bg-[#0e1524] rounded-2xl border border-slate-800/90 hover:border-cyan-500/40 transition-all p-6 sm:p-8 space-y-6 shadow-xl"
+                    >
+                      <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
+                        <div className="flex items-center gap-2">
+                          <span className="px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-bold">
+                            {article.categoryLabel}
+                          </span>
+                          <span className="text-slate-400">• {article.readTime}</span>
+                          <span className="text-slate-400">• {article.views} قراءة</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-slate-400">
+                          <span>{article.author.avatar}</span>
+                          <span className="text-white font-bold">{article.author.name}</span>
+                          <span className="text-[11px] text-slate-400">({article.author.role})</span>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h3 className="text-xl sm:text-2xl font-black text-white leading-snug mb-3">
+                          {article.title}
+                        </h3>
+                        <p className="text-slate-300 text-sm leading-relaxed">
+                          {article.excerpt}
+                        </p>
+                      </div>
+
+                      {/* Content Sections */}
+                      {isExpanded && (
+                        <div className="pt-4 border-t border-slate-800/80 space-y-6 text-sm text-slate-200">
+                          {article.content.map((sec, idx) => (
+                            <div key={idx} className="space-y-3 bg-slate-950/50 p-5 rounded-xl border border-slate-800/60">
+                              <h4 className="text-base font-bold text-amber-300 flex items-center gap-2">
+                                <span>📌</span>
+                                <span>{sec.sectionTitle}</span>
+                              </h4>
+                              <p className="leading-relaxed text-slate-300">{sec.text}</p>
+                              {sec.keyPoints && sec.keyPoints.length > 0 && (
+                                <ul className="space-y-1.5 pt-2 border-t border-slate-800/40 text-xs text-slate-300">
+                                  {sec.keyPoints.map((pt, pIdx) => (
+                                    <li key={pIdx} className="flex items-start gap-2">
+                                      <span className="text-cyan-400 font-bold">✓</span>
+                                      <span>{pt}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Action & Conversion Bridge: Free Lead Magnet + Flagship Paid */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-slate-800/80">
+                        {/* Free Lead Magnet */}
+                        <div className="p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/30 flex items-center justify-between gap-3">
+                          <div className="space-y-1">
+                            <span className="text-[10px] font-black text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
+                              {article.relatedFreeAsset.badge}
+                            </span>
+                            <h5 className="text-xs font-bold text-white line-clamp-1">
+                              {article.relatedFreeAsset.title}
+                            </h5>
+                          </div>
+                          <Link
+                            href={article.relatedFreeAsset.downloadUrl}
+                            className="px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-black shrink-0 transition-all shadow-md shadow-emerald-500/20"
+                          >
+                            تنزيل مجاناً 📥
+                          </Link>
+                        </div>
+
+                        {/* Paid Flagship Asset */}
+                        <div className="p-4 rounded-xl bg-amber-950/30 border border-amber-500/30 flex items-center justify-between gap-3">
+                          <div className="space-y-1">
+                            <div className="flex items-center gap-2">
+                              <span className="text-[10px] font-black text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/20">
+                                الباقة الاحترافية
+                              </span>
+                              <span className="text-xs font-mono font-bold text-amber-300">{article.relatedPaidAsset.price}</span>
+                            </div>
+                            <h5 className="text-xs font-bold text-white line-clamp-1">
+                              {article.relatedPaidAsset.title}
+                            </h5>
+                          </div>
+                          <Link
+                            href={article.relatedPaidAsset.url}
+                            className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 text-xs font-black shrink-0 transition-all shadow-md shadow-amber-500/20"
+                          >
+                            شراء الترسانة 🛒
+                          </Link>
+                        </div>
+                      </div>
+
+                      {/* Expand / Collapse Button */}
+                      <div className="flex justify-end pt-2">
+                        <button
+                          onClick={() => setExpandedArticleId(isExpanded ? null : article.id)}
+                          className="text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 transition-colors"
+                        >
+                          <span>{isExpanded ? 'طي المقال ▲' : 'قراءة الدليل بالكامل والتفاصيل ▼'}</span>
+                        </button>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <>
+            {/* Search & Main Category Filters */}
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
+              
+              {/* Categories Pill Bar */}
+              <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat.slug}
@@ -441,6 +605,8 @@ export default function CommunityPage() {
           </aside>
 
         </div>
+        </>
+        )}
 
       </div>
 

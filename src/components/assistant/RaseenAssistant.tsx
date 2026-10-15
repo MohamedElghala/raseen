@@ -732,6 +732,73 @@ export default function RaseenAssistant() {
       return;
     }
 
+    if (
+      q.includes('bim') ||
+      q.includes('revit') ||
+      q.includes('ريفت') ||
+      q.includes('بيم') ||
+      q.includes('هندس') ||
+      q.includes('أوتوكاد') ||
+      q.includes('autocad') ||
+      q.includes('معمار') ||
+      q.includes('boq') ||
+      q.includes('حصر')
+    ) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: Date.now().toString(),
+          sender: 'assistant',
+          text: '📐 **الترسانة الهندسية ونماذج BIM المعمارية المعتمدة**:\n\nنوفر للمهندسين والمقاولين عائلات Revit بارامترية (LOD 350)، وبلوكات AutoCAD (1500+ بلوك)، وشيتات حصر كميات ومقايسات BOQ.\n\n🎁 **هدية مجانية فورية**: يمكنك تنزيل **حزمة عائلات Revit التمهيدية (LOD 300)** مجاناً 100% لتجربة جودة النمذجة قبل اقتناء الترسانة الكاملة!',
+          time: getCurrentTime(),
+          actionLink: { label: 'تنزيل حزمة Revit المجانية فوراً ←', href: '/product/free-p1' },
+          quickReplies: [
+            {
+              label: '📐 استعراض قسم الهندسة والـ BIM',
+              action: () => {
+                const el = document.getElementById('products');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              },
+            },
+            {
+              label: '📞 طلب مكتبة هندسية مخصصة لمكتبي',
+              action: () => openLeadCapture('طلب تصميم مكتبة Revit أو بلوكات CAD مخصصة'),
+            },
+          ],
+        },
+      ]);
+      return;
+    }
+
+    if (
+      q.includes('مجان') ||
+      q.includes('هدية') ||
+      q.includes('ببلاش') ||
+      q.includes('free')
+    ) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: Date.now().toString(),
+          sender: 'assistant',
+          text: '🎁 **أهلاً بك في ركن الهدايا والأصول المجانية 100% من رَصين**!\n\nيمكنك تنزيل هذه الأصول فورياً وبدون أي مقابل لتسريع أعمالك:\n1. 📐 **حزمة عائلات Revit المعمارية (LOD 300)**: 35 عائلة بارامترية مجانية.\n2. 📊 **شيت مقايسات وحصر كميات البناء المبدئي (Mini BOQ)**.\n3. ⚖️ **عقد العمل الحر واتفاقية سرية المعلومات (Freelance & NDA)**.\n4. 💵 **شيت الميزانية الشخصية وإدارة السيولة والمصروفات**.',
+          time: getCurrentTime(),
+          actionLink: { label: 'استعراض وتحميل الأصول المجانية كلها ←', href: '/#products' },
+          quickReplies: [
+            {
+              label: '📐 تنزيل حزمة Revit المجانية (free-p1)',
+              action: () => { window.location.href = '/product/free-p1'; },
+            },
+            {
+              label: '⚖️ تنزيل عقد العمل الحر المجاني (free-p3)',
+              action: () => { window.location.href = '/product/free-p3'; },
+            },
+          ],
+        },
+      ]);
+      return;
+    }
+
     if (q.includes('شيت') || q.includes('إكسيل') || q.includes('محاسب') || q.includes('acc')) {
       showAllAccountingSheets();
       return;

@@ -20,6 +20,7 @@ const CATEGORIES = [
 
 const FILE_TYPES = [
   { id: 'all', label: 'كل الصيغ' },
+  { id: 'free', label: '🎁 أصول مجانية (0 ر.س)', icon: '🎁' },
   { id: 'excel', label: 'شيتات Excel', icon: '📗' },
   { id: 'notion', label: 'قوالب Notion', icon: '📝' },
   { id: 'powerpoint', label: 'سلايدات PowerPoint', icon: '📊' },
@@ -58,8 +59,8 @@ export default function FilterBar({
                 aria-pressed={selectedCategory === cat.id}
                 className={`min-h-[44px] whitespace-nowrap px-5 py-2 rounded-full border transition-colors flex items-center gap-2 text-sm md:text-base font-medium
                   ${selectedCategory === cat.id 
-                    ? 'bg-raseen-gold text-raseen-dark border-raseen-gold' 
-                    : 'bg-raseen-surface text-slate-300 border-raseen-border hover:border-raseen-gold hover:text-white'
+                    ? 'bg-slate-800 text-amber-300 border-amber-400/40 shadow-sm' 
+                    : 'bg-raseen-surface text-slate-300 border-raseen-border hover:border-amber-400/40 hover:text-white'
                   }`}
               >
                 {cat.icon && <span>{cat.icon}</span>}
@@ -78,8 +79,8 @@ export default function FilterBar({
                 aria-pressed={selectedFileType === type.id}
                 className={`min-h-[44px] whitespace-nowrap px-4 py-2 rounded-full border transition-colors flex items-center gap-2 text-sm font-medium
                   ${selectedFileType === type.id 
-                    ? 'bg-raseen-gold text-raseen-dark border-raseen-gold' 
-                    : 'bg-raseen-surface text-slate-300 border-raseen-border hover:border-raseen-gold hover:text-white'
+                    ? 'bg-slate-800 text-amber-300 border-amber-400/40 shadow-sm' 
+                    : 'bg-raseen-surface text-slate-300 border-raseen-border hover:border-amber-400/40 hover:text-white'
                   }`}
               >
                 {type.icon && <span>{type.icon}</span>}
