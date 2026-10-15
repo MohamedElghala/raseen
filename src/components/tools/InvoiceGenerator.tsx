@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { generateZatcaTLV, generateZatcaQRSvg } from '@/lib/zatca';
+import { generateZatcaTLV, renderQRCodeMatrix, generateZatcaQRSvg } from '@/lib/zatca';
 
 interface InvoiceItem {
   id: string;
@@ -72,20 +72,40 @@ export default function InvoiceGenerator() {
   const tax = getTax();
   const total = getTotal();
 
-  const zatcaQrSvg = useMemo(() => {
+  // Authentic ZATCA TLV Base64 payload
+  const zatcaPayload = useMemo(() => {
     try {
-      const payload = generateZatcaTLV({
-        sellerName: companyName || 'شركة رَصين للحلول الرقمية',
-        vatNumber: taxNumber || '31024589200003',
-        timestamp: `${date}T12:00:00Z`,
-        totalAmount: total.toFixed(2),
-        vatAmount: tax.toFixed(2),
-      });
-      return generateZatcaQRSvg(payload, 160);
+      return generateZatcaTLV(
+        companyName || 'شركة رَصين للحلول الرقمية',
+        taxNumber || '31024589200003',
+        `${date}T12:00:00Z`,
+        total.toFixed(2),
+        tax.toFixed(2)
+      );
     } catch {
       return '';
     }
   }, [companyName, taxNumber, date, total, tax]);
+
+  // Authentic 2D boolean QR Matrix (ISO/IEC 18004 Standard)
+  const qrMatrix = useMemo(() => {
+    if (!zatcaPayload) return null;
+    try {
+      return renderQRCodeMatrix(zatcaPayload);
+    } catch {
+      return null;
+    }
+  }, [zatcaPayload]);
+
+  // Fallback / SVG string representation
+  const zatcaQrSvg = useMemo(() => {
+    if (!zatcaPayload) return '';
+    try {
+      return generateZatcaQRSvg(zatcaPayload, 160);
+    } catch {
+      return '';
+    }
+  }, [zatcaPayload]);
 
   const handlePrint = (e: React.FormEvent) => {
     e.preventDefault();
@@ -373,19 +393,44 @@ export default function InvoiceGenerator() {
             </div>
 
             {/* ZATCA QR Simulated Badge */}
-            <div className="bg-slate-900/60 p-3 rounded-xl border border-slate-800 flex items-center justify-between">
+            <div className="bg-slate-900/60 p-3 rounded-xl border border-slate-800 flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
-                {/* Visual QR Code Box */}
-                <div 
-                  className="w-12 h-12 bg-white rounded-lg p-1 shrink-0 flex items-center justify-center shadow overflow-hidden [&>svg]:w-full [&>svg]:h-full"
-                  dangerouslySetInnerHTML={{ __html: zatcaQrSvg }}
-                />
-                <div className="text-[11px]">
+                {/* Visual Authentic QR Code Box */}
+                <div className="w-14 h-14 bg-white rounded-lg p-1 shrink-0 flex items-center justify-center shadow overflow-hidden">
+                  {qrMatrix ? (
+                    <svg 
+                      viewBox={`0 0 ${qrMatrix.length} ${qrMatrix.length}`} 
+                      className="w-full h-full"
+                      style={{ shapeRendering: 'crispEdges' }}
+                      aria-label="رمز الاستجابة السريع ZATCA QR"
+                    >
+                      <rect width={qrMatrix.length} height={qrMatrix.length} fill="#ffffff" />
+                      {qrMatrix.map((row, r) =>
+                        row.map((isDark, c) =>
+                          isDark ? (
+                            <rect key={`${r}-${c}`} x={c} y={r} width={1} height={1} fill="#0f172a" />
+                          ) : null
+                        )
+                      )}
+                    </svg>
+                  ) : (
+                    <div 
+                      className="w-full h-full [&>svg]:w-full [&>svg]:h-full"
+                      dangerouslySetInnerHTML={{ __html: zatcaQrSvg }} 
+                    />
+                  )}
+                </div>
+                <div className="text-[11px] space-y-0.5">
                   <span className="text-emerald-400 font-bold block">رمز الاستجابة السريع ZATCA QR</span>
                   <span className="text-slate-400 block text-[10px]">مشفّر ببيانات البائع والمشتري والضريبة تلقائياً</span>
+                  {zatcaPayload && (
+                    <span className="text-[9px] font-mono text-slate-500 block truncate max-w-[220px]" title={zatcaPayload}>
+                      TLV: {zatcaPayload.slice(0, 28)}...
+                    </span>
+                  )}
                 </div>
               </div>
-              <span className="text-xs text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
+              <span className="text-xs text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 shrink-0">
                 جاهز للطباعة ✓
               </span>
             </div>
@@ -417,11 +462,31 @@ export default function InvoiceGenerator() {
           </div>
 
           <div className="text-left">
-            {/* Visual QR Code in Print */}
-            <div 
-              className="w-20 h-20 bg-slate-50 border border-slate-300 rounded p-1 mb-2 inline-block overflow-hidden [&>svg]:w-full [&>svg]:h-full"
-              dangerouslySetInnerHTML={{ __html: zatcaQrSvg }}
-            />
+            {/* Visual Authentic QR Code in Print */}
+            <div className="w-24 h-24 bg-white border border-slate-300 rounded p-1 mb-2 inline-block overflow-hidden">
+              {qrMatrix ? (
+                <svg 
+                  viewBox={`0 0 ${qrMatrix.length} ${qrMatrix.length}`} 
+                  className="w-full h-full"
+                  style={{ shapeRendering: 'crispEdges' }}
+                  aria-label="رمز الاستجابة السريع ZATCA QR"
+                >
+                  <rect width={qrMatrix.length} height={qrMatrix.length} fill="#ffffff" />
+                  {qrMatrix.map((row, r) =>
+                    row.map((isDark, c) =>
+                      isDark ? (
+                        <rect key={`print-${r}-${c}`} x={c} y={r} width={1} height={1} fill="#0f172a" />
+                      ) : null
+                    )
+                  )}
+                </svg>
+              ) : (
+                <div 
+                  className="w-full h-full [&>svg]:w-full [&>svg]:h-full"
+                  dangerouslySetInnerHTML={{ __html: zatcaQrSvg }} 
+                />
+              )}
+            </div>
             <div className="text-xs font-mono">
               <p><strong>رقم الفاتورة:</strong> {invoiceNumber}</p>
               <p><strong>التاريخ:</strong> {date}</p>

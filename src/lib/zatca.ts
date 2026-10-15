@@ -56,17 +56,17 @@ export function generateZatcaTLV(
   let vatTotal: string;
 
   if (typeof arg1 === 'object' && arg1 !== null) {
-    seller = arg1.sellerName || 'شركة رَصين للحلول الرقمية';
-    vatNumber = arg1.vatNumber || '31024589200003';
-    timestamp = arg1.timestamp || new Date().toISOString();
-    total = arg1.totalAmount || '0.00';
-    vatTotal = arg1.vatAmount || '0.00';
+    seller = (arg1.sellerName && arg1.sellerName.trim()) ? String(arg1.sellerName) : 'شركة رَصين للحلول الرقمية';
+    vatNumber = (arg1.vatNumber && arg1.vatNumber.trim()) ? String(arg1.vatNumber) : '31024589200003';
+    timestamp = (arg1.timestamp && arg1.timestamp.trim()) ? String(arg1.timestamp) : new Date().toISOString();
+    total = (arg1.totalAmount && arg1.totalAmount.trim()) ? String(arg1.totalAmount) : '0.00';
+    vatTotal = (arg1.vatAmount && arg1.vatAmount.trim()) ? String(arg1.vatAmount) : '0.00';
   } else {
-    seller = (arg1 as string) || 'شركة رَصين للحلول الرقمية';
-    vatNumber = arg2 || '31024589200003';
-    timestamp = arg3 || new Date().toISOString();
-    total = arg4 || '0.00';
-    vatTotal = arg5 || '0.00';
+    seller = (arg1 && String(arg1).trim()) ? String(arg1) : 'شركة رَصين للحلول الرقمية';
+    vatNumber = (arg2 && String(arg2).trim()) ? String(arg2) : '31024589200003';
+    timestamp = (arg3 && String(arg3).trim()) ? String(arg3) : new Date().toISOString();
+    total = (arg4 && String(arg4).trim()) ? String(arg4) : '0.00';
+    vatTotal = (arg5 && String(arg5).trim()) ? String(arg5) : '0.00';
   }
 
   const tlv1 = toTLV(1, seller);
