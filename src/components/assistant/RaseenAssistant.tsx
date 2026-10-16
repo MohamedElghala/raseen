@@ -2,6 +2,9 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Analytics } from '@/lib/analytics';
+import { ProductItem } from '@/lib/types';
+import { mockProducts } from '@/lib/mockData';
+import FreeDownloadModal from '@/components/storefront/FreeDownloadModal';
 
 // --- Types ---
 export type IndustryKey = 'companies' | 'construction' | 'ecommerce' | 'restaurants' | 'freelance';
@@ -17,7 +20,7 @@ export interface CatalogRecommendation {
   link: string;
 }
 
-interface ChatMessage {
+export interface ChatMessage {
   id: string;
   sender: 'assistant' | 'user';
   text: string;
@@ -25,6 +28,8 @@ interface ChatMessage {
   quickReplies?: { label: string; action: () => void }[];
   actionLink?: { label: string; href: string };
   recommendations?: CatalogRecommendation[];
+  recommendedProducts?: ProductItem[];
+  intent?: string;
   isProfitExplanation?: boolean;
 }
 
@@ -280,6 +285,10 @@ export default function RaseenAssistant() {
   const [leadValidationError, setLeadValidationError] = useState('');
   const [isSubmittingLead, setIsSubmittingLead] = useState(false);
   const [capturedLeadId, setCapturedLeadId] = useState<string | null>(null);
+
+  // Free Download Modal state triggered from live product recommendations
+  const [isFreeModalOpen, setIsFreeModalOpen] = useState(false);
+  const [selectedFreeProduct, setSelectedFreeProduct] = useState<ProductItem | null>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -682,8 +691,174 @@ export default function RaseenAssistant() {
     }
   };
 
-  // --- Free-form User Message Handler ---
-  const handleSendMessage = (textToSend?: string) => {
+  // --- Dynamic Quick Replies Generator ---
+  const getDynamicQuickReplies = (
+    intent?: string,
+    triggerLead?: boolean
+  ): { label: string; action: () => void }[] => {
+    const replies: { label: string; action: () => void }[] = [];
+
+    if (triggerLead) {
+      replies.push({
+        label: '📞 إرسال بياناتي للتواصل عبر الواتساب',
+        action: () => openLeadCapture(`طلب تواصل مباشر - استفسار ${intent || ''}`),
+      });
+    }
+
+    switch (intent) {
+      case 'engineering_bim':
+        replies.push(
+          {
+            label: '🎁 تحميل حزمة Revit مجاناً (free-p1)',
+            action: () => {
+              const p1 = mockProducts.find((p) => p.id === 'free-p1');
+              if (p1) {
+                setSelectedFreeProduct(p1);
+                setIsFreeModalOpen(true);
+              }
+            },
+          },
+          {
+            label: '📐 استعراض قسم الهندسة والـ BIM',
+            action: () => {
+              const el = document.getElementById('products');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            },
+          },
+          {
+            label: '📞 طلب مكتبة هندسية مخصصة لمكتبي',
+            action: () => openLeadCapture('طلب تصميم مكتبة Revit أو بلوكات CAD مخصصة'),
+          }
+        );
+        break;
+
+      case 'financial_accounting':
+        replies.push(
+          {
+            label: '🎁 تحميل شيت الميزانية والسيولة مجاناً (free-p4)',
+            action: () => {
+              const p4 = mockProducts.find((p) => p.id === 'free-p4');
+              if (p4) {
+                setSelectedFreeProduct(p4);
+                setIsFreeModalOpen(true);
+              }
+            },
+          },
+          {
+            label: '📊 استعراض شيتات المحاسبة (acc-1..12)',
+            action: () => showAllAccountingSheets(),
+          },
+          {
+            label: '📞 طلب استشارة مالية أو ترخيص شركات',
+            action: () => openLeadCapture('طلب استشارة مالية ومحاسبية متقدمة'),
+          }
+        );
+        break;
+
+      case 'legal_contracts':
+        replies.push(
+          {
+            label: '🎁 تحميل عقد العمل الحر و NDA مجاناً (free-p3)',
+            action: () => {
+              const p3 = mockProducts.find((p) => p.id === 'free-p3');
+              if (p3) {
+                setSelectedFreeProduct(p3);
+                setIsFreeModalOpen(true);
+              }
+            },
+          },
+          {
+            label: '⚖️ استعراض العقود القانونية (leg-1..10)',
+            action: () => showAllLegalContracts(),
+          },
+          {
+            label: '📞 طلب صياغة عقد قانوني مخصص',
+            action: () => openLeadCapture('طلب صياغة عقد قانوني مخصص'),
+          }
+        );
+        break;
+
+      case 'business_tools':
+        replies.push(
+          {
+            label: '🧾 مولد الفواتير الإلكترونية ZATCA',
+            action: () => {
+              setIsOpen(false);
+              const el = document.getElementById('interactive-suite');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            },
+          },
+          {
+            label: '📈 حاسبة نقطة التعادل وهامش الربح',
+            action: () => {
+              setIsOpen(false);
+              const el = document.getElementById('interactive-suite');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            },
+          },
+          {
+            label: '🔍 فاحص صحة المتاجر والسيو',
+            action: () => {
+              setIsOpen(false);
+              const el = document.getElementById('interactive-suite');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            },
+          }
+        );
+        break;
+
+      case 'vendor_creator':
+        replies.push(
+          {
+            label: '🏪 كيف أربح 85% كبائع في رَصين؟',
+            action: () => explainCreatorProfitModel(),
+          },
+          {
+            label: '💼 انضم كبائع في رَصين الآن',
+            action: () => {
+              window.location.href = '/vendor';
+            },
+          },
+          {
+            label: '📞 تحدث مع مسؤول انضمام البائعين',
+            action: () => openLeadCapture('استفسار عن الانضمام كبائع - باقة 85% أرباح'),
+          }
+        );
+        break;
+
+      default:
+        replies.push(
+          {
+            label: '🎯 شجرة ترشيح الأصول لمشروعي',
+            action: () => startRecommendationTree(),
+          },
+          {
+            label: '🏪 كيف أربح 85% كبائع في رَصين؟',
+            action: () => explainCreatorProfitModel(),
+          },
+          {
+            label: '🎁 باقة الأصول المجانية للتحميل الفوري',
+            action: () => {
+              const p1 = mockProducts.find((p) => p.id === 'free-p1');
+              if (p1) {
+                setSelectedFreeProduct(p1);
+                setIsFreeModalOpen(true);
+              }
+            },
+          },
+          {
+            label: '📞 حجز استشارة مع فريق المبيعات',
+            action: () => openLeadCapture('طلب استشارة مباشرة مع فريق رَصين'),
+          }
+        );
+        break;
+    }
+
+    return replies;
+  };
+
+  // --- Conversational AI Message Handler (Connected to /api/assistant/chat) ---
+  const handleSendMessage = async (textToSend?: string) => {
     const text = (textToSend || inputVal).trim();
     if (!text) return;
 
@@ -698,14 +873,49 @@ export default function RaseenAssistant() {
     if (!textToSend) setInputVal('');
     setIsTyping(true);
 
-    setTimeout(() => {
+    try {
+      const response = await fetch('/api/assistant/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const assistantMsg: ChatMessage = {
+          id: (Date.now() + 1).toString(),
+          sender: 'assistant',
+          text: data.reply,
+          time: getCurrentTime(),
+          recommendedProducts: data.recommendedProducts || [],
+          intent: data.intent,
+          quickReplies: getDynamicQuickReplies(data.intent, data.triggerLeadCapture),
+        };
+        setMessages((prev) => [...prev, assistantMsg]);
+
+        if (data.triggerLeadCapture) {
+          setShowLeadPrompt(true);
+          setLeadInterest(`طلب استشارة: ${text}`);
+        }
+      } else {
+        respondToFreeText(text);
+      }
+    } catch {
       respondToFreeText(text);
+    } finally {
       setIsTyping(false);
-    }, 500);
+    }
   };
 
+  // --- Hybrid Semantic Fallback Engine (For offline / disconnected clients) ---
   const respondToFreeText = (query: string) => {
     const q = query.toLowerCase();
+
+    // Free Products lookup
+    const freeP1 = mockProducts.find((p) => p.id === 'free-p1');
+    const freeP2 = mockProducts.find((p) => p.id === 'free-p2');
+    const freeP3 = mockProducts.find((p) => p.id === 'free-p3');
+    const freeP4 = mockProducts.find((p) => p.id === 'free-p4');
 
     if (
       q.includes('ربح') ||
@@ -744,6 +954,7 @@ export default function RaseenAssistant() {
       q.includes('boq') ||
       q.includes('حصر')
     ) {
+      const bimProducts = [freeP1, freeP2, mockProducts.find((p) => p.id === 'p13')].filter(Boolean) as ProductItem[];
       setMessages((prev) => [
         ...prev,
         {
@@ -751,20 +962,10 @@ export default function RaseenAssistant() {
           sender: 'assistant',
           text: '📐 **الترسانة الهندسية ونماذج BIM المعمارية المعتمدة**:\n\nنوفر للمهندسين والمقاولين عائلات Revit بارامترية (LOD 350)، وبلوكات AutoCAD (1500+ بلوك)، وشيتات حصر كميات ومقايسات BOQ.\n\n🎁 **هدية مجانية فورية**: يمكنك تنزيل **حزمة عائلات Revit التمهيدية (LOD 300)** مجاناً 100% لتجربة جودة النمذجة قبل اقتناء الترسانة الكاملة!',
           time: getCurrentTime(),
+          recommendedProducts: bimProducts,
+          intent: 'engineering_bim',
           actionLink: { label: 'تنزيل حزمة Revit المجانية فوراً ←', href: '/product/free-p1' },
-          quickReplies: [
-            {
-              label: '📐 استعراض قسم الهندسة والـ BIM',
-              action: () => {
-                const el = document.getElementById('products');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              },
-            },
-            {
-              label: '📞 طلب مكتبة هندسية مخصصة لمكتبي',
-              action: () => openLeadCapture('طلب تصميم مكتبة Revit أو بلوكات CAD مخصصة'),
-            },
-          ],
+          quickReplies: getDynamicQuickReplies('engineering_bim'),
         },
       ]);
       return;
@@ -776,22 +977,34 @@ export default function RaseenAssistant() {
       q.includes('ببلاش') ||
       q.includes('free')
     ) {
+      const allFree = mockProducts.filter((p) => p.price === 0);
       setMessages((prev) => [
         ...prev,
         {
           id: Date.now().toString(),
           sender: 'assistant',
-          text: '🎁 **أهلاً بك في ركن الهدايا والأصول المجانية 100% من رَصين**!\n\nيمكنك تنزيل هذه الأصول فورياً وبدون أي مقابل لتسريع أعمالك:\n1. 📐 **حزمة عائلات Revit المعمارية (LOD 300)**: 35 عائلة بارامترية مجانية.\n2. 📊 **شيت مقايسات وحصر كميات البناء المبدئي (Mini BOQ)**.\n3. ⚖️ **عقد العمل الحر واتفاقية سرية المعلومات (Freelance & NDA)**.\n4. 💵 **شيت الميزانية الشخصية وإدارة السيولة والمصروفات**.',
+          text: '🎁 **أهلاً بك في ركن الهدايا والأصول المجانية 100% من رَصين**!\n\nيمكنك تنزيل هذه الأصول فورياً وبدون أي مقابل لتسريع أعمالك:\n1. 📐 **حزمة عائلات Revit المعمارية (LOD 300)**: 35 عائلة بارامترية مجانية.\n2. 📊 **شيت مقايسات وحصر كميات البناء المبدئي (Mini BOQ)**.\n3. ⚖️ **عقد العمل الحر واتفاقية سرية المعلومات (Freelance & NDA)**.\n4. 💵 **شيت الميزانية التقديرية والتدفق النقدي**.',
           time: getCurrentTime(),
+          recommendedProducts: allFree,
           actionLink: { label: 'استعراض وتحميل الأصول المجانية كلها ←', href: '/#products' },
           quickReplies: [
             {
               label: '📐 تنزيل حزمة Revit المجانية (free-p1)',
-              action: () => { window.location.href = '/product/free-p1'; },
+              action: () => {
+                if (freeP1) {
+                  setSelectedFreeProduct(freeP1);
+                  setIsFreeModalOpen(true);
+                }
+              },
             },
             {
               label: '⚖️ تنزيل عقد العمل الحر المجاني (free-p3)',
-              action: () => { window.location.href = '/product/free-p3'; },
+              action: () => {
+                if (freeP3) {
+                  setSelectedFreeProduct(freeP3);
+                  setIsFreeModalOpen(true);
+                }
+              },
             },
           ],
         },
@@ -817,7 +1030,9 @@ export default function RaseenAssistant() {
           sender: 'assistant',
           text: '🧾 يمكنك إصدار وتخصيص الفواتير الضريبية الإلكترونية المتوافقة مع معايير ZATCA والضرائب المصرية مع رمز QR فوري ومجاني في جناح الأدوات الحية أعلى الصفحة:',
           time: getCurrentTime(),
+          intent: 'business_tools',
           actionLink: { label: 'فتح مولد الفواتير الإلكترونية ZATCA', href: '/#interactive-suite' },
+          quickReplies: getDynamicQuickReplies('business_tools'),
         },
       ]);
       return;
@@ -831,7 +1046,9 @@ export default function RaseenAssistant() {
           sender: 'assistant',
           text: '📈 حاسبة نقطة التعادل وهامش المساهمة متاحة مجاناً الآن في أعلى الصفحة! يمكنك تحريك أشرطة التكاليف وسعر الوحدة لمعرفة متى تبدأ بجني أرباح حقيقية يومياً.',
           time: getCurrentTime(),
+          intent: 'business_tools',
           actionLink: { label: 'جرب حاسبة التعادل فوراً', href: '/#interactive-suite' },
+          quickReplies: getDynamicQuickReplies('business_tools'),
         },
       ]);
       return;
@@ -850,6 +1067,7 @@ export default function RaseenAssistant() {
     }
 
     // Default polite response
+    const defaultRecs = [freeP1, freeP3, freeP4].filter(Boolean) as ProductItem[];
     setMessages((prev) => [
       ...prev,
       {
@@ -857,24 +1075,9 @@ export default function RaseenAssistant() {
         sender: 'assistant',
         text: 'شكراً لتواصلك مع رَصين! 🌟 منصتنا تقدم أصولاً ونماذج إكسيل وعقوداً قانونية وأدوات إدارة أعمال ذكية تختصر 80% من جهد وتكاليف التأسيس والتشغيل. كيف تحب أن أساعدك الآن؟',
         time: getCurrentTime(),
-        quickReplies: [
-          {
-            label: '🎯 ترشيح أصول لمشروعي',
-            action: () => startRecommendationTree(),
-          },
-          {
-            label: '🏪 نموذج ربح البائعين (85%)',
-            action: () => explainCreatorProfitModel(),
-          },
-          {
-            label: '📊 شيتات المحاسبة (acc-1..12)',
-            action: () => showAllAccountingSheets(),
-          },
-          {
-            label: '📞 التحدث مع مستشار معتمد',
-            action: () => openLeadCapture('طلب استشارة عامة'),
-          },
-        ],
+        recommendedProducts: defaultRecs,
+        intent: 'general_support',
+        quickReplies: getDynamicQuickReplies('general_support'),
       },
     ]);
   };
@@ -993,6 +1196,91 @@ export default function RaseenAssistant() {
                             >
                               طلب تخصيص
                             </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Live Recommended Product Cards (Free lead magnets prioritized) */}
+                  {m.recommendedProducts && m.recommendedProducts.length > 0 && (
+                    <div className="mt-3 space-y-2 pt-2 border-t border-slate-800">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] font-bold text-amber-400 block">
+                          الأصول والحلول المقترحة لك:
+                        </span>
+                        {m.intent && (
+                          <span className="text-[9px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded font-mono">
+                            {m.intent}
+                          </span>
+                        )}
+                      </div>
+                      {m.recommendedProducts.map((prod) => (
+                        <div
+                          key={prod.id}
+                          className={`p-2.5 rounded-xl border transition-all ${
+                            prod.price === 0
+                              ? 'bg-slate-950 border-emerald-500/40 hover:border-emerald-400 shadow-sm shadow-emerald-500/10'
+                              : 'bg-slate-950 border-slate-800 hover:border-amber-500/40'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between gap-2">
+                            {prod.price === 0 ? (
+                              <span className="text-[9px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded-full flex items-center gap-1">
+                                <span>⚡ أصل مجاني للتحميل الفوري</span>
+                              </span>
+                            ) : (
+                              <span className="font-mono text-[10px] bg-amber-500/10 text-amber-400 px-1.5 py-0.5 rounded border border-amber-500/20 font-bold">
+                                {prod.id}
+                              </span>
+                            )}
+                            <span
+                              className={`text-[10px] font-black ${
+                                prod.price === 0 ? 'text-emerald-400' : 'text-amber-400'
+                              }`}
+                            >
+                              {prod.price === 0 ? 'مجاناً 100%' : `${prod.price} ج.م`}
+                            </span>
+                          </div>
+
+                          <h4 className="text-[11px] font-bold text-white mt-1.5 leading-snug">
+                            {prod.title}
+                          </h4>
+                          <p className="text-[10px] text-slate-400 mt-1 leading-relaxed line-clamp-2">
+                            {prod.description}
+                          </p>
+
+                          {/* Action Controls */}
+                          <div className="mt-2 pt-2 border-t border-slate-900 flex items-center gap-2">
+                            {prod.price === 0 ? (
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setSelectedFreeProduct(prod);
+                                  setIsFreeModalOpen(true);
+                                }}
+                                className="flex-1 py-1 px-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black rounded-lg text-[10px] flex items-center justify-center gap-1 shadow-md transition-all cursor-pointer"
+                              >
+                                <span>📥 تحميل مجاني فوري (1-Click)</span>
+                              </button>
+                            ) : (
+                              <>
+                                <a
+                                  href={`/product/${prod.id}`}
+                                  onClick={() => setIsOpen(false)}
+                                  className="text-[10px] font-bold text-amber-400 hover:text-amber-300 underline"
+                                >
+                                  تفاصيل الأصل والشراء ←
+                                </a>
+                                <button
+                                  type="button"
+                                  onClick={() => openLeadCapture(`طلب شراء أو ترخيص: [${prod.id}] ${prod.title}`)}
+                                  className="text-[10px] font-bold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 px-2 py-0.5 rounded transition-colors mr-auto"
+                                >
+                                  طلب استشارة
+                                </button>
+                              </>
+                            )}
                           </div>
                         </div>
                       ))}
@@ -1180,6 +1468,16 @@ export default function RaseenAssistant() {
           </div>
         </div>
       )}
+
+      {/* Free Download Modal Triggered Directly from Assistant */}
+      <FreeDownloadModal
+        isOpen={isFreeModalOpen}
+        product={selectedFreeProduct}
+        onClose={() => {
+          setIsFreeModalOpen(false);
+          setSelectedFreeProduct(null);
+        }}
+      />
     </>
   );
 }

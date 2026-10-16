@@ -13,6 +13,7 @@ const suites = [
   require('./tier1_a4_print.test.js'),
   require('./tier1_freemium_bim.test.js'),
   require('./tier1_editorial_blog.test.js'),
+  require('./tier1_assistant_ai.test.js'),
   require('./tier2_boundary.test.js'),
   require('./tier3_combinations.test.js'),
   require('./tier4_scenarios.test.js'),
