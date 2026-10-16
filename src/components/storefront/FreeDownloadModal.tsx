@@ -34,6 +34,18 @@ export default function FreeDownloadModal({
     }
   }, [isOpen, product?.id]);
 
+  // ESC key listener to dismiss modal
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen || !product) return null;
 
   // Find related premium upsell product
@@ -93,7 +105,7 @@ export default function FreeDownloadModal({
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -160,7 +172,10 @@ export default function FreeDownloadModal({
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto animate-fadeIn"
       dir="rtl"
     >
-      <div className="relative w-full max-w-lg bg-slate-900 border border-emerald-500/30 rounded-2xl p-6 sm:p-8 shadow-2xl text-right my-8 max-h-[90vh] overflow-y-auto">
+      {/* Backdrop Click Dismissal Layer */}
+      <div className="absolute inset-0" onClick={onClose} aria-hidden="true" />
+
+      <div className="relative w-full max-w-lg bg-slate-900 border border-emerald-500/30 rounded-2xl p-6 sm:p-8 shadow-2xl text-right my-8 max-h-[90vh] overflow-y-auto z-10">
         {/* Close Button */}
         <button
           onClick={onClose}
