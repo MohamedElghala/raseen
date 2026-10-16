@@ -216,11 +216,23 @@ function validateQRMatrix(matrix) {
   };
 }
 
+const { ImageConfigContext } = jiti('next/dist/shared/lib/image-config-context.shared-runtime.js');
+const { imageConfigDefault } = jiti('next/dist/shared/lib/image-config.js');
+
 /**
  * Render React component to HTML string for SSR inspection
  */
 function renderComponent(Component, props = {}) {
-  return ReactDOMServer.renderToStaticMarkup(React.createElement(Component, props));
+  const element = React.createElement(Component, props);
+  if (ImageConfigContext && imageConfigDefault) {
+    const wrapped = React.createElement(
+      ImageConfigContext.Provider,
+      { value: { ...imageConfigDefault, unoptimized: true } },
+      element
+    );
+    return ReactDOMServer.renderToStaticMarkup(wrapped);
+  }
+  return ReactDOMServer.renderToStaticMarkup(element);
 }
 
 module.exports = {

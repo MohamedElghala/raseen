@@ -20,7 +20,7 @@ const CATEGORIES = [
 
 const FILE_TYPES = [
   { id: 'all', label: 'كل الصيغ' },
-  { id: 'free', label: '🎁 أصول مجانية (0 ر.س)', icon: '🎁' },
+  { id: 'free', label: '🎁 أصول مجانية (4 نماذج)', icon: '🎁' },
   { id: 'excel', label: 'شيتات Excel', icon: '📗' },
   { id: 'notion', label: 'قوالب Notion', icon: '📝' },
   { id: 'powerpoint', label: 'سلايدات PowerPoint', icon: '📊' },
@@ -41,9 +41,28 @@ export default function FilterBar({
     <div className="w-full bg-raseen-dark border-b border-raseen-border py-6 px-4">
       <div className="max-w-7xl mx-auto flex flex-col gap-6">
         
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-white">تصفح المنتجات</h2>
-          <div className="px-3 py-1 rounded-full bg-raseen-surface border border-raseen-border text-raseen-gold text-sm font-medium">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center gap-3">
+            <h2 className="text-xl font-bold text-white">تصفح المنتجات</h2>
+            
+            {/* 1-Click Free Assets Quick Filter */}
+            <button
+              type="button"
+              onClick={() => onFileTypeChange(selectedFileType === 'free' ? 'all' : 'free')}
+              aria-label="🎁 أصول مجانية للتحميل الفوري (4 نماذج)"
+              aria-pressed={selectedFileType === 'free'}
+              className={`min-h-[44px] px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all border shadow-lg ${
+                selectedFileType === 'free'
+                  ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 border-emerald-300 shadow-emerald-500/25 scale-105'
+                  : 'bg-emerald-950/40 border-emerald-500/50 text-emerald-300 hover:bg-emerald-500 hover:text-slate-950 hover:border-emerald-400'
+              }`}
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+              <span>🎁 أصول مجانية للتحميل الفوري (4 نماذج)</span>
+            </button>
+          </div>
+
+          <div className="px-3 py-1 rounded-full bg-raseen-surface border border-raseen-border text-raseen-gold text-sm font-medium self-start sm:self-auto">
             {totalProducts} منتج متاح
           </div>
         </div>

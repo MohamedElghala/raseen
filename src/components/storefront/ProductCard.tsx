@@ -1,12 +1,13 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCartStore } from '@/store/cartStore';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { ProductItem } from '@/lib/types';
 import { formatPrice } from '@/lib/currency';
+import FreeDownloadModal from './FreeDownloadModal';
 
 interface ProductCardProps {
   product: ProductItem;
@@ -17,11 +18,16 @@ export default function ProductCard({ product }: ProductCardProps) {
   const currency = useCartStore((s) => s.currency);
   const toggleWishlist = useWishlistStore((s) => s.toggleWishlist);
   const isFav = useWishlistStore((s) => s.isInWishlist(product.id));
+  const [isFreeModalOpen, setIsFreeModalOpen] = useState(false);
 
   const handleBuyClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    addItem(product);
+    if (product.price === 0) {
+      setIsFreeModalOpen(true);
+    } else {
+      addItem(product);
+    }
   };
 
   const handleWishlistClick = (e: React.MouseEvent) => {
@@ -42,11 +48,12 @@ export default function ProductCard({ product }: ProductCardProps) {
     : null;
 
   return (
-    <Link
-      href={`/product/${product.id}`}
-      className="block group rounded-xl overflow-hidden bg-raseen-surface border border-raseen-border hover:border-raseen-gold/40 hover:shadow-lg hover:shadow-raseen-gold/5 transition-all duration-300 raseen-glass-hover"
-      aria-label={`عرض تفاصيل المنتج ${product.title}`}
-    >
+    <>
+      <Link
+        href={`/product/${product.id}`}
+        className="block group rounded-xl overflow-hidden bg-raseen-surface border border-raseen-border hover:border-raseen-gold/40 hover:shadow-lg hover:shadow-raseen-gold/5 transition-all duration-300 raseen-glass-hover"
+        aria-label={`عرض تفاصيل المنتج ${product.title}`}
+      >
       <div className="relative aspect-[3/2] w-full bg-raseen-navy overflow-hidden">
         <Image
           src={product.imageUrl}
@@ -65,9 +72,9 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
 
         {product.price === 0 ? (
-          <div className="absolute top-3 left-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 px-2.5 py-1 rounded-md text-xs font-black shadow-lg shadow-emerald-500/20 flex items-center gap-1">
-            <span>🎁</span>
-            <span>هدية مجانية</span>
+          <div className="absolute top-3 left-3 bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-600 text-slate-950 px-2.5 py-1 rounded-lg text-[11px] font-black shadow-lg shadow-emerald-500/25 flex items-center gap-1.5 border border-emerald-300/40 animate-pulse">
+            <span className="w-1.5 h-1.5 rounded-full bg-slate-950 animate-ping" />
+            <span>أصل مجاني للتحميل الفوري</span>
           </div>
         ) : discountPercent > 0 ? (
           <div className="absolute top-3 left-3 bg-red-500/90 backdrop-blur-md px-2 py-1 rounded-md text-xs font-bold text-white shadow-sm">
@@ -156,5 +163,13 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
       </div>
     </Link>
+    {product.price === 0 && (
+      <FreeDownloadModal
+        isOpen={isFreeModalOpen}
+        product={product}
+        onClose={() => setIsFreeModalOpen(false)}
+      />
+    )}
+  </>
   );
 }

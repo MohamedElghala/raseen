@@ -11,6 +11,7 @@ const suites = [
   require('./tier1_currency.test.js'),
   require('./tier1_leads.test.js'),
   require('./tier1_a4_print.test.js'),
+  require('./tier1_freemium_bim.test.js'),
   require('./tier2_boundary.test.js'),
   require('./tier3_combinations.test.js'),
   require('./tier4_scenarios.test.js'),

@@ -22,6 +22,8 @@ export interface ProductItem {
   tags: string[];
   createdAt: string;
   featured?: boolean;
+  fileUrl?: string;
+  fileSize?: string;
   technicalSpecs?: {
     compatibility?: string[];
     fileFormats?: string[];
@@ -32,6 +34,7 @@ export interface ProductItem {
     pagesCount?: number;
     jurisdiction?: string;
     canvaDirectUrl?: string;
+    fileSize?: string;
   };
 }
 

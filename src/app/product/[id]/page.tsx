@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
@@ -8,6 +8,7 @@ import { mockProducts, mockReviews } from '@/lib/mockData';
 import { useCartStore } from '@/store/cartStore';
 import { formatPrice } from '@/lib/currency';
 import ProductCard from '@/components/storefront/ProductCard';
+import FreeDownloadModal from '@/components/storefront/FreeDownloadModal';
 import ExcelInspector from '@/components/products/ExcelInspector';
 import ContractInspector from '@/components/products/ContractInspector';
 import CadRevitInspector from '@/components/products/CadRevitInspector';
@@ -20,6 +21,7 @@ export default function ProductDetailPage() {
 
   const addItem = useCartStore((state) => state.addItem);
   const currency = useCartStore((state) => state.currency);
+  const [isFreeModalOpen, setIsFreeModalOpen] = useState(false);
 
   const product = useMemo(() => {
     return mockProducts.find((p) => p.id === id);
@@ -94,9 +96,17 @@ export default function ProductDetailPage() {
           {/* Info */}
           <div className="flex flex-col">
             <div className="mb-4">
-              <span className="inline-block px-3 py-1 bg-raseen-dark border border-raseen-border text-raseen-gold rounded-full text-xs font-semibold mb-3">
-                {product.category}
-              </span>
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <span className="inline-block px-3 py-1 bg-raseen-dark border border-raseen-border text-raseen-gold rounded-full text-xs font-semibold">
+                  {product.category}
+                </span>
+                {product.price === 0 && (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-600 text-slate-950 rounded-full text-xs font-black shadow-lg shadow-emerald-500/20 border border-emerald-300/40 animate-pulse">
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-950 animate-ping" />
+                    <span>أصل مجاني للتحميل الفوري</span>
+                  </span>
+                )}
+              </div>
               <h1 className="text-2xl md:text-3xl font-bold text-white mb-4 leading-tight">{product.title}</h1>
 
               <div className="flex items-center gap-4 mb-6 text-sm flex-wrap">
@@ -172,17 +182,32 @@ export default function ProductDetailPage() {
                 {displayOriginalPrice && (
                   <div className="text-slate-500 line-through text-xs mb-1">{displayOriginalPrice}</div>
                 )}
-                <div className="text-3xl font-black text-raseen-gold">{displayPrice}</div>
+                {product.price === 0 ? (
+                  <div className="text-3xl font-black text-emerald-400">مجاناً 100%</div>
+                ) : (
+                  <div className="text-3xl font-black text-raseen-gold">{displayPrice}</div>
+                )}
               </div>
 
-              <button
-                onClick={() => addItem(product)}
-                className="btn-gold flex items-center gap-2 !px-8 shadow-lg shadow-raseen-gold/20"
-                aria-label="أضف للسلة"
-              >
-                <span>أضف للسلة</span>
-                <span>🛒</span>
-              </button>
+              {product.price === 0 ? (
+                <button
+                  onClick={() => setIsFreeModalOpen(true)}
+                  className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black flex items-center gap-2 !px-8 py-3.5 rounded-xl shadow-lg shadow-emerald-500/20 text-base transition-all"
+                  aria-label="تحميل مجاني فوري"
+                >
+                  <span>تحميل مجاني فوري</span>
+                  <span>📥</span>
+                </button>
+              ) : (
+                <button
+                  onClick={() => addItem(product)}
+                  className="btn-gold flex items-center gap-2 !px-8 shadow-lg shadow-raseen-gold/20"
+                  aria-label="أضف للسلة"
+                >
+                  <span>أضف للسلة</span>
+                  <span>🛒</span>
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -256,6 +281,14 @@ export default function ProductDetailPage() {
         )}
 
       </div>
+
+      {product.price === 0 && (
+        <FreeDownloadModal
+          isOpen={isFreeModalOpen}
+          product={product}
+          onClose={() => setIsFreeModalOpen(false)}
+        />
+      )}
     </main>
   );
 }
