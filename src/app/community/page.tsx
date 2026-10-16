@@ -5,7 +5,17 @@ import Link from 'next/link';
 import { useCommunityStore } from '@/store/communityStore';
 import { CommunityCategorySlug, CommunityPost } from '@/lib/communityTypes';
 import CreatePostModal from '@/components/community/CreatePostModal';
-import { BLOG_POSTS, BlogPost } from '@/lib/blogData';
+import { BLOG_ARTICLES } from '@/lib/blogArticlesData';
+import { BlogArticle } from '@/lib/blogTypes';
+import EmbeddedProductCard from '@/components/blog/EmbeddedProductCard';
+
+const BLOG_CATEGORIES = [
+  { slug: 'all', label: 'جميع مقالات المدونة', icon: '🌐' },
+  { slug: 'engineering', label: 'الهندسة وBIM', icon: '📐' },
+  { slug: 'financial', label: 'المالية والمحاسبة', icon: '📊' },
+  { slug: 'legal', label: 'القانون والـ NDA', icon: '⚖️' },
+  { slug: 'business', label: 'ريادة الأعمال', icon: '💼' },
+];
 
 const CATEGORIES: { slug: CommunityCategorySlug; label: string; icon: string }[] = [
   { slug: 'all', label: 'جميع الأقسام', icon: '🌐' },
@@ -17,8 +27,10 @@ const CATEGORIES: { slug: CommunityCategorySlug; label: string; icon: string }[]
 ];
 
 export default function CommunityPage() {
-  const [activeView, setActiveView] = useState<'discussions' | 'blog'>('discussions');
-  const [expandedArticleId, setExpandedArticleId] = useState<string | null>('post-1');
+  const [activeView, setActiveView] = useState<'blog' | 'discussions'>('blog');
+  const [blogCategory, setBlogCategory] = useState<string>('all');
+  const [blogSearchQuery, setBlogSearchQuery] = useState<string>('');
+  const [expandedArticleId, setExpandedArticleId] = useState<string | null>(null);
   const posts = useCommunityStore((s) => s.posts);
   const selectedCategory = useCommunityStore((s) => s.selectedCategory);
   const setSelectedCategory = useCommunityStore((s) => s.setSelectedCategory);
@@ -59,6 +71,25 @@ export default function CommunityPage() {
       return 0; // default order
     });
   }, [posts, selectedCategory, activeTab, searchQuery]);
+
+  const filteredArticles = useMemo(() => {
+    return BLOG_ARTICLES.filter((article) => {
+      if (blogCategory !== 'all' && article.category !== blogCategory) {
+        return false;
+      }
+      if (blogSearchQuery.trim()) {
+        const q = blogSearchQuery.toLowerCase();
+        const matchTitle = article.title.toLowerCase().includes(q);
+        const matchExcerpt = article.excerpt.toLowerCase().includes(q);
+        const matchAuthor = article.author.name.toLowerCase().includes(q);
+        const matchTags = article.tags.some((t) => t.toLowerCase().includes(q));
+        if (!matchTitle && !matchExcerpt && !matchAuthor && !matchTags) {
+          return false;
+        }
+      }
+      return true;
+    });
+  }, [blogCategory, blogSearchQuery]);
 
   return (
     <main className="min-h-screen bg-raseen-dark text-white font-cairo py-10" dir="rtl" lang="ar">
@@ -123,53 +154,105 @@ export default function CommunityPage() {
           </div>
         </section>
 
-        {/* View Switcher: Discussions vs Knowledge Hub Blog */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
+        {/* Dual-View Switcher: Editorial Blog vs Community Discussions */}
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
           <button
-            onClick={() => setActiveView('discussions')}
-            className={`px-6 py-3 rounded-2xl font-bold text-xs sm:text-sm flex items-center gap-2.5 transition-all shadow-lg ${
-              activeView === 'discussions'
-                ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-amber-500/20 scale-[1.02]'
-                : 'bg-raseen-surface border border-raseen-border text-slate-300 hover:text-white hover:bg-slate-900'
-            }`}
-          >
-            <span>💬</span>
-            <span>ساحة النقاشات والطلبات (1,280+ نقاش)</span>
-          </button>
-
-          <button
+            type="button"
             onClick={() => setActiveView('blog')}
-            className={`px-6 py-3 rounded-2xl font-bold text-xs sm:text-sm flex items-center gap-2.5 transition-all shadow-lg ${
+            className={`px-6 py-3.5 rounded-2xl font-bold text-xs sm:text-sm flex items-center gap-2.5 transition-all shadow-xl min-h-[44px] ${
               activeView === 'blog'
-                ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 shadow-cyan-500/20 scale-[1.02]'
+                ? 'bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-500 text-slate-950 shadow-cyan-500/25 scale-[1.02] ring-2 ring-cyan-400/50'
                 : 'bg-raseen-surface border border-raseen-border text-slate-300 hover:text-white hover:bg-slate-900'
             }`}
           >
             <span>📚</span>
-            <span>المدونة الهندسية والمعرفية والسيو (أدلة حصرية)</span>
+            <span>المدونة التخصصية ومقالات السيو ({BLOG_ARTICLES.length} أدلة معتمدة)</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveView('discussions')}
+            className={`px-6 py-3.5 rounded-2xl font-bold text-xs sm:text-sm flex items-center gap-2.5 transition-all shadow-xl min-h-[44px] ${
+              activeView === 'discussions'
+                ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-amber-500/25 scale-[1.02] ring-2 ring-amber-400/50'
+                : 'bg-raseen-surface border border-raseen-border text-slate-300 hover:text-white hover:bg-slate-900'
+            }`}
+          >
+            <span>💬</span>
+            <span>ساحة النقاشات وطلبات النماذج ({posts.length}+ نقاش)</span>
           </button>
         </div>
 
         {activeView === 'blog' ? (
           <div className="space-y-8">
-            <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-xl">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6 mb-8">
+            {/* Blog Catalog Header & Filters */}
+            <div className="bg-slate-900/60 border border-slate-800/90 rounded-3xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-6 mb-8">
                 <div>
-                  <div className="text-xs font-mono text-cyan-400 font-bold mb-1">RASEEN EDITORIAL & TECHNICAL KNOWLEDGE BASE</div>
-                  <h2 className="text-2xl sm:text-3xl font-black text-white">المدونة الهندسية والريادية المتخصصة</h2>
-                  <p className="text-xs sm:text-sm text-slate-400 mt-1">
-                    أدلة عملية ومقالات سيو معمقة للمهندسين والمحاسبين ورواد الأعمال، مع نماذج مجانية وتشويقية قابلة للتطبيق الفوري.
+                  <div className="inline-flex items-center gap-2 text-xs font-mono text-cyan-400 font-bold mb-1.5 bg-cyan-950/60 border border-cyan-800/50 px-3 py-1 rounded-full">
+                    <span>🔬</span>
+                    <span>RASEEN EDITORIAL & TECHNICAL KNOWLEDGE BASE</span>
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl font-black text-white">
+                    المدونة التخصصية ومركز أبحاث السيو
+                  </h2>
+                  <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-2xl">
+                    أدلة هندسية ومحاسبية وقانونية معمقة صاغها كبار الاستشاريين، مقترنة بنماذج BIM وأصول مجانية جاهزة للتطبيق الفوري.
                   </p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="px-3 py-1.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-bold font-mono">
-                    {BLOG_POSTS.length} أدلة تفصيلية
+                <div className="flex items-center gap-3">
+                  <span className="px-3.5 py-1.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-bold font-mono">
+                    {filteredArticles.length} / {BLOG_ARTICLES.length} مقال متاح
                   </span>
                 </div>
               </div>
 
+              {/* Blog Category Pills & Search */}
+              <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
+                <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none">
+                  {BLOG_CATEGORIES.map((cat) => (
+                    <button
+                      key={cat.slug}
+                      type="button"
+                      onClick={() => setBlogCategory(cat.slug)}
+                      className={`px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex items-center gap-2 min-h-[40px] ${
+                        blogCategory === cat.slug
+                          ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
+                          : 'bg-slate-950/70 border border-slate-800 text-slate-300 hover:text-white hover:border-cyan-500/40'
+                      }`}
+                    >
+                      <span>{cat.icon}</span>
+                      <span>{cat.label}</span>
+                    </button>
+                  ))}
+                </div>
+
+                <div className="w-full md:w-80 relative">
+                  <input
+                    type="text"
+                    value={blogSearchQuery}
+                    onChange={(e) => setBlogSearchQuery(e.target.value)}
+                    placeholder="بحث في مقالات المدونة والأدلة..."
+                    className="w-full bg-slate-950/80 border border-slate-800 rounded-xl pr-10 pl-4 py-2.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400 transition-colors min-h-[40px]"
+                  />
+                  <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm">
+                    🔍
+                  </span>
+                  {blogSearchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => setBlogSearchQuery('')}
+                      className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Articles Grid */}
               <div className="grid grid-cols-1 gap-8">
-                {BLOG_POSTS.map((article) => {
+                {filteredArticles.map((article) => {
                   const isExpanded = expandedArticleId === article.id;
                   return (
                     <article
@@ -181,104 +264,105 @@ export default function CommunityPage() {
                           <span className="px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-bold">
                             {article.categoryLabel}
                           </span>
-                          <span className="text-slate-400">• {article.readTime}</span>
+                          <span className="text-slate-400">• {article.readingTime}</span>
                           <span className="text-slate-400">• {article.views} قراءة</span>
+                          <span className="text-slate-400 font-mono">• {article.publishedAt}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-slate-400">
-                          <span>{article.author.avatar}</span>
+                        <div className="flex items-center gap-2 text-slate-300">
+                          <span className="text-lg">{article.author.avatar}</span>
                           <span className="text-white font-bold">{article.author.name}</span>
-                          <span className="text-[11px] text-slate-400">({article.author.role})</span>
+                          <span className="text-[11px] text-slate-400 hidden sm:inline">
+                            ({article.author.role})
+                          </span>
                         </div>
                       </div>
 
                       <div>
-                        <h3 className="text-xl sm:text-2xl font-black text-white leading-snug mb-3">
-                          {article.title}
+                        <h3 className="text-xl sm:text-2xl font-black text-white leading-snug mb-3 hover:text-cyan-300 transition-colors">
+                          <Link href={`/community/article/${article.slug}`}>
+                            {article.title}
+                          </Link>
                         </h3>
                         <p className="text-slate-300 text-sm leading-relaxed">
                           {article.excerpt}
                         </p>
                       </div>
 
-                      {/* Content Sections */}
-                      {isExpanded && (
-                        <div className="pt-4 border-t border-slate-800/80 space-y-6 text-sm text-slate-200">
-                          {article.content.map((sec, idx) => (
-                            <div key={idx} className="space-y-3 bg-slate-950/50 p-5 rounded-xl border border-slate-800/60">
-                              <h4 className="text-base font-bold text-amber-300 flex items-center gap-2">
-                                <span>📌</span>
-                                <span>{sec.sectionTitle}</span>
-                              </h4>
-                              <p className="leading-relaxed text-slate-300">{sec.text}</p>
-                              {sec.keyPoints && sec.keyPoints.length > 0 && (
-                                <ul className="space-y-1.5 pt-2 border-t border-slate-800/40 text-xs text-slate-300">
-                                  {sec.keyPoints.map((pt, pIdx) => (
-                                    <li key={pIdx} className="flex items-start gap-2">
-                                      <span className="text-cyan-400 font-bold">✓</span>
-                                      <span>{pt}</span>
-                                    </li>
-                                  ))}
-                                </ul>
-                              )}
-                            </div>
+                      {/* Tags & Sections Summary */}
+                      <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
+                        <span className="text-slate-400 text-[11px]">المحاور الفنية:</span>
+                        {article.sections.map((sec, idx) => (
+                          <span
+                            key={sec.id}
+                            className="px-2 py-0.5 rounded-md bg-slate-900 border border-slate-800 text-slate-300 text-[11px]"
+                          >
+                            #{idx + 1} {sec.title.split(':')[0]}
+                          </span>
+                        ))}
+                      </div>
+
+                      {/* Embedded Related Products Preview */}
+                      <div className="pt-2">
+                        <div className="text-xs font-bold text-amber-300/90 mb-2 flex items-center gap-1.5">
+                          <span>📦</span>
+                          <span>الأصول والنماذج المرتبطة بهذا المقال:</span>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {article.embeddedProductIds.map((pid) => (
+                            <EmbeddedProductCard key={pid} productId={pid} />
                           ))}
                         </div>
-                      )}
-
-                      {/* Action & Conversion Bridge: Free Lead Magnet + Flagship Paid */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-slate-800/80">
-                        {/* Free Lead Magnet */}
-                        <div className="p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/30 flex items-center justify-between gap-3">
-                          <div className="space-y-1">
-                            <span className="text-[10px] font-black text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
-                              {article.relatedFreeAsset.badge}
-                            </span>
-                            <h5 className="text-xs font-bold text-white line-clamp-1">
-                              {article.relatedFreeAsset.title}
-                            </h5>
-                          </div>
-                          <Link
-                            href={article.relatedFreeAsset.downloadUrl}
-                            className="px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-black shrink-0 transition-all shadow-md shadow-emerald-500/20"
-                          >
-                            تنزيل مجاناً 📥
-                          </Link>
-                        </div>
-
-                        {/* Paid Flagship Asset */}
-                        <div className="p-4 rounded-xl bg-amber-950/30 border border-amber-500/30 flex items-center justify-between gap-3">
-                          <div className="space-y-1">
-                            <div className="flex items-center gap-2">
-                              <span className="text-[10px] font-black text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/20">
-                                الباقة الاحترافية
-                              </span>
-                              <span className="text-xs font-mono font-bold text-amber-300">{article.relatedPaidAsset.price}</span>
-                            </div>
-                            <h5 className="text-xs font-bold text-white line-clamp-1">
-                              {article.relatedPaidAsset.title}
-                            </h5>
-                          </div>
-                          <Link
-                            href={article.relatedPaidAsset.url}
-                            className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 text-xs font-black shrink-0 transition-all shadow-md shadow-amber-500/20"
-                          >
-                            شراء الترسانة 🛒
-                          </Link>
-                        </div>
                       </div>
 
-                      {/* Expand / Collapse Button */}
-                      <div className="flex justify-end pt-2">
-                        <button
-                          onClick={() => setExpandedArticleId(isExpanded ? null : article.id)}
-                          className="text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 transition-colors"
+                      {/* Action Links */}
+                      <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-800/80">
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => setExpandedArticleId(isExpanded ? null : article.id)}
+                            className="text-xs font-bold text-slate-400 hover:text-cyan-300 flex items-center gap-1.5 transition-colors"
+                          >
+                            <span>{isExpanded ? 'طي المحتوى المختصر ▲' : 'استعراض فهرس المحاور ▼'}</span>
+                          </button>
+                        </div>
+
+                        <Link
+                          href={`/community/article/${article.slug}`}
+                          className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 text-xs sm:text-sm font-black transition-all shadow-md shadow-cyan-500/20 flex items-center gap-2"
                         >
-                          <span>{isExpanded ? 'طي المقال ▲' : 'قراءة الدليل بالكامل والتفاصيل ▼'}</span>
-                        </button>
+                          <span>قراءة الدليل الكامل والمقال التفصيلي</span>
+                          <span>←</span>
+                        </Link>
                       </div>
+
+                      {/* Expanded Section Titles */}
+                      {isExpanded && (
+                        <div className="pt-4 border-t border-slate-800/60 space-y-3 bg-slate-950/60 p-4 rounded-xl">
+                          <h4 className="text-xs font-bold text-cyan-300">محاور هذا الدليل بالتفصيل:</h4>
+                          <ul className="space-y-2 text-xs text-slate-300">
+                            {article.sections.map((sec, sIdx) => (
+                              <li key={sec.id} className="flex items-start gap-2">
+                                <span className="font-mono text-cyan-400 font-bold">{sIdx + 1}.</span>
+                                <div>
+                                  <span className="font-bold text-white">{sec.title}</span>
+                                  <p className="text-[11px] text-slate-400 mt-0.5 line-clamp-1">{sec.content}</p>
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                     </article>
                   );
                 })}
+
+                {filteredArticles.length === 0 && (
+                  <div className="text-center py-12 bg-slate-950/40 rounded-2xl border border-slate-800">
+                    <span className="text-4xl">🔍</span>
+                    <h4 className="text-base font-bold text-white mt-3">لم يتم العثور على مقالات مطابقة</h4>
+                    <p className="text-xs text-slate-400 mt-1">جرب تغيير معايير البحث أو اختيار قسم آخر.</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
