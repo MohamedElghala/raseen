@@ -1,15 +1,22 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { bundleDeals, products } from '@/lib/mockData';
 import { useCartStore } from '@/store/cartStore';
 import { formatPrice } from '@/lib/currency';
 
 export default function BundleDeals() {
+  const [mounted, setMounted] = useState(false);
   const addItem = useCartStore((s) => s.addItem);
   const toggleCart = useCartStore((s) => s.toggleCart);
   const currency = useCartStore((s) => s.currency);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const activeCurrency = mounted ? currency : 'EGP';
 
   const handleAddBundle = (productIds: string[]) => {
     productIds.forEach((id) => {
@@ -39,8 +46,8 @@ export default function BundleDeals() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
         {bundleDeals.map((bundle) => {
-          const displayPrice = formatPrice(bundle.bundlePrice, currency);
-          const displayOriginal = formatPrice(bundle.originalPrice, currency);
+          const displayPrice = formatPrice(bundle.bundlePrice, activeCurrency);
+          const displayOriginal = formatPrice(bundle.originalPrice, activeCurrency);
 
           return (
             <div

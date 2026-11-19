@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -20,10 +20,17 @@ interface ProductDetailClientProps {
 
 export default function ProductDetailClient({ productId }: ProductDetailClientProps) {
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
   const addItem = useCartStore((state) => state.addItem);
   const currency = useCartStore((state) => state.currency);
   const [isFreeModalOpen, setIsFreeModalOpen] = useState(false);
   const [failedImageId, setFailedImageId] = useState<string | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const activeCurrency = mounted ? currency : 'EGP';
 
   const product = useMemo(() => {
     return mockProducts.find((p) => p.id === productId);
@@ -57,9 +64,9 @@ export default function ProductDetailClient({ productId }: ProductDetailClientPr
     );
   }
 
-  const displayPrice = formatPrice(product.price, currency);
+  const displayPrice = formatPrice(product.price, activeCurrency);
   const displayOriginalPrice = product.originalPrice
-    ? formatPrice(product.originalPrice, currency)
+    ? formatPrice(product.originalPrice, activeCurrency)
     : null;
   const heroImageSrc =
     failedImageId === product.id || !product.imageUrl

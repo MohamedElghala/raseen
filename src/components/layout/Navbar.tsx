@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react';
@@ -9,8 +9,13 @@ import { useAuthStore } from '@/store/authStore';
 import type { Currency } from '@/lib/types';
 
 export default function Navbar() {
+  const [mounted, setMounted] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { data: session } = useSession();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const totalItems = useCartStore((s) => s.totalItems);
   const toggleCart = useCartStore((s) => s.toggleCart);
@@ -41,7 +46,8 @@ export default function Navbar() {
     }
   };
 
-  const cartCount = totalItems();
+  const cartCount = mounted ? totalItems() : 0;
+  const activeCurrency = mounted ? currency : 'EGP';
 
   const navLinks = [
     { href: '/#products', label: 'السوق الرقمي', icon: '🛒' },
@@ -64,14 +70,15 @@ export default function Navbar() {
                 alt="شعار رَصين" 
                 width={44} 
                 height={44} 
+                priority
                 className="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-300"
               />
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-2 leading-none">
                 <span className="text-2xl md:text-3xl font-black gold-gradient-text tracking-tight font-cairo">رَصِيـن</span>
-                <span className="text-slate-500 text-xs font-light">|</span>
-                <span className="text-xs md:text-sm font-black tracking-[0.2em] text-white font-sans uppercase">RASEEN</span>
+                <span className="text-slate-500 text-xs font-light hidden sm:inline">|</span>
+                <span className="text-xs md:text-sm font-black tracking-[0.2em] text-white font-sans uppercase hidden sm:inline">RASEEN</span>
               </div>
               <span className="text-[10px] text-slate-400 font-medium hidden sm:block mt-0.5">منصة الأصول الرقمية والإبداعية</span>
             </div>
@@ -95,7 +102,7 @@ export default function Navbar() {
 
             {/* Currency Switcher */}
             <select
-              value={currency}
+              value={activeCurrency}
               onChange={(e) => setCurrency(e.target.value as Currency)}
               className="bg-raseen-surface border border-raseen-border text-slate-300 rounded-lg px-2 py-1.5 text-xs md:text-sm focus:outline-none focus:ring-1 focus:ring-raseen-gold min-h-[44px] cursor-pointer"
               aria-label="تغيير العملة"

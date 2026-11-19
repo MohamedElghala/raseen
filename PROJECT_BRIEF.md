@@ -31,7 +31,7 @@
 
 ## 4. الإنجازات الأخيرة (Recent Progress / Accomplishments)
 - إعادة تصميم وتسمية المساعد إلى **"مستشار رَصين"** (`المساعد الذكي • إدارة وتمكين الأعمال`) وإزالة أي عبارات آلية أو ادعاءات غير موثقة في `RaseenAssistant.tsx` و`blogData.ts` و`communitySeedData.ts` و`QuickStoreWizard.tsx` و`Hero.tsx`.
-- معالجة أخطاء React Hydration (`#418`) على الصفحة الرئيسية بتثبيت التنسيق العددي `en-US` في `InvoiceGenerator.tsx` و`BreakEvenCalculator.tsx`.
+- معالجة أخطاء React Hydration (`#418`) على الصفحة الرئيسية (بتثبيت التنسيق العددي `en-US` في `InvoiceGenerator.tsx` و`BreakEvenCalculator.tsx`) وعبر جميع الصفحات عند وجود سلة/عملة/مفضلة محفوظة في `localStorage` (بتمرير بوابة `mounted` في `Navbar.tsx` و`ProductCard.tsx` و`BundleDeals.tsx` و`ProductDetailClient.tsx`)، وتحسين ترويسة الموبايل `375px`.
 - ضبط سياسة أمان المحتوى `CSP` في `next.config.js` للسماح بـ Google OAuth `form-action` وحماية SVG (`sandbox`)، وتوحيد رسالة كلمة المرور (10 أحرف+) في `register/route.ts`.
 - ضبط SEO (`layout.tsx`, `sitemap.ts`, `robots.ts`)، وإعداد ESLint + CI، وفصل `DOWNLOAD_TOKEN_SECRET` و`LICENSE_SIGNING_SECRET` كـ Secrets مستقلة في Vercel Production.
 - إصلاح مؤشر Git المحلي غير المتلف ومزامنة المستودع على GitHub مع فحص التسريبات الأمنية (`security_scanner.py`: 0 تسريبات).

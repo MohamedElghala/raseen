@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCartStore } from '@/store/cartStore';
@@ -14,6 +14,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const [mounted, setMounted] = useState(false);
   const addItem = useCartStore((s) => s.addItem);
   const toggleCart = useCartStore((s) => s.toggleCart);
   const currency = useCartStore((s) => s.currency);
@@ -21,6 +22,10 @@ export default function ProductCard({ product }: ProductCardProps) {
   const isFav = useWishlistStore((s) => s.isInWishlist(product.id));
   const [isFreeModalOpen, setIsFreeModalOpen] = useState(false);
   const [imgSrc, setImgSrc] = useState(product.imageUrl || '/products/fallback-card.svg');
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleBuyClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -45,9 +50,12 @@ export default function ProductCard({ product }: ProductCardProps) {
       )
     : 0;
 
-  const displayPrice = formatPrice(product.price, currency);
+  const activeCurrency = mounted ? currency : 'EGP';
+  const activeIsFav = mounted ? isFav : false;
+
+  const displayPrice = formatPrice(product.price, activeCurrency);
   const displayOriginal = product.originalPrice
-    ? formatPrice(product.originalPrice, currency)
+    ? formatPrice(product.originalPrice, activeCurrency)
     : null;
 
   return (
@@ -99,13 +107,13 @@ export default function ProductCard({ product }: ProductCardProps) {
             type="button"
             onClick={handleWishlistClick}
             className={`absolute bottom-3 right-3 z-10 p-2 rounded-full backdrop-blur-md transition-all border min-h-[44px] min-w-[44px] flex items-center justify-center ${
-              isFav
+              activeIsFav
                 ? 'bg-red-500/20 text-red-400 border-red-500/50 shadow-lg shadow-red-500/20'
                 : 'bg-raseen-dark/50 hover:bg-raseen-dark text-slate-300 hover:text-red-400 border-transparent hover:border-raseen-border'
             }`}
-            aria-label={isFav ? 'إزالة من المفضلة' : 'أضف إلى المفضلة'}
+            aria-label={activeIsFav ? 'إزالة من المفضلة' : 'أضف إلى المفضلة'}
           >
-            <svg className="w-5 h-5" fill={isFav ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5" fill={activeIsFav ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
             </svg>
           </button>
