@@ -7,6 +7,7 @@ interface CartState {
   items: CartItem[];
   isOpen: boolean;
   currency: Currency;
+  hasHydrated: boolean;
   
   // Actions
   addItem: (product: ProductItem) => void;
@@ -15,6 +16,7 @@ interface CartState {
   clearCart: () => void;
   toggleCart: (isOpen?: boolean) => void;
   setCurrency: (currency: Currency) => void;
+  setHasHydrated: (hasHydrated: boolean) => void;
   
   // Computed
   totalItems: () => number;
@@ -27,6 +29,7 @@ export const useCartStore = create<CartState>()(
       items: [],
       isOpen: false,
       currency: 'EGP',
+      hasHydrated: false,
 
       addItem: (product) => {
         set((state) => {
@@ -64,6 +67,7 @@ export const useCartStore = create<CartState>()(
         set((state) => ({ isOpen: isOpen !== undefined ? isOpen : !state.isOpen })),
 
       setCurrency: (currency) => set({ currency }),
+      setHasHydrated: (hasHydrated) => set({ hasHydrated }),
 
       totalItems: () => {
         return get().items.reduce((total, item) => total + item.quantity, 0);
@@ -76,6 +80,9 @@ export const useCartStore = create<CartState>()(
     {
       name: 'raseen-cart-storage',
       partialize: (state) => ({ items: state.items, currency: state.currency }),
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated(true);
+      },
     }
   )
 );

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import RaseenTemplateEditor from '@/components/editor/RaseenTemplateEditor';
+import EditorClientLoader from '@/components/editor/EditorClientLoader';
 
 export const metadata: Metadata = {
   title: 'محرر القوالب الذكي (Canva Studio) | رَصين للأصول الرقمية',
@@ -13,5 +13,5 @@ export const metadata: Metadata = {
 };
 
 export default function EditorPage() {
-  return <RaseenTemplateEditor />;
+  return <EditorClientLoader />;
 }

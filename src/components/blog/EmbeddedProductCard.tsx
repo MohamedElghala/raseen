@@ -68,10 +68,13 @@ export default function EmbeddedProductCard({
           </div>
 
           <div className="flex items-center gap-2 text-xs text-slate-300">
-            <span className="text-amber-400 font-bold">★ {product.rating}</span>
-            <span className="text-slate-400">({product.reviewCount} تقييم)</span>
+            <span className="font-mono uppercase px-2 py-0.5 rounded bg-slate-800 text-amber-300 font-bold">
+              {product.fileType}
+            </span>
             <span className="text-slate-500">•</span>
-            <span className="text-slate-400">{product.salesCount}+ تحميل</span>
+            <span className="text-slate-300">
+              {product.license === 'commercial' ? 'رخصة تجارية' : 'رخصة شخصية'}
+            </span>
           </div>
         </div>
 

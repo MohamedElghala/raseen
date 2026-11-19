@@ -39,21 +39,31 @@ export function updateExchangeRates(newRates: Partial<Record<Currency, number>>)
   activeRates = { ...activeRates, ...newRates };
 }
 
+// Smart Purchasing Power Parity (PPP) rates to prevent undervaluation in Gulf & USD markets
+export const PPP_RATES: Record<Currency, number> = {
+  EGP: 1,
+  SAR: 0.25, // e.g. 150 EGP -> 38 SAR, 350 EGP -> 88 SAR (Fair market tier)
+  AED: 0.25, // e.g. 150 EGP -> 38 AED, 350 EGP -> 88 AED
+  USD: 0.08, // e.g. 150 EGP -> $12 USD, 350 EGP -> $28 USD
+};
+
 /**
- * Converts price in EGP to target currency based on exchange rates.
+ * Converts price in EGP to target currency using smart regional purchasing power parity.
  */
 export const convertPrice = (
   priceEGP: number,
   targetCurrency: Currency,
-  rates: Record<Currency, number> = activeRates
+  rates: Record<Currency, number> = PPP_RATES
 ): number => {
-  const rate = rates[targetCurrency] ?? EXCHANGE_RATES[targetCurrency] ?? 1;
-  return priceEGP * rate;
+  const rate = rates[targetCurrency] ?? PPP_RATES[targetCurrency] ?? 1;
+  const rawConverted = priceEGP * rate;
+
+  // Clean psychological rounding (integers for all currencies)
+  return Math.round(rawConverted);
 };
 
 /**
  * Formats an EGP price in the target currency with its appropriate symbol.
- * Does NOT perform double conversion: takes base EGP amount, converts once, and appends symbol.
  */
 export const formatPrice = (
   priceEGP: number,
@@ -61,15 +71,7 @@ export const formatPrice = (
   rates: Record<Currency, number> = activeRates
 ): string => {
   const converted = convertPrice(priceEGP, currency, rates);
-
-  // EGP is displayed rounded, foreign currencies with 2 decimals
-  const formatted =
-    currency === 'EGP'
-      ? Math.round(converted).toString()
-      : converted.toFixed(2).replace(/\.00$/, '');
-
-  // Support RTL rendering properly by putting space between amount and symbol
-  return `${formatted} ${CURRENCY_SYMBOLS[currency] || currency}`;
+  return `${converted} ${CURRENCY_SYMBOLS[currency] || currency}`;
 };
 
 /**

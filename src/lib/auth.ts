@@ -2,7 +2,7 @@ import { AuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { verifyPassword } from '@/lib/passwords';
-import { findUserByEmail, createUser } from '@/lib/userService';
+import { findUserByEmail, createUser, DatabaseUnavailableError } from '@/lib/userService';
 
 export const authOptions: AuthOptions = {
   session: {
@@ -25,7 +25,15 @@ export const authOptions: AuthOptions = {
           throw new Error('يرجى إدخال البريد الإلكتروني وكلمة المرور');
         }
 
-        const user = await findUserByEmail(credentials.email);
+        let user;
+        try {
+          user = await findUserByEmail(credentials.email);
+        } catch (err) {
+          if (err instanceof DatabaseUnavailableError) {
+            throw new Error('تعذر الاتصال بقاعدة البيانات حالياً، يرجى المحاولة لاحقاً');
+          }
+          throw err;
+        }
 
         if (!user || !user.password) {
           throw new Error('البريد الإلكتروني أو كلمة المرور غير صحيحة');
@@ -84,5 +92,11 @@ export const authOptions: AuthOptions = {
   pages: {
     signIn: '/',
   },
-  secret: process.env.NEXTAUTH_SECRET || 'raseen_production_super_secret_auth_token_2026_key_998877',
+  secret:
+    process.env.NEXTAUTH_SECRET ||
+    (process.env.NODE_ENV === 'production' && process.env.NEXT_PHASE !== 'phase-production-build'
+      ? (() => {
+          throw new Error('Missing NEXTAUTH_SECRET in production environment variables');
+        })()
+      : 'raseen_dev_local_secret_only'),
 };

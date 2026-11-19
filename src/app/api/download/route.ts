@@ -1,8 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { validateDownloadToken } from '@/lib/storage';
+import {
+  createVaultTicket,
+  resolveVaultDeliveryUrl,
+  validateDownloadToken,
+} from '@/lib/storage';
 import prisma from '@/lib/prisma';
+import { checkRateLimit, extractClientIp } from '@/lib/rateLimit';
 
 export async function GET(request: NextRequest) {
+  const ip = extractClientIp(request);
+  const rl = checkRateLimit(`download:${ip}`, 30, 60 * 1000);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: 'تم تجاوز الحد المسموح للطلبات، يرجى الانتظار دقيقة.' },
+      { status: 429 }
+    );
+  }
+
   try {
     const searchParams = request.nextUrl.searchParams;
     const token = searchParams.get('token');
@@ -35,13 +49,14 @@ export async function GET(request: NextRequest) {
           );
         }
 
-        // Increment count
         const updated = await prisma.downloadToken.update({
           where: { token },
           data: { downloadCount: { increment: 1 } },
         });
 
         const remaining = updated.maxDownloads - updated.downloadCount;
+        const ticket = createVaultTicket(updated.productId, updated.userId);
+        const directDownloadUrl = resolveVaultDeliveryUrl(updated.productId, ticket, true);
 
         return NextResponse.json({
           success: true,
@@ -51,7 +66,7 @@ export async function GET(request: NextRequest) {
           downloadCount: updated.downloadCount,
           remainingDownloads: remaining,
           expiresAt: updated.expiresAt,
-          directDownloadUrl: `https://storage.raseen.store/vault/${updated.productId}.zip?vault_auth=granted`,
+          directDownloadUrl,
         });
       }
     } catch (dbErr) {
@@ -59,7 +74,7 @@ export async function GET(request: NextRequest) {
     }
 
     // 2. Fallback to Cryptographic HMAC Token
-    const result = validateDownloadToken(token);
+    const result = validateDownloadToken(token, { increment: true });
 
     if (!result.valid) {
       return NextResponse.json(

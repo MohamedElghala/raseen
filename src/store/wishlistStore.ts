@@ -3,15 +3,18 @@ import { persist } from 'zustand/middleware';
 
 interface WishlistState {
   wishlistIds: string[];
+  hasHydrated: boolean;
   toggleWishlist: (productId: string) => void;
   isInWishlist: (productId: string) => boolean;
   clearWishlist: () => void;
+  setHasHydrated: (hasHydrated: boolean) => void;
 }
 
 export const useWishlistStore = create<WishlistState>()(
   persist(
     (set, get) => ({
       wishlistIds: [],
+      hasHydrated: false,
 
       toggleWishlist: (productId: string) => {
         set((state) => {
@@ -29,9 +32,13 @@ export const useWishlistStore = create<WishlistState>()(
       },
 
       clearWishlist: () => set({ wishlistIds: [] }),
+      setHasHydrated: (hasHydrated: boolean) => set({ hasHydrated }),
     }),
     {
       name: 'raseen-wishlist-storage',
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated(true);
+      },
     }
   )
 );

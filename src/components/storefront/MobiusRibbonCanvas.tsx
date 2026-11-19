@@ -11,15 +11,16 @@ export default function MobiusRibbonCanvas() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationFrameId: number;
+    let animationFrameId: number | null = null;
     let time = 0;
+    let isVisible = true;
 
     const handleResize = () => {
       const rect = canvas.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
-      ctx.scale(dpr, dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
     handleResize();
@@ -204,10 +205,46 @@ export default function MobiusRibbonCanvas() {
       animationFrameId = requestAnimationFrame(render);
     };
 
+    const startLoop = () => {
+      if (animationFrameId === null && isVisible && !document.hidden) {
+        animationFrameId = requestAnimationFrame(render);
+      }
+    };
+
+    const stopLoop = () => {
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+    };
+
+    const observer =
+      typeof IntersectionObserver !== 'undefined'
+        ? new IntersectionObserver(
+            (entries) => {
+              const entry = entries[0];
+              isVisible = Boolean(entry?.isIntersecting);
+              if (isVisible) startLoop();
+              else stopLoop();
+            },
+            { threshold: 0.05 }
+          )
+        : null;
+
+    observer?.observe(canvas);
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) stopLoop();
+      else startLoop();
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
     render();
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      stopLoop();
+      observer?.disconnect();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('resize', handleResize);
     };
   }, []);

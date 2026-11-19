@@ -189,8 +189,8 @@ export default function BreakEvenCalculator() {
             />
             <div className="flex justify-between text-[10px] text-slate-500 font-mono">
               <span>0 {curr}</span>
-              <span>{(unitPrice / 2).toLocaleString()} {curr}</span>
-              <span>{Math.round(unitPrice * 1.2).toLocaleString()} {curr}</span>
+              <span>{(unitPrice / 2).toLocaleString('en-US')} {curr}</span>
+              <span>{Math.round(unitPrice * 1.2).toLocaleString('en-US')} {curr}</span>
             </div>
 
             {/* Non-viability Warning */}
@@ -269,11 +269,11 @@ export default function BreakEvenCalculator() {
             <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-2xl relative overflow-hidden shadow-lg">
               <div className="text-[11px] font-bold text-amber-400 mb-1">نقطة التعادل (Break-even)</div>
               <div className="text-2xl sm:text-3xl font-black text-white font-mono">
-                {stats.breakEvenUnits.toLocaleString()}
+                {stats.breakEvenUnits.toLocaleString('en-US')}
                 <span className="text-xs font-normal text-slate-300 mr-1.5">مبيعة</span>
               </div>
               <div className="text-[11px] text-slate-400 mt-1">
-                بقيمة <span className="text-white font-bold font-mono">{stats.breakEvenRevenue.toLocaleString()} {curr}</span>
+                بقيمة <span className="text-white font-bold font-mono">{stats.breakEvenRevenue.toLocaleString('en-US')} {curr}</span>
               </div>
             </div>
 
@@ -284,7 +284,7 @@ export default function BreakEvenCalculator() {
                 %{stats.marginRatio}
               </div>
               <div className="text-[11px] text-slate-400 mt-1">
-                ربح الوحدة: <span className="text-white font-bold font-mono">{stats.contributionMargin.toLocaleString()} {curr}</span>
+                ربح الوحدة: <span className="text-white font-bold font-mono">{stats.contributionMargin.toLocaleString('en-US')} {curr}</span>
               </div>
             </div>
           </div>
@@ -325,7 +325,7 @@ export default function BreakEvenCalculator() {
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-slate-300 flex items-center gap-1.5">
                 <span>🎯</span>
-                <span>لتحقيق صافي ربح {targetProfit.toLocaleString()} {curr}:</span>
+                <span>لتحقيق صافي ربح {targetProfit.toLocaleString('en-US')} {curr}:</span>
               </span>
               <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 text-[10px] font-mono font-bold">
                 الهدف الشهري
@@ -335,12 +335,12 @@ export default function BreakEvenCalculator() {
             <div className="flex items-baseline justify-between pt-1">
               <div>
                 <span className="text-3xl sm:text-4xl font-black text-cyan-400 font-mono">
-                  {stats.targetUnits.toLocaleString()}
+                  {stats.targetUnits.toLocaleString('en-US')}
                 </span>
                 <span className="text-xs text-slate-400 mr-2">وحدة / طلب شهرياً</span>
               </div>
               <div className="text-left text-xs font-mono text-slate-300">
-                إجمالي إيراد: <span className="text-white font-bold">{stats.targetRevenue.toLocaleString()} {curr}</span>
+                إجمالي إيراد: <span className="text-white font-bold">{stats.targetRevenue.toLocaleString('en-US')} {curr}</span>
               </div>
             </div>
 

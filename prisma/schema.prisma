@@ -129,3 +129,16 @@ model Report {
   productId String
   createdAt DateTime @default(now())
 }
+
+
+model Lead {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String?
+  email     String?
+  channel   String   @default("whatsapp")
+  interest  String
+  metadata  String   @default("{}")
+  source    String   @default("RaseenAssistant AI Bot")
+  createdAt DateTime @default(now())
+}

@@ -58,13 +58,13 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             <div className="space-y-3 max-w-2xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-raseen-surface border border-raseen-border text-xs text-raseen-gold font-bold">
                 <span className="text-base">{category.icon}</span>
-                <span>قسم معتمد • {categoryProducts.length} أصل رقمي</span>
+                <span>قسم تخصصي • {categoryProducts.length} أصل رقمي</span>
               </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
                 {category.name}
               </h1>
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-                {category.description} تم إعداد وتدقيق كافة الملفات بواسطة نخبة من الخبراء والاستشاريين المعتمدين لضمان دقة العمل والامتثال الكامل.
+                {category.description} ملفات وقوالب مصممة بعناية لتسريع سير عملك وفق أفضل الممارسات المهنية.
               </p>
             </div>
 

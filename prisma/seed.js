@@ -1,5 +1,12 @@
+const crypto = require('crypto');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+
+function hashSeedPassword(password) {
+  const salt = crypto.randomBytes(16).toString('hex');
+  const derivedKey = crypto.scryptSync(password, salt, 64);
+  return `${salt}:${derivedKey.toString('hex')}`;
+}
 
 const categoriesData = [
   { slug: 'business', name: 'شركات ورواد أعمال', nameEn: 'Business', icon: '🏢', description: 'ملفات وقوالب مخصصة للشركات، العقود، والأتمتة.' },
@@ -10,9 +17,9 @@ const categoriesData = [
 ];
 
 const usersData = [
-  { id: 'usr-vendor-1', name: 'م. أحمد البائع', email: 'vendor@raseen.com', password: 'password123', role: 'vendor', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80' },
-  { id: 'usr-buyer-1', name: 'سارة المشتري', email: 'buyer@raseen.com', password: 'password123', role: 'buyer', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80' },
-  { id: 'usr-admin-1', name: 'مدير رَصين', email: 'admin@raseen.com', password: 'adminpassword', role: 'admin', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80' }
+  { id: 'usr-vendor-1', name: 'م. أحمد البائع', email: 'vendor@raseen.com', password: hashSeedPassword(process.env.SEED_VENDOR_PASSWORD || 'vendor_demo_123'), role: 'vendor', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80' },
+  { id: 'usr-buyer-1', name: 'سارة المشتري', email: 'buyer@raseen.com', password: hashSeedPassword(process.env.SEED_BUYER_PASSWORD || 'buyer_demo_123'), role: 'buyer', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80' },
+  { id: 'usr-admin-1', name: 'مدير رَصين', email: 'admin@raseen.com', password: hashSeedPassword(process.env.SEED_ADMIN_PASSWORD || 'admin_demo_change_me'), role: 'admin', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80' }
 ];
 
 const productsData = [
@@ -20,13 +27,13 @@ const productsData = [
   {
     id: 'p1',
     title: 'حزمة عقود العمل والشراكة واتفاقيات عدم الإفصاح (NDA)',
-    description: '15 نموذج عقد قانوني مصاغ بعناية فائقة بواسطة محامين تجاريين معتمدين. تشمل عقود تأسيس شركات، اتفاقيات شراكة استثمارية، عقود توظيف، وصيغ NDA متوافقة مع القوانين المصرية والخليجية.',
+    description: '15 نموذج عقد استرشادي مصاغ بعناية لمواءمة بيئة الأعمال التجارية. تشمل عقود تأسيس شركات، اتفاقيات شراكة استثمارية، عقود توظيف، وصيغ NDA متوافقة مع الممارسات القانونية المصرية والخليجية.',
     price: 250,
     originalPrice: 400,
     categorySlug: 'business',
     fileType: 'word-pdf',
     license: 'commercial',
-    imageUrl: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80',
     rating: 4.9,
     reviewCount: 42,
     salesCount: 187,
@@ -156,7 +163,7 @@ const productsData = [
     categorySlug: 'accounting',
     fileType: 'excel',
     license: 'commercial',
-    imageUrl: 'https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80',
     rating: 4.9,
     reviewCount: 62,
     salesCount: 280,
@@ -593,12 +600,300 @@ const productsData = [
     categorySlug: 'business',
     fileType: 'word-pdf',
     license: 'commercial',
-    imageUrl: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=800&q=80',
     rating: 4.9,
     reviewCount: 37,
     salesCount: 175,
     tags: 'canva,عقود,شراكة,ملكية فكرية,قانوني',
     featured: false
+  },
+  {
+    id: 'p37',
+    title: 'سجل الأصول الثابتة وحساب الإهلاك المحاسبي الآلي وفق المعايير الدولية (IFRS)',
+    description: 'شيت إكسل احترافي لتسجيل وإدارة الأصول الثابتة وحساب أقساط الإهلاك آلياً بطرق القسط الثابت والمتناقص مع مصفوفة الأثر الضريبي.',
+    price: 220,
+    originalPrice: 350,
+    categorySlug: 'accounting',
+    fileType: 'excel',
+    license: 'commercial',
+    imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
+    rating: 4.9,
+    reviewCount: 48,
+    salesCount: 290,
+    tags: 'أصول ثابتة,إهلاك,محاسبة,إكسل,IFRS',
+    featured: false
+  },
+  {
+    id: 'p38',
+    title: 'شيت التسعير الديناميكي وهامش الربح وتحليل نقطة التعادل للمنتجات والخدمات',
+    description: 'نموذج مالي مرن لحساب تكلفة الوحدة المتغيرة والثابتة، تحديد نقطة التعادل بدقة، ومحاكاة هوامش الربح تحت مختلف سيناريوهات الخصومات.',
+    price: 170,
+    originalPrice: 280,
+    categorySlug: 'accounting',
+    fileType: 'excel',
+    license: 'commercial',
+    imageUrl: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80',
+    rating: 4.8,
+    reviewCount: 56,
+    salesCount: 340,
+    tags: 'تسعير,هامش ربح,تكاليف,إكسل,نقطة التعادل',
+    featured: true
+  },
+  {
+    id: 'p39',
+    title: 'نظام مسير الرواتب والتأمينات الاجتماعية وضريبة كسب العمل (Payroll Pro)',
+    description: 'نظام متكامل لاحتساب الرواتب والبدلات والاستقطاعات، مع حساب التأمينات الاجتماعية وضريبة الدخل وكسب العمل طبقاً لآخر اللوائح المعتمدة.',
+    price: 260,
+    originalPrice: 400,
+    categorySlug: 'accounting',
+    fileType: 'excel',
+    license: 'commercial',
+    imageUrl: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80',
+    rating: 4.9,
+    reviewCount: 82,
+    salesCount: 510,
+    tags: 'رواتب,Payroll,تأمينات,كسب العمل,إكسل',
+    featured: false
+  },
+  {
+    id: 'p40',
+    title: 'شيت التدفقات النقدية والموازنة التقديرية التشغيلية (Cash Flow Master)',
+    description: 'أداة تنبؤ مالي أسبوعية وشهرية لإدارة السيولة النقدية وتفادي العجز المالي، مع تنبيهات الفجوة التمويلية وتقارير التدفق المالي التنفيذي.',
+    price: 290,
+    originalPrice: 450,
+    categorySlug: 'accounting',
+    fileType: 'excel',
+    license: 'commercial',
+    imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
+    rating: 4.8,
+    reviewCount: 64,
+    salesCount: 420,
+    tags: 'تدفق نقدي,Cash Flow,سيولة,موازنة,إكسل',
+    featured: true
+  },
+  {
+    id: 'p41',
+    title: 'مشروع فيلا سكنية مودرن كامل بنظام نمذجة معلومات البناء (Revit 2024 BIM Master)',
+    description: 'مشروع فيلا سكنية متكامل العناصر (معماري، إنشائي، تفاصيل أبواب وشبابيك، وجداول كميات متزامنة) جاهز للتسليم والترخيص الفوري.',
+    price: 380,
+    originalPrice: 600,
+    categorySlug: 'engineering',
+    fileType: 'cad-revit',
+    license: 'commercial',
+    imageUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
+    rating: 5.0,
+    reviewCount: 39,
+    salesCount: 195,
+    tags: 'Revit,BIM,فيلا,معماري,نمذجة',
+    featured: true
+  },
+  {
+    id: 'p42',
+    title: 'مكتبة عائلات Revit MEP للتكييف والصحي والكهرباء (400+ Parametric Families)',
+    description: 'أكثر من 400 عائلة ريفيت تفاعلية متطورة لأنظمة الإطفاء، مجاري الهواء، واللوحات الكهربائية متوافقة مع Revit 2022-2026.',
+    price: 310,
+    originalPrice: 500,
+    categorySlug: 'engineering',
+    fileType: 'cad-revit',
+    license: 'commercial',
+    imageUrl: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
+    rating: 4.9,
+    reviewCount: 45,
+    salesCount: 230,
+    tags: 'Revit MEP,تكييف,صحي,كهرباء,عائلات ريفيت',
+    featured: false
+  },
+  {
+    id: 'p43',
+    title: 'مجموعة التفاصيل الإنشائية وحصر حديد التسليح (AutoCAD Structural Detailing)',
+    description: 'ملفات DWG قياسية جاهزة لتفاصيل تسليح القواعد، الأعمدة، الكمرات، والأسقف الهوردي والـ Flat Slab وفق الكود المصري والسعودي.',
+    price: 240,
+    originalPrice: 360,
+    categorySlug: 'engineering',
+    fileType: 'cad-revit',
+    license: 'commercial',
+    imageUrl: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80',
+    rating: 4.8,
+    reviewCount: 71,
+    salesCount: 380,
+    tags: 'تسليح,تفاصيل إنشائية,AutoCAD,DWG,كود البناء',
+    featured: false
+  },
+  {
+    id: 'p44',
+    title: 'مخطط لاندسكيب ومكتبة فرش الحدائق والمتنزهات الحضرية (CAD Vector Plan)',
+    description: 'مخططات DWG متكاملة لتصميم المساحات الخارجية واللاندسكيب مع بلوكات الأشجار، ممرات المشاة، شبكات الري، ووحدات الإضاءة الخارجية.',
+    price: 190,
+    originalPrice: 300,
+    categorySlug: 'engineering',
+    fileType: 'cad-revit',
+    license: 'commercial',
+    imageUrl: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80',
+    rating: 4.7,
+    reviewCount: 33,
+    salesCount: 160,
+    tags: 'لاندسكيب,AutoCAD,حدائق,تخطيط عمراني,بلوكات',
+    featured: false
+  },
+  {
+    id: 'p45',
+    title: 'الهوية البصرية الشاملة ودليل العلامة التجارية الكامل (Canva Brand Guidelines Kit)',
+    description: 'دليل براند متكامل من 35 صفحة على Canva يشمل مصفوفة الألوان، تناسق الخطوط، نماذج القرطاسية، وستايل السوشيال ميديا للمشاريع الواعدة.',
+    price: 175,
+    originalPrice: 320,
+    categorySlug: 'individuals',
+    fileType: 'canva',
+    license: 'commercial',
+    imageUrl: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80',
+    rating: 4.9,
+    reviewCount: 67,
+    salesCount: 410,
+    tags: 'canva,هوية بصرية,Brand Guidelines,شعار,ألوان',
+    featured: true
+  },
+  {
+    id: 'p46',
+    title: 'قوالب تسويق العقارات الفاخرة للقصور والوحدات السكنية (Canva Real Estate Kit)',
+    description: '45 تصميماً جذاباً للترويج للفلل والوحدات السكنية، ومخططات الأسعار، وجداول التسليم للوسطاء والمطورين العقاريين على انستجرام وفيسبوك.',
+    price: 210,
+    originalPrice: 350,
+    categorySlug: 'business',
+    fileType: 'canva',
+    license: 'commercial',
+    imageUrl: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80',
+    rating: 4.8,
+    reviewCount: 52,
+    salesCount: 280,
+    tags: 'canva,عقارات,تسويق عقاري,فلل,سوشيال ميديا',
+    featured: false
+  },
+  {
+    id: 'p47',
+    title: 'حزمة عقود تطوير البرمجيات وحلول الـ SaaS والامتياز التجاري (Software & Franchise)',
+    description: 'صياغة قانونية متطورة لعقود البرمجة والـ SLA، اتفاقيات الخصوصية وسياسة الاستخدام للمواقع والتطبيقات، وعقود الفرنشايز التجاري.',
+    price: 340,
+    originalPrice: 550,
+    categorySlug: 'business',
+    fileType: 'word-pdf',
+    license: 'commercial',
+    imageUrl: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
+    rating: 4.9,
+    reviewCount: 41,
+    salesCount: 220,
+    tags: 'عقود برمجية,SaaS,SLA,فرنشايز,قانوني',
+    featured: true
+  },
+  {
+    id: 'p48',
+    title: 'عقد تقديم خدمات استشارية وتسويقية بنظام الاحتفاظ الشهري (Retainer Agreement)',
+    description: 'عقد قانوني محكم لوكالات التسويق والمستشارين المستقلين يحدد نطاق المهام الشهرية (Scope of Work)، مواعيد الدفع، وسياسة الإلغاء.',
+    price: 230,
+    originalPrice: 380,
+    categorySlug: 'business',
+    fileType: 'word-pdf',
+    license: 'commercial',
+    imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80',
+    rating: 4.8,
+    reviewCount: 39,
+    salesCount: 190,
+    tags: 'عقود,تسويق,استشارات,Retainer,وكالات',
+    featured: false
+  },
+  {
+    id: 'p49',
+    title: 'حزمة السيرة الذاتية التنافسية للقيادات التنفيذية والتقنية (Executive ATS CV Pack)',
+    description: '5 نماذج سيرة ذاتية مع خطابات التغطية (Cover Letters) مصممة خصيصاً للمدراء والمهندسين وكبار المتخصصين مع كلمات مفتاحية قيادية لاجتياز الفرز الآلي.',
+    price: 120,
+    originalPrice: 220,
+    categorySlug: 'students',
+    fileType: 'word-pdf',
+    license: 'personal',
+    imageUrl: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=800&q=80',
+    rating: 5.0,
+    reviewCount: 88,
+    salesCount: 650,
+    tags: 'سيرة ذاتية,ATS,وظائف قيادية,CV,Cover Letter',
+    featured: true
+  },
+  {
+    id: 'p50',
+    title: 'الخزنة الشاملة لبرومبتات ChatGPT و Claude للتسويق والمبيعات المتقدمة (Prompt Vault)',
+    description: 'أكثر من 400 برومبت هندسي فائق الفاعلية لكتابة الإعلانات المقنعة، دراسات السوق، استراتيجيات SEO، وبناء نصوص مبيعات متوافقة مع الذكاء الاصطناعي.',
+    price: 130,
+    originalPrice: 250,
+    categorySlug: 'business',
+    fileType: 'ai-prompts',
+    license: 'personal',
+    imageUrl: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80',
+    rating: 4.9,
+    reviewCount: 95,
+    salesCount: 710,
+    tags: 'ChatGPT,Claude,برومبتات,تسويق,ذكاء اصطناعي',
+    featured: true
+  },
+  {
+    id: 'free-p1',
+    title: 'حزمة عائلات Revit المعمارية التمهيدية (LOD 300) - أصل مجاني للتحميل الفوري',
+    description: 'عينة معمارية مجانية 100% تضم 35 عائلة ريفيت بارامترية للأبواب والنوافذ والأثاث المكتبي ووحدات الإنارة متوافقة مع Revit 2020-2026 وفق المعيار LOD 300 لتجربة دقة النمذجة قبل الترقية للباقات الاحترافية.',
+    price: 0,
+    originalPrice: 150,
+    categorySlug: 'engineering',
+    fileType: 'cad-revit',
+    license: 'commercial',
+    imageUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
+    rating: 5.0,
+    reviewCount: 142,
+    salesCount: 1840,
+    tags: 'BIM,Revit,مجاني,عائلات ريفيت,LOD 300,معماري,هندسة',
+    featured: true
+  },
+  {
+    id: 'free-p2',
+    title: 'شيت مقايسات وحصر كميات البناء المبدئي (Mini BOQ Starter) - أصل مجاني للتحميل الفوري',
+    description: 'نموذج إكسل مجاني مؤتمت لحصر كميات الخرسانات المسلحة وحديد التسليح وحساب تكلفة المتر المسطح مع 145 معادلة تفاعلية لتسريع تسعير المشروعات للمقاولين والمهندسين.',
+    price: 0,
+    originalPrice: 120,
+    categorySlug: 'engineering',
+    fileType: 'excel',
+    license: 'personal',
+    imageUrl: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
+    rating: 4.9,
+    reviewCount: 98,
+    salesCount: 1420,
+    tags: 'حصر كميات,BOQ,مقايسات,إكسل,مجاني,تكاليف بناء,هندسة',
+    featured: true
+  },
+  {
+    id: 'free-p3',
+    title: 'نموذج عقد العمل الحر واتفاقية سرية المعلومات (Mini NDA & Freelance) - أصل مجاني للتحميل الفوري',
+    description: 'صيغة قانونية محكمة وموثقة لحفظ حقوق المستقل وأصحاب الأعمال في المشاريع الرقمية والبرمجية مع بنود سرية المعلومات NDA المتوافقة مع الأنظمة السعودية والمصرية والخليجية.',
+    price: 0,
+    originalPrice: 180,
+    categorySlug: 'business',
+    fileType: 'word-pdf',
+    license: 'commercial',
+    imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80',
+    rating: 4.9,
+    reviewCount: 165,
+    salesCount: 2150,
+    tags: 'عقد عمل حر,NDA,سرية معلومات,قانوني,مجاني,فريلانس,شركات',
+    featured: true
+  },
+  {
+    id: 'free-p4',
+    title: 'شيت الميزانية التقديرية والتدفق النقدي للمشاريع (Mini Cash Flow & Budget) - أصل مجاني للتحميل الفوري',
+    description: 'شيت إكسل محاسبي ذكي لتخطيط التدفقات النقدية والميزانية التقديرية لـ 12 شهراً مع 180 معادلة ورسوم بيانية ديناميكية لتحليل نقطة التعادل وإدارة السيولة التشغيلية مجاناً.',
+    price: 0,
+    originalPrice: 100,
+    categorySlug: 'accounting',
+    fileType: 'excel',
+    license: 'personal',
+    imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
+    rating: 4.8,
+    reviewCount: 112,
+    salesCount: 1680,
+    tags: 'ميزانية,تدفق نقدي,Cash Flow,إكسل,محاسبة,مجاني,سيولة',
+    featured: true
   }
 ];
 
@@ -629,8 +924,8 @@ async function main() {
 
   const defaultVendorId = 'usr-vendor-1';
 
-  // 3. Seed 30 Products
-  console.log('💎 إضافة وتحديث الـ 30 أصلاً رقمياً معتمداً...');
+  // 3. Seed 54 Products
+  console.log('💎 إضافة وتحديث الـ 54 أصلاً رقمياً...');
   for (const p of productsData) {
     const catId = categoryMap[p.categorySlug];
     await prisma.product.upsert({
@@ -671,7 +966,7 @@ async function main() {
     });
   }
 
-  console.log('✅ اكتملت تغذية قاعدة البيانات بنجاح: 5 فئات، 3 مستخدمين، و 30 منتجاً.');
+  console.log('✅ اكتملت تغذية قاعدة البيانات بنجاح: 5 فئات، 3 مستخدمين، و 54 منتجاً.');
 }
 
 main()

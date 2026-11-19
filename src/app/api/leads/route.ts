@@ -1,12 +1,20 @@
 import { NextResponse } from 'next/server';
+import prisma from '@/lib/prisma';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { mockProducts } from '@/lib/mockData';
+import { generateDownloadToken } from '@/lib/storage';
+import { issueSignedLicense } from '@/lib/licenseServer';
+import { LeadSchema } from '@/lib/validations';
+import { checkRateLimit, extractClientIp } from '@/lib/rateLimit';
 
 interface LeadPayload {
-  name?: string;
-  phone?: string;
-  email?: string;
+  name?: string | null;
+  phone?: string | null;
+  email?: string | null;
   channel?: 'whatsapp' | 'email' | 'phone';
-  interest?: string;
-  metadata?: Record<string, any>;
+  interest?: string | null;
+  metadata?: Record<string, any> | null;
 }
 
 interface StoredLead {
@@ -21,20 +29,13 @@ interface StoredLead {
   source: string;
 }
 
-// In-memory store maintaining real lead state across requests
 const inMemoryLeads: StoredLead[] = [];
 
-// International E.164 regex (e.g. +966501234567, +201012345678, +14155552671)
 const E164_PHONE_REGEX = /^\+[1-9]\d{6,14}$/;
-
-// Arabic local phone regex (Egypt: 010/011/012/015, KSA: 05, UAE: 05, GCC/Levant: 0[1-9]...)
 const ARABIC_LOCAL_PHONE_REGEX = /^0(1[0125]\d{8}|5\d{8}|[2-9]\d{6,9})$/;
-
-// Clean international digits without plus (7 to 15 digits)
 const CLEAN_INT_PHONE_REGEX = /^[1-9]\d{6,14}$/;
-
-// Standard RFC 5322 compliant email regex
-const RFC5322_EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+const RFC5322_EMAIL_REGEX =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
 
 function validatePhone(phone: string): boolean {
   if (!phone || typeof phone !== 'string') return false;
@@ -52,10 +53,20 @@ function validateEmail(email: string): boolean {
 }
 
 export async function POST(request: Request) {
+  const ip = extractClientIp(request);
+  // Generous limit per minute to protect against spam bursts without impacting integration tests
+  const rl = checkRateLimit(`leads:${ip}`, 100, 60 * 1000);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { success: false, error: 'تم إرسال عدد كبير من الطلبات، يرجى المحاولة بعد دقيقة.' },
+      { status: 429 }
+    );
+  }
+
   try {
-    let body: LeadPayload;
+    let rawBody: LeadPayload;
     try {
-      body = await request.json();
+      rawBody = await request.json();
     } catch {
       return NextResponse.json(
         { success: false, error: 'بيانات الطلب غير صالحة. يرجى إرسال JSON سليم.' },
@@ -63,19 +74,19 @@ export async function POST(request: Request) {
       );
     }
 
-    const {
-      name,
-      phone,
-      email,
-      channel = 'whatsapp',
-      interest,
-      metadata,
-    } = body;
+    const parsed = LeadSchema.safeParse(rawBody);
+    if (!parsed.success) {
+      return NextResponse.json(
+        { success: false, error: parsed.error.issues[0]?.message || 'بيانات الطلب غير صالحة.' },
+        { status: 400 }
+      );
+    }
+
+    const { name, phone, email, channel = 'whatsapp', interest, metadata } = parsed.data;
 
     const trimmedPhone = phone ? phone.trim() : '';
     const trimmedEmail = email ? email.trim() : '';
 
-    // Validate that at least phone or email is provided
     if (!trimmedPhone && !trimmedEmail) {
       return NextResponse.json(
         { success: false, error: 'يرجى تقديم رقم الهاتف أو البريد الإلكتروني للتواصل.' },
@@ -83,7 +94,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Validate phone if provided
     if (trimmedPhone && !validatePhone(trimmedPhone)) {
       return NextResponse.json(
         {
@@ -95,7 +105,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Validate email if provided
     if (trimmedEmail && !validateEmail(trimmedEmail)) {
       return NextResponse.json(
         {
@@ -106,7 +115,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Validate channel-specific requirements
     if (channel === 'whatsapp' && !trimmedPhone) {
       return NextResponse.json(
         {
@@ -138,17 +146,61 @@ export async function POST(request: Request) {
       interest: (interest && interest.trim()) || 'استشارة عامة في خدمات وأصول رَصين',
       metadata: metadata || {},
       createdAt: new Date().toISOString(),
-      source: 'RaseenAssistant AI Bot',
+      source: 'RaseenAssistant',
     };
+
+    try {
+      await prisma.lead.create({
+        data: {
+          id: leadId,
+          name: leadRecord.name,
+          phone: leadRecord.phone,
+          email: leadRecord.email,
+          channel: leadRecord.channel,
+          interest: leadRecord.interest,
+          metadata: JSON.stringify(leadRecord.metadata),
+          source: leadRecord.source,
+        },
+      });
+    } catch (dbErr) {
+      console.warn('Prisma lead write bypassed, storing in buffer:', (dbErr as Error).message);
+    }
 
     inMemoryLeads.push(leadRecord);
 
-    console.log('🌟 [NEW QUALIFIED LEAD CAPTURED]:', JSON.stringify(leadRecord, null, 2));
+    // If this lead capture requested a genuinely free ($0) catalog asset, issue a signed vault download link
+    let downloadUrl: string | undefined;
+    let downloadToken: string | undefined;
+    let licenseToken: string | undefined;
+    const requestedProductId =
+      typeof metadata?.productId === 'string' ? metadata.productId : undefined;
+
+    if (requestedProductId) {
+      const freeAsset = mockProducts.find(
+        (p) => p.id === requestedProductId && p.price === 0
+      );
+      if (freeAsset) {
+        const buyerId = trimmedEmail || trimmedPhone || leadId;
+        downloadToken = generateDownloadToken(freeAsset.id, buyerId);
+        downloadUrl = `/api/vault/${encodeURIComponent(freeAsset.id)}?token=${encodeURIComponent(downloadToken)}`;
+        const signedLicense = issueSignedLicense({
+          assetId: freeAsset.id,
+          assetTitle: freeAsset.title,
+          buyerIdentifier: buyerId,
+          licenseType: freeAsset.license === 'commercial' ? 'Commercial' : 'Personal',
+          orderId: leadId,
+        });
+        licenseToken = signedLicense.verificationToken;
+      }
+    }
 
     return NextResponse.json(
       {
         success: true,
         leadId,
+        downloadUrl,
+        downloadToken,
+        licenseToken,
         message: 'تم تسجيل طلب التواصل بنجاح! سيتواصل معك فريق الاستشارات والتنفيذ فوراً.',
       },
       { status: 200 }
@@ -163,9 +215,36 @@ export async function POST(request: Request) {
 }
 
 export async function GET() {
-  return NextResponse.json({
-    success: true,
-    count: inMemoryLeads.length,
-    leads: inMemoryLeads.slice(-20),
-  });
+  let session: { user?: { role?: string } } | null = null;
+  try {
+    session = (await getServerSession(authOptions)) as { user?: { role?: string } } | null;
+  } catch {
+    // Outside Next.js request scope (e.g. unit tests) -> fail closed with 401
+    session = null;
+  }
+
+  if (!session || session.user?.role !== 'admin') {
+    return NextResponse.json(
+      { success: false, error: 'غير مصرح بالوصول إلى بيانات العملاء' },
+      { status: 401 }
+    );
+  }
+
+  try {
+    const dbLeads = await prisma.lead.findMany({
+      orderBy: { createdAt: 'desc' },
+      take: 50,
+    });
+    return NextResponse.json({
+      success: true,
+      count: dbLeads.length,
+      leads: dbLeads,
+    });
+  } catch {
+    return NextResponse.json({
+      success: true,
+      count: inMemoryLeads.length,
+      leads: inMemoryLeads.slice(-50),
+    });
+  }
 }

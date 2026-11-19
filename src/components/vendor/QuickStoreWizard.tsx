@@ -334,8 +334,8 @@ export default function QuickStoreWizard({ onFinish }: QuickStoreWizardProps) {
                 <span className="font-black text-raseen-gold text-sm">{assetPrice} {currency}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-400">طرق الدفع المفعلة:</span>
-                <span className="text-slate-200 font-bold">إنستاباي • فودافون كاش • مدى • فيزا</span>
+                <span className="text-slate-400">طرق السداد المتاحة:</span>
+                <span className="text-slate-200 font-bold">إنستاباي • فودافون كاش (وتدعم مدى/فيزا عند التفعيل)</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-400">صافي عائدك (85%):</span>

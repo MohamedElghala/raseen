@@ -186,8 +186,11 @@ suite.test('ASST-1.5: Chat API validates input payloads and returns HTTP 400 on 
 suite.test('ASST-1.6: RaseenAssistant component renders trigger, validates contacts, and integrates FreeDownloadModal', () => {
   // Component static rendering test
   const html = renderComponent(RaseenAssistant);
-  assert(html.includes('مساعد رَصين الذكي 🟢 متصل'), 'Component must render floating trigger button');
-  assert(html.includes('فتح المساعد الذكي'), 'Component must render accessible aria-label');
+  assert(html.includes('مستشار رَصين'), 'Component must render rebranded advisor label');
+  assert(html.includes('فتح مستشار رَصين'), 'Component must render accessible aria-label');
+  assert(!html.includes('🤖'), 'Component must not render robot emoji');
+  assert(!html.includes('ذكاء اصطناعي'), 'Component must not mention ذكاء اصطناعي');
+  assert(!html.includes('المؤتمت'), 'Component must not mention المؤتمت');
 
   // Phone Validation Logic Verification
   // Valid Saudi numbers

@@ -2,7 +2,10 @@ import { MetadataRoute } from 'next';
 import { mockProducts } from '@/lib/mockData';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://raseen.me';
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.NEXTAUTH_URL ||
+    'https://raseen-nine.vercel.app';
 
   // Core static pages
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -29,6 +32,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/verify`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/vendor`,

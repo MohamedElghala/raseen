@@ -72,12 +72,14 @@ suite.test('BOUND-2.3: Currency conversion handles zero, negative, and extreme p
   // Negative price (e.g. discount or credit note)
   const negativePrice = -500;
   const negSAR = currencyLib.convertPrice(negativePrice, 'SAR');
-  assertEqual(negSAR, -38.5, 'Negative price must scale linearly without sign flip');
+  assertEqual(negSAR, -125, 'Negative price must scale linearly under PPP without sign flip');
+  const negSARCustom = currencyLib.convertPrice(negativePrice, 'SAR', { EGP: 1, SAR: 0.08, AED: 0.08, USD: 0.02 });
+  assertEqual(negSARCustom, -40, 'Negative price with custom rates must scale linearly without sign flip');
 
   // Huge amount
   const hugePrice = 100000000;
   const hugeUSD = currencyLib.convertPrice(hugePrice, 'USD');
-  assertEqual(hugeUSD, 2000000, 'Large prices must calculate accurately');
+  assertEqual(hugeUSD, 8000000, 'Large prices must calculate accurately under PPP');
 });
 
 // Test 4: Leads API Adversarial Injection Payloads

@@ -27,7 +27,7 @@ const FILE_TYPES = [
   { id: 'word-pdf', label: 'عقود PDF/Word', icon: '📄' },
   { id: 'canva', label: 'قوالب Canva', icon: '🎨' },
   { id: 'cad-revit', label: 'AutoCAD/Revit', icon: '📐' },
-  { id: 'ai-prompts', label: 'برومبتات AI', icon: '🤖' },
+  { id: 'ai-prompts', label: 'برومبتات AI', icon: '✨' },
 ];
 
 export default function FilterBar({

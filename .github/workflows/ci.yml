@@ -1,0 +1,42 @@
+name: Raseen CI Verification
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      NEXTAUTH_SECRET: ci_ephemeral_nextauth_secret_for_build_check
+      LICENSE_SIGNING_SECRET: ci_ephemeral_license_secret_for_build_check
+      DOWNLOAD_TOKEN_SECRET: ci_ephemeral_download_secret_for_build_check
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Prisma generate
+        run: npx prisma generate
+
+      - name: TypeScript typecheck
+        run: npm run typecheck
+
+      - name: ESLint check
+        run: npm run lint
+
+      - name: Run E2E verification suite
+        run: npm test
+
+      - name: Production build check
+        run: npm run build

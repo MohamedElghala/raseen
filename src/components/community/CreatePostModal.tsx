@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useSession } from 'next-auth/react';
 import { useCommunityStore } from '@/store/communityStore';
-import { useAuthStore } from '@/store/authStore';
 import { CommunityCategorySlug } from '@/lib/communityTypes';
 
 export default function CreatePostModal() {
@@ -10,7 +10,14 @@ export default function CreatePostModal() {
   const closeModal = useCommunityStore((s) => s.closeCreateModal);
   const initialType = useCommunityStore((s) => s.createModalType);
   const addPost = useCommunityStore((s) => s.addPost);
-  const currentUser = useAuthStore((s) => s.user);
+  const { data: session } = useSession();
+  const currentUser = session?.user
+    ? {
+        name: session.user.name || 'عضو رَصين',
+        email: session.user.email || '',
+        role: (session.user as { role?: string }).role || 'buyer',
+      }
+    : null;
 
   const [postType, setPostType] = useState<'discussion' | 'request'>(initialType);
   const [title, setTitle] = useState('');

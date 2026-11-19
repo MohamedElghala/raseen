@@ -21,14 +21,6 @@ export default function LoginModal() {
   const [success, setSuccess] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleQuickDemo = (demoEmail: string, demoPass: string, demoRole: 'buyer' | 'vendor') => {
-    setTab('login');
-    setRole(demoRole);
-    setEmail(demoEmail);
-    setPassword(demoPass);
-    setError('');
-  };
-
   if (!isLoginOpen) return null;
 
   const pwdStrength = checkPasswordStrength(password);
@@ -55,7 +47,7 @@ export default function LoginModal() {
         return;
       }
       if (!pwdStrength.isValid) {
-        setError(pwdStrength.message || 'كلمة المرور يجب أن تكون 8 أحرف على الأقل وتحتوي على أرقام وحروف');
+        setError(pwdStrength.message || 'كلمة المرور يجب أن تكون 10 أحرف على الأقل وتحتوي على حرف كبير وصغير ورقم ورمز خاص');
         return;
       }
       if (password !== confirmPassword) {
@@ -200,31 +192,6 @@ export default function LoginModal() {
             </p>
           </div>
 
-          {/* Quick 1-Click Demo Buttons for Fast Evaluation */}
-          <div className="mb-4 p-2.5 rounded-xl bg-slate-900/90 border border-cyan-500/30 shadow-inner">
-            <span className="text-[11px] font-bold text-cyan-400 block mb-1.5 text-center">
-              🚀 تجربة فورية بنقرة واحدة (حسابات جاهزة للاختبار):
-            </span>
-            <div className="grid grid-cols-2 gap-1.5">
-              <button
-                type="button"
-                onClick={() => handleQuickDemo('demo.buyer@raseen.me', 'Buyer@Pass2026!', 'buyer')}
-                className="px-2.5 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-[11px] text-slate-200 font-bold border border-slate-700 hover:border-cyan-400 transition-all flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer"
-              >
-                <span>🛒</span>
-                <span>حساب مشترٍ</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickDemo('demo.vendor@raseen.me', 'Vendor@Pass2026!', 'vendor')}
-                className="px-2.5 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-[11px] text-slate-200 font-bold border border-slate-700 hover:border-amber-400 transition-all flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer"
-              >
-                <span>🏪</span>
-                <span>بائع معتمد (85%)</span>
-              </button>
-            </div>
-          </div>
-
           {/* Quick Google Sign In */}
           <div className="mb-4">
             <button
@@ -306,23 +273,30 @@ export default function LoginModal() {
               />
               
               {/* Real-time Password Strength Indicator for Register */}
-              {tab === 'register' && password && (
-                <div className="mt-1">
-                  <div className="flex items-center justify-between text-[11px] mb-1">
-                    <span className="text-slate-400">قوة كلمة المرور:</span>
-                    <span style={{ color: pwdStrength.color }} className="font-bold">{pwdStrength.label}</span>
-                  </div>
-                  <div className="w-full h-1.5 bg-slate-700 rounded-full overflow-hidden flex gap-1">
-                    {[1, 2, 3, 4].map((step) => (
-                      <div 
-                        key={step} 
-                        className="flex-1 h-full rounded-full transition-all"
-                        style={{ 
-                          backgroundColor: step <= pwdStrength.score ? pwdStrength.color : '#334155' 
-                        }}
-                      />
-                    ))}
-                  </div>
+              {tab === 'register' && (
+                <div className="mt-1 space-y-1">
+                  <p className="text-[10px] text-slate-400">
+                    متطلبات كلمة المرور: 10 أحرف على الأقل، حرف كبير (A-Z)، حرف صغير (a-z)، رقم، ورمز خاص (!@#$).
+                  </p>
+                  {password && (
+                    <div>
+                      <div className="flex items-center justify-between text-[11px] mb-1">
+                        <span className="text-slate-400">قوة كلمة المرور:</span>
+                        <span style={{ color: pwdStrength.color }} className="font-bold">{pwdStrength.label}</span>
+                      </div>
+                      <div className="w-full h-1.5 bg-slate-700 rounded-full overflow-hidden flex gap-1">
+                        {[1, 2, 3, 4].map((step) => (
+                          <div
+                            key={step}
+                            className="flex-1 h-full rounded-full transition-all"
+                            style={{
+                              backgroundColor: step <= pwdStrength.score ? pwdStrength.color : '#334155'
+                            }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

@@ -1,40 +1,22 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import { UserRole } from '../lib/types';
 
-export interface User {
+export interface AuthUser {
+  id?: string;
   name: string;
   email: string;
-  role: UserRole;
+  role: string;
   avatar?: string;
 }
 
-interface AuthState {
-  user: User | null;
+interface AuthUIState {
   isLoginOpen: boolean;
-  
-  // Actions
-  setUser: (user: User | null) => void;
-  logout: () => void;
   toggleLoginModal: (isOpen?: boolean) => void;
 }
 
-export const useAuthStore = create<AuthState>()(
-  persist(
-    (set) => ({
-      user: null,
-      isLoginOpen: false,
-
-      setUser: (user) => set({ user }),
-
-      logout: () => set({ user: null }),
-
-      toggleLoginModal: (isOpen) =>
-        set((state) => ({ isLoginOpen: isOpen !== undefined ? isOpen : !state.isLoginOpen })),
-    }),
-    {
-      name: 'raseen-auth-storage',
-      partialize: (state) => ({ user: state.user }),
-    }
-  )
-);
+export const useAuthStore = create<AuthUIState>((set) => ({
+  isLoginOpen: false,
+  toggleLoginModal: (isOpen) =>
+    set((state) => ({
+      isLoginOpen: typeof isOpen === 'boolean' ? isOpen : !state.isLoginOpen,
+    })),
+}));

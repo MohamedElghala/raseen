@@ -88,7 +88,7 @@ export default function Hero({ onSearch }: HeroProps) {
               }`}
             >
               <span>🔍</span>
-              <span>سوق الأصول والشيتات (50 أصل)</span>
+              <span>سوق الأصول والشيتات (54 أصل معتمد)</span>
             </button>
 
             <button
@@ -146,7 +146,7 @@ export default function Hero({ onSearch }: HeroProps) {
                   setQuery(e.target.value);
                   onSearch(e.target.value);
                 }}
-                placeholder="ابحث في أكثر من 1,400 أصل: شيت محاسبة، عقد شراكة، Pitch Deck، بلوكات CAD..."
+                placeholder="ابحث في أكثر من 54 أصل رقمي معتمد: شيت محاسبة، عقد شراكة، Pitch Deck، بلوكات CAD..."
                 aria-label="ابحث عن المنتجات والأصول الرقمية"
                 className="w-full h-12 sm:h-14 pl-3 pr-12 rounded-r-2xl bg-slate-900/95 border-2 border-slate-700/80 text-white placeholder-slate-400 focus:outline-none focus:border-amber-400 transition-all text-xs sm:text-sm font-cairo backdrop-blur-2xl"
               />
@@ -193,7 +193,7 @@ export default function Hero({ onSearch }: HeroProps) {
                       أنشئ متجرك الرقمي كبائع
                     </span>
                     <span className="text-[11px] text-slate-400 block">
-                      اربح 85% مع تسوية آلية عبر إنستاباي ومدى
+                      اربح 85% مع تسوية عبر إنستاباي والتحويل البنكي
                     </span>
                   </div>
                 </div>

@@ -163,6 +163,16 @@ export function detectIntent(rawText: string): {
       'صياغه',
     ],
     business_tools: [
+      'كانفا',
+      'canva',
+      'تسويق',
+      'تصميم',
+      'بوربوينت',
+      'powerpoint',
+      'نوشن',
+      'notion',
+      'برومبت',
+      'prompts',
       'اداه',
       'ادوات',
       'حاسبه',
@@ -336,22 +346,46 @@ export function getRecommendedProducts(
   // Filter out any undefined items
   const validCurated = curated.filter((p): p is ProductItem => Boolean(p));
 
-  // If user searched for a very specific keyword (e.g. revit, boq, ضرائب), check direct catalog matches
-  const keywordMatches = mockProducts.filter((p) => {
-    const titleNorm = normalizeArabic(p.title);
-    const descNorm = normalizeArabic(p.description);
-    const tagsNorm = p.tags.map(normalizeArabic).join(' ');
-    return (
-      (normQuery.length > 3 && (titleNorm.includes(normQuery) || tagsNorm.includes(normQuery) || descNorm.includes(normQuery)))
-    );
-  });
+  // Tokenize normalized query to handle multi-word Arabic/English questions
+  const STOPWORDS = new Set([
+    'في', 'من', 'على', 'الي', 'عن', 'مع', 'هذا', 'هذه', 'التي', 'الذي',
+    'اريد', 'ابحث', 'ابغي', 'عايز', 'هل', 'عندكم', 'ممكن', 'احتاج',
+    'the', 'for', 'and', 'with', 'how', 'can', 'you',
+  ].map(normalizeArabic));
 
-  if (keywordMatches.length > 0) {
+  const queryTokens = normQuery
+    .split(/[\s,،.؟?!:;\/\\()\-]+/)
+    .map((t) => t.trim())
+    .filter((t) => t.length >= 3 && !STOPWORDS.has(t));
+
+  const scoredMatches = mockProducts
+    .map((p) => {
+      const titleNorm = normalizeArabic(p.title);
+      const descNorm = normalizeArabic(p.description);
+      const tagsNorm = p.tags.map(normalizeArabic).join(' ');
+      let score = 0;
+
+      if (normQuery.length > 3 && (titleNorm.includes(normQuery) || tagsNorm.includes(normQuery))) {
+        score += 10;
+      }
+
+      for (const token of queryTokens) {
+        if (titleNorm.includes(token)) score += 4;
+        if (tagsNorm.includes(token)) score += 3;
+        if (descNorm.includes(token)) score += 1;
+      }
+
+      return { product: p, score };
+    })
+    .filter((entry) => entry.score >= 3)
+    .sort((a, b) => b.score - a.score)
+    .map((entry) => entry.product);
+
+  if (scoredMatches.length > 0) {
     // Partition into free and paid, ensuring free comes first!
-    const freeMatches = keywordMatches.filter((p) => p.price === 0);
-    const paidMatches = keywordMatches.filter((p) => p.price > 0);
+    const freeMatches = scoredMatches.filter((p) => p.price === 0);
+    const paidMatches = scoredMatches.filter((p) => p.price > 0);
     const combined = [...freeMatches, ...paidMatches, ...validCurated];
-    // De-duplicate
     const seen = new Set<string>();
     const deduplicated: ProductItem[] = [];
     for (const item of combined) {
@@ -388,7 +422,7 @@ export function generateAdvisoryReply(
   switch (intent) {
     case 'engineering_bim':
       advice =
-        `📐 **الترسانة الهندسية ونماذج BIM المعمارية المعتمدة**:\n\n` +
+        `📐 **الترسانة الهندسية ونماذج BIM المعمارية والإنشائية**:\n\n` +
         `أهلاً بك يا باشمهندس! توفر منصة رَصين ترسانة هندسية متكاملة للمكاتب الاستشارية والمقاولين وفق أعلى المعايير العالمية (LOD 300 و LOD 350).\n\n` +
         (freeCount > 0
           ? `🎁 **هدية فورية لك**: يمكنك الآن تنزيل **${freeItems[0].title}** مجاناً 100% بنقرة زر واحدة لاختبار جودة العائلات والنمذجة قبل اقتناء الباقات الشاملة!\n\n`
@@ -400,7 +434,7 @@ export function generateAdvisoryReply(
 
     case 'financial_accounting':
       advice =
-        `📊 **الحلول المالية والمحاسبية المعتمدة ومطابقة ZATCA**:\n\n` +
+        `📊 **الحلول المالية والمحاسبية ومواءمة الفوترة الضريبية ZATCA**:\n\n` +
         `مرحباً بك! صُممت نماذج رَصين المحاسبية بواسطة ماليين ومحاسبين قانونيين لتمنحك دقة متناهية وإدارة سيولة آمنة:\n\n` +
         (freeCount > 0
           ? `🎁 **هدية مجانية فورية**: شيت **${freeItems[0].title}** متاح للتحميل الفوري بدون أي مقابل لتنظيم ميزانيتك وتدفقاتك فوراً!\n\n`
@@ -413,7 +447,7 @@ export function generateAdvisoryReply(
     case 'legal_contracts':
       advice =
         `⚖️ **العقود التجارية والاتفاقيات القانونية الموثقة**:\n\n` +
-        `أهلاً بك! في رَصين، قمنا بصياغة ومراجعة كافة العقود مع كبرى المكاتب القانونية التجارية لحماية استثماراتك وحقوقك الفكرية:\n\n` +
+        `أهلاً بك! في رَصين، نوفر نماذج عقود استرشادية مصاغة بعناية لمواءمة بيئة الأعمال التجارية والعمل الحر، لحماية استثماراتك وحقوقك الفكرية (يُوصى بمراجعتها مع مستشارك القانوني للحالات الخاصة):\n\n` +
         (freeCount > 0
           ? `🎁 **نموذج قانوني مجاني فوري**: يمكنك الآن تنزيل **${freeItems[0].title}** بصيغتي Word و PDF لحماية أعمالك وتعاقداتك اليوم مجاناً!\n\n`
           : '') +
@@ -449,7 +483,7 @@ export function generateAdvisoryReply(
     default:
       advice =
         `🌟 **أهلاً بك في منصة رَصين لإدارة الأعمال (Raseen Business Platform)**!\n\n` +
-        `أنا مستشارك الذكي المؤتمت المتاح على مدار الساعة (24/7). أساعدك في اختيار أفضل الأدوات الرقمية المناسبة لمجالك:\n\n` +
+        `أنا مستشار رَصين المتاح على مدار الساعة (24/7). أساعدك في اختيار أفضل الأدوات والأصول الرقمية المناسبة لمجالك:\n\n` +
         `• 📐 **الهندسة والـ BIM**: عائلات Revit LOD 300/350، بلوكات AutoCAD، وجداول BOQ.\n` +
         `• 📊 **المالية والمحاسبة**: شيتات ميزان المراجعة، التدفقات النقدية، وفواتير ZATCA.\n` +
         `• ⚖️ **العقود القانونية**: اتفاقيات العمل الحر، NDA، وعقود الشركات وتطوير البرمجيات.\n` +
@@ -466,23 +500,70 @@ export function generateAdvisoryReply(
   return advice;
 }
 
-// Optional asynchronous enhancement via Local AI Gateway if available
-export async function tryEnhanceWithAIGateway(prompt: string): Promise<string | null> {
-  try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 800); // 800ms fast timeout
+const RASEEN_SYSTEM_PROMPT =
+  'أنت "مستشار رَصين" (المساعد الذكي لمنصة رَصين للأصول والقوالب الرقمية في مصر والسعودية والخليج). تحدث بأسلوب عربي فصيح واضح وودود مع نقاط منظمة وإيموجي مناسبة، وتجنب تماماً أي تعبيرات آلية أو ادعاءات غير موثقة أو رمز الروبوت.';
 
-    const res = await fetch('http://127.0.0.1:8080/v1/chat/completions', {
+function sanitizeAssistantOutput(text: string): string {
+  return text
+    .replace(/🤖/g, '')
+    .replace(/ذكاء\s*اصطناعي/g, 'تقنية متقدمة')
+    .replace(/المؤتمت/g, 'الفوري')
+    .replace(/المعتمد(?:ة|ين)?/g, 'الاحترافي')
+    .trim();
+}
+
+// Optional asynchronous enhancement via Gemini Free Tier or custom AI Gateway if configured
+export async function tryEnhanceWithAIGateway(prompt: string): Promise<string | null> {
+  const geminiKey = process.env.GEMINI_API_KEY;
+  if (geminiKey) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 3500);
+    try {
+      const model = process.env.GEMINI_MODEL || 'gemini-2.0-flash';
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(geminiKey)}`;
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: RASEEN_SYSTEM_PROMPT }] },
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.65, maxOutputTokens: 350 },
+        }),
+        signal: controller.signal,
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (typeof text === 'string' && text.trim().length > 20) {
+          return sanitizeAssistantOutput(text);
+        }
+      }
+    } catch {
+      // Fall through to gateway or deterministic advisor
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+
+  const gatewayUrl = process.env.AI_GATEWAY_URL;
+  if (!gatewayUrl) {
+    return null;
+  }
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 2500);
+  try {
+    const res = await fetch(`${gatewayUrl.replace(/\/+$/, '')}/v1/chat/completions`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        ...(process.env.AI_GATEWAY_KEY ? { Authorization: `Bearer ${process.env.AI_GATEWAY_KEY}` } : {}),
+      },
       body: JSON.stringify({
-        model: 'gemini-2.0-flash',
+        model: process.env.AI_MODEL || 'gemini-2.0-flash',
         messages: [
-          {
-            role: 'system',
-            content:
-              'أنت المساعد الذكي الخبير لمنصة رَصين لإدارة الأعمال. تحدث بأسلوب عربي فصيح، مهني، جذاب وودود مع استخدام الإيموجي وتنسيق المقروئية العالية.',
-          },
+          { role: 'system', content: RASEEN_SYSTEM_PROMPT },
           { role: 'user', content: prompt },
         ],
         temperature: 0.7,
@@ -491,17 +572,17 @@ export async function tryEnhanceWithAIGateway(prompt: string): Promise<string | 
       signal: controller.signal,
     });
 
-    clearTimeout(timeout);
-
     if (res.ok) {
       const data = await res.json();
       const content = data.choices?.[0]?.message?.content;
       if (content && typeof content === 'string' && content.trim().length > 20) {
-        return content.trim();
+        return sanitizeAssistantOutput(content);
       }
     }
   } catch {
     // Graceful silent fallback to local semantic generator
+  } finally {
+    clearTimeout(timeout);
   }
   return null;
 }

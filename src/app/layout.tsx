@@ -6,15 +6,20 @@ import Footer from '@/components/layout/Footer';
 import CartModal from '@/components/storefront/CartModal';
 import LoginModal from '@/components/auth/LoginModal';
 import AuthProvider from '@/components/providers/AuthProvider';
-import RaseenAssistant from '@/components/assistant/RaseenAssistant';
+import AssistantLoader from '@/components/assistant/AssistantLoader';
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-WWN1MNE93T';
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
 const GOOGLE_VERIFICATION = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || 'googlec660322f2991dfce';
 
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  process.env.NEXTAUTH_URL ||
+  'https://raseen-nine.vercel.app';
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://raseen.me'),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: 'رَصِيـن | سوق الأصول والأدوات الرقمية الاحترافية والعمل الحر',
     template: '%s | رَصِيـن RASEEN',
@@ -43,7 +48,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'رَصِيـن | سوق الأصول والأدوات الرقمية والعمل الحر',
     description: 'أدوات وشيتات وقوالب ذكية تختصر سنوات من جهدك وعملك مع تسليم فوري وتخصيص بواسطة مستقلين معتمدين.',
-    url: 'https://raseen.me',
+    url: SITE_URL,
     siteName: 'رَصِيـن | RASEEN',
     locale: 'ar_EG',
     type: 'website',
@@ -70,11 +75,11 @@ const jsonLdSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'رَصِيـن | RASEEN',
-  url: 'https://raseen.me',
+  url: SITE_URL,
   description: 'سوق الأصول الرقمية والإبداعية والعمل الحر في الشرق الأوسط',
   potentialAction: {
     '@type': 'SearchAction',
-    target: 'https://raseen.me/?search={search_term_string}',
+    target: `${SITE_URL}/?search={search_term_string}`,
     'query-input': 'required name=search_term_string',
   },
 };
@@ -122,6 +127,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             `}
           </Script>
         )}
+
+        {/* Cloudflare Web Analytics (Privacy-First, Zero Cookie) */}
+        {process.env.NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN && (
+          <Script
+            defer
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={`{"token": "${process.env.NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN}"}`}
+            strategy="afterInteractive"
+          />
+        )}
       </head>
 
       <body className="font-cairo min-h-screen bg-raseen-dark text-slate-200 antialiased">
@@ -143,7 +158,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
           <CartModal />
           <LoginModal />
-          <RaseenAssistant />
+          <AssistantLoader />
         </AuthProvider>
       </body>
     </html>

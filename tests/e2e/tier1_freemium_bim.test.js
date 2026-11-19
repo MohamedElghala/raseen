@@ -158,15 +158,12 @@ suite.test('FREE-1.5: /api/leads records and validates free asset lead captures'
   assertEqual(res.status, 200, 'POST /api/leads must return HTTP 200');
   assertEqual(data.success, true, 'Lead capture response must be successful');
   assert(data.leadId && data.leadId.startsWith('LEAD-'), 'leadId must follow standard LEAD- prefix');
+  assert(data.downloadUrl && data.downloadUrl.includes('/api/vault/free-p1'), 'Free asset lead capture must return vault downloadUrl');
+  assert(data.downloadToken && typeof data.downloadToken === 'string', 'Free asset lead capture must issue signed downloadToken');
 
-  // Verify lead was genuinely stored in state
+  // Verify GET /api/leads enforces admin authentication instead of leaking PII
   const getRes = await leadsRoute.GET();
-  const getData = await getRes.json();
-  const stored = getData.leads.find((l) => l.id === data.leadId);
-  assert(stored, 'Lead must be found in stored leads registry');
-  assertEqual(stored.phone, '+966509988776', 'Phone number must match payload');
-  assertEqual(stored.channel, 'whatsapp', 'Channel must be whatsapp');
-  assertEqual(stored.metadata.productId, 'free-p1', 'Product ID must be preserved in metadata');
+  assertEqual(getRes.status, 401, 'Unauthenticated GET /api/leads must return HTTP 401');
 });
 
 // Test 6: FreeDownloadModal returns null when closed or without product

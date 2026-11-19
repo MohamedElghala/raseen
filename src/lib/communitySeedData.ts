@@ -84,7 +84,7 @@ export const INITIAL_POSTS: CommunityPost[] = [
         postId: 'post-2',
         author: {
           name: 'هاني رسلان',
-          title: 'صانع نماذج إكسل معتمد لدى رَصين',
+          title: 'صانع نماذج إكسل متميز في رَصين',
           verified: true,
           role: 'creator',
         },

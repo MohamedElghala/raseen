@@ -2,8 +2,8 @@
 
 import React, { useState, use } from 'react';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { useCommunityStore } from '@/store/communityStore';
-import { useAuthStore } from '@/store/authStore';
 import { mockProducts } from '@/lib/mockData';
 
 export default function DiscussionDetailPage({
@@ -22,7 +22,14 @@ export default function DiscussionDetailPage({
   const upvoteComment = useCommunityStore((s) => s.upvoteComment);
   const upvotedCommentIds = useCommunityStore((s) => s.upvotedCommentIds);
 
-  const currentUser = useAuthStore((s) => s.user);
+  const { data: session } = useSession();
+  const currentUser = session?.user
+    ? {
+        name: session.user.name || 'عضو رَصين',
+        email: session.user.email || '',
+        role: (session.user as { role?: string }).role || 'buyer',
+      }
+    : null;
 
   const post = posts.find((p) => p.id === postId);
 
@@ -346,7 +353,7 @@ export default function DiscussionDetailPage({
               <span>شارك خبرتك أو قدّم عرضك</span>
             </h3>
             <p className="text-xs text-slate-400 mb-4">
-              الردود الاحترافية تمنحك شارة "خبير معتمد" وتزيد من ثقة العملاء في شراء أصولك الرقمية.
+              الردود الاحترافية تمنحك شارة «خبير متميز» وتزيد من ثقة العملاء في شراء أصولك الرقمية.
             </p>
 
             <form onSubmit={handleCommentSubmit} className="space-y-4">

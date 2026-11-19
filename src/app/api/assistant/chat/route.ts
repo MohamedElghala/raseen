@@ -1,18 +1,28 @@
 import { NextResponse } from 'next/server';
 import {
-  AssistantChatRequest,
   AssistantChatResponse,
   detectIntent,
   getRecommendedProducts,
   generateAdvisoryReply,
   tryEnhanceWithAIGateway,
 } from '@/lib/assistantEngine';
+import { AssistantChatSchema } from '@/lib/validations';
+import { checkRateLimit, extractClientIp } from '@/lib/rateLimit';
 
 export async function POST(request: Request) {
+  const ip = extractClientIp(request);
+  const rl = checkRateLimit(`assistant-chat:${ip}`, 25, 60 * 1000);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: 'تم تجاوز الحد المسموح من الرسائل، يرجى الانتظار دقيقة قبل المحاولة مجدداً.' },
+      { status: 429 }
+    );
+  }
+
   try {
-    let body: AssistantChatRequest;
+    let rawBody: unknown;
     try {
-      body = await request.json();
+      rawBody = await request.json();
     } catch {
       return NextResponse.json(
         { error: 'بيانات غير صالحة. يرجى إرسال JSON سليم.' },
@@ -20,15 +30,15 @@ export async function POST(request: Request) {
       );
     }
 
-    const rawMessage = body.message;
-    if (!rawMessage || typeof rawMessage !== 'string' || !rawMessage.trim()) {
+    const parsed = AssistantChatSchema.safeParse(rawBody);
+    if (!parsed.success) {
       return NextResponse.json(
-        { error: 'حقل الرسالة (message) مطلوب ولا يمكن أن يكون فارغاً.' },
+        { error: parsed.error.issues[0]?.message || 'حقل الرسالة (message) مطلوب ولا يمكن أن يكون فارغاً.' },
         { status: 400 }
       );
     }
 
-    const message = rawMessage.trim();
+    const message = parsed.data.message;
 
     // 1. Detect Intent and Lead Trigger
     const { intent, triggerLeadCapture } = detectIntent(message);

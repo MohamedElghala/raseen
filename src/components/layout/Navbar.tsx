@@ -17,24 +17,28 @@ export default function Navbar() {
   const currency = useCartStore((s) => s.currency);
   const setCurrency = useCartStore((s) => s.setCurrency);
 
-  const user = useAuthStore((s) => s.user);
   const toggleLoginModal = useAuthStore((s) => s.toggleLoginModal);
-  const logout = useAuthStore((s) => s.logout);
 
-  // Active user can be either NextAuth Google user or manual login user
-  const activeUser = session?.user
+  const sessionUser = session?.user as
+    | { name?: string | null; email?: string | null; image?: string | null; role?: string }
+    | undefined;
+
+  const activeUser = sessionUser
     ? {
-        name: session.user.name || 'مستخدم رَصين',
-        email: session.user.email || '',
-        avatar: session.user.image,
+        name: sessionUser.name || 'مستخدم رَصين',
+        email: sessionUser.email || '',
+        avatar: sessionUser.image || undefined,
+        role: sessionUser.role || 'buyer',
       }
-    : user;
+    : null;
 
   const handleLogout = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('raseen-auth-storage');
+    }
     if (session) {
       signOut({ callbackUrl: '/' });
     }
-    logout();
   };
 
   const cartCount = totalItems();

@@ -22,6 +22,7 @@ export default function FreeDownloadModal({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDownloaded, setIsDownloaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [signedDownloadUrl, setSignedDownloadUrl] = useState<string | null>(null);
 
   // Reset form when modal opens with a new product
   useEffect(() => {
@@ -31,6 +32,7 @@ export default function FreeDownloadModal({
       setIsSubmitting(false);
       setIsDownloaded(false);
       setErrorMessage(null);
+      setSignedDownloadUrl(null);
     }
   }, [isOpen, product?.id]);
 
@@ -67,11 +69,22 @@ export default function FreeDownloadModal({
 
   const upsellProduct = getUpsellProduct();
 
-  const triggerDirectDownload = () => {
-    // 1. Generate genuine downloadable starter asset bundle in browser
+  const triggerDirectDownload = (downloadUrlOverride?: string) => {
+    const vaultUrl = downloadUrlOverride || signedDownloadUrl;
+    if (vaultUrl) {
+      const link = document.createElement('a');
+      link.href = vaultUrl;
+      link.download = `${product.id}-raseen`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      return;
+    }
+
+    // Preview specification bundle for paid demo previews (paid assets require checkout)
     const fileHeader = `======================================================================\n` +
       `               منصة رَصين — RASEEN BUSINESS PLATFORM                  \n` +
-      `                   أصل مجاني معتمد للتحميل الفوري                     \n` +
+      `                   نموذج معاينة ومواصفات فنية                         \n` +
       `======================================================================\n\n` +
       `اسم الأصل: ${product.title}\n` +
       `المعرف: ${product.id}\n` +
@@ -80,7 +93,7 @@ export default function FreeDownloadModal({
       `الحجم التقديري: ${product.fileSize || product.technicalSpecs?.fileSize || 'جاهز للاستخدام'}\n` +
       `الترخيص: ${product.license === 'commercial' ? 'ترخيص تجاري كامل' : 'ترخيص شخصي مصرح'}\n` +
       `تاريخ الإصدار والتحميل: ${new Date().toISOString()}\n\n` +
-      `المواصفات الفنية المعتمدة:\n` +
+      `المواصفات الفنية:\n` +
       (product.technicalSpecs?.lodStandard ? `- معيار النمذجة: ${product.technicalSpecs.lodStandard}\n` : '') +
       (product.technicalSpecs?.blocksCount ? `- عدد العائلات / البلوكات: ${product.technicalSpecs.blocksCount}\n` : '') +
       (product.technicalSpecs?.sheetsCount ? `- عدد أوراق العمل: ${product.technicalSpecs.sheetsCount}\n` : '') +
@@ -89,12 +102,7 @@ export default function FreeDownloadModal({
       (product.technicalSpecs?.jurisdiction ? `- الاختصاص القضائي: ${product.technicalSpecs.jurisdiction}\n` : '') +
       `- برامج التوافق: ${product.technicalSpecs?.compatibility?.join(' | ') || 'Office & CAD'}\n` +
       `- صيغ الملفات: ${product.technicalSpecs?.fileFormats?.join(' | ') || 'All formats'}\n\n` +
-      `روابط إضافية وتحديثات:\n` +
-      `- رابط المنصة: https://raseen.store\n` +
-      `- ملف الأصل: ${product.fileUrl || '/downloads/free/' + product.id}\n\n` +
-      `----------------------------------------------------------------------\n` +
-      `ملاحظة: هذا الأصل مرخص مجاناً 100% بدون أي تكلفة أو وسيلة دفع.\n` +
-      `للترقية إلى الباقات الاحترافية الكاملة، استخدم كوبون الخصم: RASEEN40 (خصم 40%)\n` +
+      `رابط المنتج على المنصة: https://raseen-nine.vercel.app/product/${product.id}\n` +
       `======================================================================\n`;
 
     const blob = new Blob([fileHeader], { type: 'text/plain;charset=utf-8' });
@@ -154,8 +162,12 @@ export default function FreeDownloadModal({
         throw new Error(data.error || 'تعذر إرسال البيانات، يرجى المحاولة مرة أخرى.');
       }
 
+      if (data.downloadUrl) {
+        setSignedDownloadUrl(data.downloadUrl);
+      }
+
       // Success: trigger download and show confirmation + upsell
-      triggerDirectDownload();
+      triggerDirectDownload(data.downloadUrl);
       setIsDownloaded(true);
     } catch (err: any) {
       setErrorMessage(err.message || 'حدث خطأ أثناء معالجة الطلب.');
@@ -344,7 +356,7 @@ export default function FreeDownloadModal({
               </p>
               <button
                 type="button"
-                onClick={triggerDirectDownload}
+                onClick={() => triggerDirectDownload()}
                 className="text-xs text-emerald-400 underline hover:text-emerald-300 font-bold"
               >
                 اضغط هنا لإعادة التنزيل فوراً 📥

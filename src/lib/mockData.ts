@@ -15,7 +15,7 @@ export const fileTypeFilters: FileTypeFilter[] = [
   { slug: 'word-pdf', name: 'عقود PDF/Word', icon: '📄' },
   { slug: 'canva', name: 'قوالب Canva', icon: '🎨' },
   { slug: 'cad-revit', name: 'AutoCAD/Revit', icon: '📐' },
-  { slug: 'ai-prompts', name: 'برومبتات AI', icon: '🤖' }
+  { slug: 'ai-prompts', name: 'برومبتات AI', icon: '✨' }
 ];
 
 export interface BundleDeal {
@@ -77,13 +77,13 @@ export const products: ProductItem[] = [
     category: 'business',
     fileType: 'word-pdf',
     license: 'commercial',
-    imageUrl: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80',
     rating: 4.8,
     reviewCount: 65,
     salesCount: 420,
     vendorName: 'مكتب الصفوة القانوني',
     tags: ['عقود', 'قانوني', 'شركات', 'شراكة', 'توظيف'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true,
     technicalSpecs: {
       compatibility: ['Microsoft Word 2016 - 2024', 'Google Docs', 'Adobe Acrobat Pro'],
@@ -106,7 +106,7 @@ export const products: ProductItem[] = [
     salesCount: 580,
     vendorName: 'رواد التصميم',
     tags: ['عروض', 'مستثمرين', 'بوربوينت', 'شركات ناشئة'],
-    createdAt: new Date().toISOString()
+    createdAt: '2026-03-01T00:00:00.000Z'
   },
   {
     id: 'p3',
@@ -123,7 +123,7 @@ export const products: ProductItem[] = [
     salesCount: 210,
     vendorName: 'استشارات فينتشر',
     tags: ['دراسة جدوى', 'نموذج مالي', 'إكسل', 'استثمار'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true,
     technicalSpecs: {
       compatibility: ['Excel 2016 - 2024', 'Microsoft 365', 'Google Sheets'],
@@ -146,7 +146,7 @@ export const products: ProductItem[] = [
     salesCount: 195,
     vendorName: 'أوتوميشن هاب',
     tags: ['أتمتة', 'Zapier', 'Make', 'واتساب', 'فواتير'],
-    createdAt: new Date().toISOString()
+    createdAt: '2026-03-01T00:00:00.000Z'
   },
   {
     id: 'p5',
@@ -162,7 +162,7 @@ export const products: ProductItem[] = [
     salesCount: 310,
     vendorName: 'نوشن بزنس',
     tags: ['CRM', 'Notion', 'مبيعات', 'إدارة عملاء'],
-    createdAt: new Date().toISOString()
+    createdAt: '2026-03-01T00:00:00.000Z'
   },
   {
     id: 'p6',
@@ -179,7 +179,7 @@ export const products: ProductItem[] = [
     salesCount: 160,
     vendorName: 'خبراء الموارد البشرية',
     tags: ['HR', 'توظيف', 'لوائح', 'عروض وظيفية'],
-    createdAt: new Date().toISOString()
+    createdAt: '2026-03-01T00:00:00.000Z'
   },
 
   // ================= 2. ACCOUNTING (6 Products) =================
@@ -198,7 +198,7 @@ export const products: ProductItem[] = [
     salesCount: 980,
     vendorName: 'الحلول المالية الذكية',
     tags: ['محاسبة', 'إكسل', 'تقارير مالية', 'قيود يومية'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true,
     technicalSpecs: {
       compatibility: ['Excel 2016 - 2026', 'Microsoft 365', 'Google Sheets'],
@@ -221,7 +221,7 @@ export const products: ProductItem[] = [
     salesCount: 460,
     vendorName: 'لوجستكس إكسل',
     tags: ['مخازن', 'تكلفة', 'FIFO', 'إكسل', 'جرد'],
-    createdAt: new Date().toISOString()
+    createdAt: '2026-03-01T00:00:00.000Z'
   },
   {
     id: 'p9',
@@ -231,13 +231,13 @@ export const products: ProductItem[] = [
     category: 'accounting',
     fileType: 'excel',
     license: 'personal',
-    imageUrl: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80',
     rating: 4.6,
     reviewCount: 52,
     salesCount: 340,
     vendorName: 'أحمد المالي',
     tags: ['ضرائب', 'VAT', 'إقرار ضريبي', 'إكسل'],
-    createdAt: new Date().toISOString()
+    createdAt: '2026-03-01T00:00:00.000Z'
   },
   {
     id: 'p10',
@@ -248,13 +248,13 @@ export const products: ProductItem[] = [
     category: 'accounting',
     fileType: 'powerpoint',
     license: 'commercial',
-    imageUrl: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
     rating: 4.9,
     reviewCount: 68,
     salesCount: 380,
     vendorName: 'داتا برو',
     tags: ['Power BI', 'داشبورد', 'تحليل مالي', 'مؤشرات'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true
   },
   {
@@ -265,13 +265,13 @@ export const products: ProductItem[] = [
     category: 'accounting',
     fileType: 'excel',
     license: 'commercial',
-    imageUrl: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80',
     rating: 4.7,
     reviewCount: 88,
     salesCount: 530,
     vendorName: 'باي رول بلس',
     tags: ['رواتب', 'ضرائب', 'تأمينات', 'كسب العمل'],
-    createdAt: new Date().toISOString()
+    createdAt: '2026-03-01T00:00:00.000Z'
   },
   {
     id: 'p12',
@@ -281,13 +281,13 @@ export const products: ProductItem[] = [
     category: 'accounting',
     fileType: 'excel',
     license: 'personal',
-    imageUrl: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
     rating: 4.8,
     reviewCount: 34,
     salesCount: 220,
     vendorName: 'فاينانشال موديلز',
     tags: ['تدفق نقدي', 'سيولة', 'توقعات', 'إكسل'],
-    createdAt: new Date().toISOString()
+    createdAt: '2026-03-01T00:00:00.000Z'
   },
 
   // ================= 3. ENGINEERING (6 Products) =================
@@ -306,7 +306,7 @@ export const products: ProductItem[] = [
     salesCount: 720,
     vendorName: 'أركيتيكت هاب',
     tags: ['AutoCAD', 'معماري', 'بلوكات', 'تصميم'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true,
     technicalSpecs: {
       compatibility: ['AutoCAD 2013 - 2026', 'Autodesk Revit 2020 - 2026', 'Civil 3D'],
@@ -323,13 +323,13 @@ export const products: ProductItem[] = [
     category: 'engineering',
     fileType: 'excel',
     license: 'commercial',
-    imageUrl: 'https://images.unsplash.com/photo-1541888946425-d0fbb18f15f7?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
     rating: 4.7,
     reviewCount: 65,
     salesCount: 390,
     vendorName: 'م. إبراهيم الإنشائي',
     tags: ['إنشائي', 'خرسانة', 'تسليح', 'تصميم هندسي'],
-    createdAt: new Date().toISOString()
+    createdAt: '2026-03-01T00:00:00.000Z'
   },
   {
     id: 'p15',
@@ -345,7 +345,7 @@ export const products: ProductItem[] = [
     salesCount: 480,
     vendorName: 'كونتراكتور برو',
     tags: ['حصر كميات', 'BOQ', 'مقايسات', 'تشطيبات'],
-    createdAt: new Date().toISOString()
+    createdAt: '2026-03-01T00:00:00.000Z'
   },
   {
     id: 'p16',
@@ -361,7 +361,7 @@ export const products: ProductItem[] = [
     salesCount: 230,
     vendorName: 'بيم أركي تك',
     tags: ['Revit', 'BIM', 'عائلات', 'ديكور', 'MEP'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     technicalSpecs: {
       compatibility: ['Autodesk Revit 2020 - 2026', 'Navisworks', 'AutoCAD Architecture'],
       fileFormats: ['.RFA (Revit Parametric Family)', '.RVT'],
@@ -383,7 +383,7 @@ export const products: ProductItem[] = [
     salesCount: 290,
     vendorName: 'بروجكتس بلانر',
     tags: ['إدارة مشاريع', 'Gantt', 'S-Curve', 'جدول زمني'],
-    createdAt: new Date().toISOString()
+    createdAt: '2026-03-01T00:00:00.000Z'
   },
   {
     id: 'p18',
@@ -399,7 +399,7 @@ export const products: ProductItem[] = [
     salesCount: 180,
     vendorName: 'ميكانيكا ستوديو',
     tags: ['HVAC', 'تكييف', 'أحمال حرارية', 'دكت'],
-    createdAt: new Date().toISOString()
+    createdAt: '2026-03-01T00:00:00.000Z'
   },
 
   // ================= 4. STUDENTS (6 Products) =================
@@ -418,7 +418,7 @@ export const products: ProductItem[] = [
     salesCount: 2150,
     vendorName: 'كارير استوديو',
     tags: ['سيرة ذاتية', 'توظيف', 'ATS', 'خريجين'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true
   },
   {
@@ -435,7 +435,7 @@ export const products: ProductItem[] = [
     salesCount: 1040,
     vendorName: 'أكاديميا نوشن',
     tags: ['Notion', 'دراسة', 'تنظيم', 'أبحاث'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true
   },
   {
@@ -452,7 +452,7 @@ export const products: ProductItem[] = [
     salesCount: 460,
     vendorName: 'برزنتيشن كيدز',
     tags: ['تخرج', 'مناقشة', 'بوربوينت', 'أبحاث'],
-    createdAt: new Date().toISOString()
+    createdAt: '2026-03-01T00:00:00.000Z'
   },
   {
     id: 'p22',
@@ -468,7 +468,7 @@ export const products: ProductItem[] = [
     salesCount: 510,
     vendorName: 'برومبت برو',
     tags: ['ذكاء اصطناعي', 'برومبت', 'ChatGPT', 'بحث علمي'],
-    createdAt: new Date().toISOString()
+    createdAt: '2026-03-01T00:00:00.000Z'
   },
   {
     id: 'p23',
@@ -484,7 +484,7 @@ export const products: ProductItem[] = [
     salesCount: 390,
     vendorName: 'إنجلش ماستر',
     tags: ['IELTS', 'لغات', 'دراسة', 'اختبارات'],
-    createdAt: new Date().toISOString()
+    createdAt: '2026-03-01T00:00:00.000Z'
   },
   {
     id: 'p24',
@@ -500,7 +500,7 @@ export const products: ProductItem[] = [
     salesCount: 260,
     vendorName: 'أكاديميك رايتر',
     tags: ['IEEE', 'APA', 'أبحاث', 'LaTeX', 'Word'],
-    createdAt: new Date().toISOString()
+    createdAt: '2026-03-01T00:00:00.000Z'
   },
 
   // ================= 5. INDIVIDUALS & PRODUCTIVITY (6 Products) =================
@@ -513,13 +513,13 @@ export const products: ProductItem[] = [
     category: 'individuals',
     fileType: 'excel',
     license: 'personal',
-    imageUrl: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
     rating: 4.7,
     reviewCount: 230,
     salesCount: 1220,
     vendorName: 'مدخر محترف',
     tags: ['ميزانية', 'مصاريف', 'إكسل', 'توفير', 'ادخار'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true
   },
   {
@@ -536,7 +536,7 @@ export const products: ProductItem[] = [
     salesCount: 890,
     vendorName: 'لايف ديزاينر',
     tags: ['Notion', 'أهداف', 'عادات', 'إنتاجية'],
-    createdAt: new Date().toISOString()
+    createdAt: '2026-03-01T00:00:00.000Z'
   },
   {
     id: 'p27',
@@ -552,7 +552,7 @@ export const products: ProductItem[] = [
     salesCount: 490,
     vendorName: 'كرييتف ستوديو',
     tags: ['سوشيال ميديا', 'تصميم', 'تسويق', 'انستغرام'],
-    createdAt: new Date().toISOString()
+    createdAt: '2026-03-01T00:00:00.000Z'
   },
   {
     id: 'p28',
@@ -568,7 +568,7 @@ export const products: ProductItem[] = [
     salesCount: 310,
     vendorName: 'هيلثي لايف',
     tags: ['وجبات', 'توفير', 'صحة', 'تسوق'],
-    createdAt: new Date().toISOString()
+    createdAt: '2026-03-01T00:00:00.000Z'
   },
   {
     id: 'p29',
@@ -585,7 +585,7 @@ export const products: ProductItem[] = [
     salesCount: 670,
     vendorName: 'فريلانسر شيلد',
     tags: ['عمل حر', 'فريلانس', 'عقود', 'حقوق مالية'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true
   },
   {
@@ -596,13 +596,13 @@ export const products: ProductItem[] = [
     category: 'individuals',
     fileType: 'ai-prompts',
     license: 'personal',
-    imageUrl: 'https://images.unsplash.com/photo-1686191128892-3b37813f0799?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80',
     rating: 4.8,
     reviewCount: 89,
     salesCount: 530,
     vendorName: 'أي آي ديزاينرز',
     tags: ['Midjourney', 'ذكاء اصطناعي', 'موك آب', 'إعلانات'],
-    createdAt: new Date().toISOString()
+    createdAt: '2026-03-01T00:00:00.000Z'
   },
   {
     id: 'p31',
@@ -619,7 +619,7 @@ export const products: ProductItem[] = [
     salesCount: 410,
     vendorName: 'كرييتف كانفا ستوديو',
     tags: ['canva', 'انستجرام', 'ريلز', 'سوشيال ميديا', 'تصاميم', 'تسويق'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true
   },
   {
@@ -637,7 +637,7 @@ export const products: ProductItem[] = [
     salesCount: 920,
     vendorName: 'مسارك المهني',
     tags: ['canva', 'سيرة ذاتية', 'ATS', 'توظيف', 'لينكدإن'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true
   },
   {
@@ -655,7 +655,7 @@ export const products: ProductItem[] = [
     salesCount: 380,
     vendorName: 'فواتير تك',
     tags: ['canva', 'فواتير', 'ضرائب', 'حسابات', 'عروض أسعار'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: false
   },
   {
@@ -673,7 +673,7 @@ export const products: ProductItem[] = [
     salesCount: 290,
     vendorName: 'سلايد برو',
     tags: ['canva', 'سلايدات', 'تقارير', 'عرض تقديمي', 'شركات'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true
   },
   {
@@ -691,7 +691,7 @@ export const products: ProductItem[] = [
     salesCount: 215,
     vendorName: 'أكاديمي ديزاين',
     tags: ['canva', 'شهادات', 'تدريب', 'اعتماد', 'تعليم'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: false
   },
   {
@@ -703,13 +703,13 @@ export const products: ProductItem[] = [
     category: 'business',
     fileType: 'word-pdf',
     license: 'commercial',
-    imageUrl: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=800&q=80',
     rating: 4.9,
     reviewCount: 37,
     salesCount: 175,
     vendorName: 'دار العدالة للاستشارات',
     tags: ['canva', 'عقود', 'شراكة', 'ملكية فكرية', 'قانوني'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: false
   },
   {
@@ -727,7 +727,7 @@ export const products: ProductItem[] = [
     salesCount: 290,
     vendorName: 'الحلول المالية الذكية',
     tags: ['أصول ثابتة', 'إهلاك', 'محاسبة', 'إكسل', 'IFRS'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: false
   },
   {
@@ -745,7 +745,7 @@ export const products: ProductItem[] = [
     salesCount: 340,
     vendorName: 'أحمد المالي',
     tags: ['تسعير', 'هامش ربح', 'تكاليف', 'إكسل', 'نقطة التعادل'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true
   },
   {
@@ -757,13 +757,13 @@ export const products: ProductItem[] = [
     category: 'accounting',
     fileType: 'excel',
     license: 'commercial',
-    imageUrl: 'https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80',
     rating: 4.9,
     reviewCount: 82,
     salesCount: 510,
     vendorName: 'خبراء الموارد البشرية',
     tags: ['رواتب', 'Payroll', 'تأمينات', 'كسب العمل', 'إكسل'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: false
   },
   {
@@ -781,7 +781,7 @@ export const products: ProductItem[] = [
     salesCount: 420,
     vendorName: 'الحلول المالية الذكية',
     tags: ['تدفق نقدي', 'Cash Flow', 'سيولة', 'موازنة', 'إكسل'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true
   },
   {
@@ -799,7 +799,7 @@ export const products: ProductItem[] = [
     salesCount: 195,
     vendorName: 'استوديو بيم المعماري',
     tags: ['Revit', 'BIM', 'فيلا', 'معماري', 'نمذجة'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true
   },
   {
@@ -817,7 +817,7 @@ export const products: ProductItem[] = [
     salesCount: 230,
     vendorName: 'استوديو بيم المعماري',
     tags: ['Revit MEP', 'تكييف', 'صحي', 'كهرباء', 'عائلات ريفيت'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: false
   },
   {
@@ -835,7 +835,7 @@ export const products: ProductItem[] = [
     salesCount: 380,
     vendorName: 'إنجنيرنج زون',
     tags: ['تسليح', 'تفاصيل إنشائية', 'AutoCAD', 'DWG', 'كود البناء'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: false
   },
   {
@@ -847,13 +847,13 @@ export const products: ProductItem[] = [
     category: 'engineering',
     fileType: 'cad-revit',
     license: 'commercial',
-    imageUrl: 'https://images.unsplash.com/photo-1558904541-efa8c4a08931?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80',
     rating: 4.7,
     reviewCount: 33,
     salesCount: 160,
     vendorName: 'إنجنيرنج زون',
     tags: ['لاندسكيب', 'AutoCAD', 'حدائق', 'تخطيط عمراني', 'بلوكات'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: false
   },
   {
@@ -871,7 +871,7 @@ export const products: ProductItem[] = [
     salesCount: 410,
     vendorName: 'كرييتف كانفا ستوديو',
     tags: ['canva', 'هوية بصرية', 'Brand Guidelines', 'شعار', 'ألوان'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true
   },
   {
@@ -889,7 +889,7 @@ export const products: ProductItem[] = [
     salesCount: 280,
     vendorName: 'كرييتف كانفا ستوديو',
     tags: ['canva', 'عقارات', 'تسويق عقاري', 'فلل', 'سوشيال ميديا'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: false
   },
   {
@@ -901,13 +901,13 @@ export const products: ProductItem[] = [
     category: 'business',
     fileType: 'word-pdf',
     license: 'commercial',
-    imageUrl: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
     rating: 4.9,
     reviewCount: 41,
     salesCount: 220,
     vendorName: 'دار العدالة للاستشارات',
     tags: ['عقود برمجية', 'SaaS', 'SLA', 'فرنشايز', 'قانوني'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true
   },
   {
@@ -925,7 +925,7 @@ export const products: ProductItem[] = [
     salesCount: 190,
     vendorName: 'مكتب الصفوة القانوني',
     tags: ['عقود', 'تسويق', 'استشارات', 'Retainer', 'وكالات'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: false
   },
   {
@@ -943,7 +943,7 @@ export const products: ProductItem[] = [
     salesCount: 650,
     vendorName: 'مسارك المهني',
     tags: ['سيرة ذاتية', 'ATS', 'وظائف قيادية', 'CV', 'Cover Letter'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true
   },
   {
@@ -955,13 +955,13 @@ export const products: ProductItem[] = [
     category: 'business',
     fileType: 'ai-prompts',
     license: 'personal',
-    imageUrl: 'https://images.unsplash.com/photo-1686191128892-3b37813f0799?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80',
     rating: 4.9,
     reviewCount: 95,
     salesCount: 710,
     vendorName: 'أي آي ديزاينرز',
     tags: ['ChatGPT', 'Claude', 'برومبتات', 'تسويق', 'ذكاء اصطناعي'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true
   },
 
@@ -983,7 +983,7 @@ export const products: ProductItem[] = [
     salesCount: 1840,
     vendorName: 'بيم أركي تك',
     tags: ['BIM', 'Revit', 'مجاني', 'عائلات ريفيت', 'LOD 300', 'معماري', 'هندسة'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true,
     technicalSpecs: {
       compatibility: ['Autodesk Revit 2020 - 2026', 'Navisworks Manage', 'AutoCAD Architecture'],
@@ -1010,7 +1010,7 @@ export const products: ProductItem[] = [
     salesCount: 1420,
     vendorName: 'كونتراكتور برو',
     tags: ['حصر كميات', 'BOQ', 'مقايسات', 'إكسل', 'مجاني', 'تكاليف بناء', 'هندسة'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true,
     technicalSpecs: {
       compatibility: ['Microsoft Excel 2016 - 2026', 'Office 365', 'Google Sheets'],
@@ -1029,7 +1029,7 @@ export const products: ProductItem[] = [
     category: 'business',
     fileType: 'word-pdf',
     license: 'commercial',
-    imageUrl: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80',
     fileUrl: '/downloads/free/raseen-mini-nda-freelance.docx',
     fileSize: '1.2 MB',
     rating: 4.9,
@@ -1037,7 +1037,7 @@ export const products: ProductItem[] = [
     salesCount: 2150,
     vendorName: 'مكتب الصفوة القانوني',
     tags: ['عقد عمل حر', 'NDA', 'سرية معلومات', 'قانوني', 'مجاني', 'فريلانس', 'شركات'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true,
     technicalSpecs: {
       compatibility: ['Microsoft Word 2016 - 2026', 'Google Docs', 'Adobe Acrobat Reader'],
@@ -1056,7 +1056,7 @@ export const products: ProductItem[] = [
     category: 'accounting',
     fileType: 'excel',
     license: 'personal',
-    imageUrl: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
     fileUrl: '/downloads/free/raseen-mini-budget-cashflow.xlsx',
     fileSize: '3.4 MB',
     rating: 4.8,
@@ -1064,7 +1064,7 @@ export const products: ProductItem[] = [
     salesCount: 1680,
     vendorName: 'فاينانشال موديلز',
     tags: ['ميزانية', 'تدفق نقدي', 'Cash Flow', 'إكسل', 'محاسبة', 'مجاني', 'سيولة'],
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-03-01T00:00:00.000Z',
     featured: true,
     technicalSpecs: {
       compatibility: ['Microsoft Excel 2016 - 2026', 'Office 365', 'Google Sheets'],

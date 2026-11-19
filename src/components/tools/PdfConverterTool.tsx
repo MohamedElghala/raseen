@@ -1,12 +1,15 @@
 'use client';
 
 import React, { useState } from 'react';
+import ToolLeadCaptureModal from '@/components/tools/ToolLeadCaptureModal';
 
 export default function PdfConverterTool() {
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState<string>('نموذج_عقد_شراكة_تجاري_معتمد.pdf');
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [convertedMode, setConvertedMode] = useState<'word' | 'excel' | 'text'>('word');
+  const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
+  const [hasCapturedLead, setHasCapturedLead] = useState(false);
   const [extractedText, setExtractedText] = useState<string>(
     `عقد اتفاقية وشراكة استراتيجية
 إنه في يوم الإثنين الموافق 2026/10/05، تم الاتفاق بين:
@@ -41,7 +44,7 @@ export default function PdfConverterTool() {
     }, 1200);
   };
 
-  const handleDownloadFile = () => {
+  const executeDownload = () => {
     const ext = convertedMode === 'word' ? 'docx' : convertedMode === 'excel' ? 'csv' : 'txt';
     const mime = convertedMode === 'word' ? 'application/msword' : convertedMode === 'excel' ? 'text/csv;charset=utf-8;' : 'text/plain;charset=utf-8;';
     const blob = new Blob([extractedText], { type: mime });
@@ -56,6 +59,14 @@ export default function PdfConverterTool() {
 
     setDownloadSuccess(`تم تصدير وتحميل الملف بصيغة .${ext.toUpperCase()} بنجاح!`);
     setTimeout(() => setDownloadSuccess(null), 3500);
+  };
+
+  const handleDownloadFile = () => {
+    if (!hasCapturedLead) {
+      setIsLeadModalOpen(true);
+    } else {
+      executeDownload();
+    }
   };
 
   return (
@@ -184,6 +195,16 @@ export default function PdfConverterTool() {
           />
         )}
       </div>
+
+      <ToolLeadCaptureModal
+        isOpen={isLeadModalOpen}
+        toolName="محول ومستخرج المستندات PDF"
+        onClose={() => setIsLeadModalOpen(false)}
+        onProceed={() => {
+          setHasCapturedLead(true);
+          executeDownload();
+        }}
+      />
     </div>
   );
 }

@@ -42,7 +42,7 @@ export const ACCOUNTING_CATALOG: CatalogRecommendation[] = [
     priceEGP: 350,
     description: 'شيت متكامل لقيود اليومية الأمريكية، ميزان المراجعة الآلي، وحساب الأرباح والخسائر بمعادلات ديناميكية.',
     tags: ['محاسبة', 'دفتر اليومية', 'Excel'],
-    link: '/#products',
+    link: '/product/p7',
   },
   {
     id: 'acc-2',
@@ -51,7 +51,7 @@ export const ACCOUNTING_CATALOG: CatalogRecommendation[] = [
     priceEGP: 260,
     description: 'مراقبة السيولة النقدية اليومية والشهرية مع تنبؤ بالعجز الفائض وتنبيهات السيولة الحرجة.',
     tags: ['تدفقات نقدية', 'سيولة', 'موازنة'],
-    link: '/#products',
+    link: '/product/p40',
   },
   {
     id: 'acc-3',
@@ -60,7 +60,7 @@ export const ACCOUNTING_CATALOG: CatalogRecommendation[] = [
     priceEGP: 190,
     description: 'متوافق مع معايير هيئة الزكاة والضريبة السعودية (15%) ومصلحة الضرائب المصرية (14%).',
     tags: ['ضرائب', 'ZATCA', 'VAT'],
-    link: '/#products',
+    link: '/product/p9',
   },
   {
     id: 'acc-4',
@@ -69,7 +69,7 @@ export const ACCOUNTING_CATALOG: CatalogRecommendation[] = [
     priceEGP: 280,
     description: 'تتبع كروت الصنف، تنبيهات حد الطلب، وحساب تكلفة البضاعة المباعة تلقائياً.',
     tags: ['مخازن', 'FIFO', 'تكلفة مبيعات'],
-    link: '/#products',
+    link: '/product/p8',
   },
   {
     id: 'acc-5',
@@ -78,7 +78,7 @@ export const ACCOUNTING_CATALOG: CatalogRecommendation[] = [
     priceEGP: 220,
     description: 'حساب ساعات العمل الإضافية، الاستقطاعات، التأمينات، وصافي الرواتب بضغطة زر واحدة.',
     tags: ['رواتب', 'أجور', 'HR'],
-    link: '/#products',
+    link: '/product/p11',
   },
   {
     id: 'acc-6',
@@ -87,7 +87,7 @@ export const ACCOUNTING_CATALOG: CatalogRecommendation[] = [
     priceEGP: 320,
     description: 'حساب تكاليف التأسيس، العائد على الاستثمار ROI، ومعدل العائد الداخلي IRR للمستثمرين والبنوك.',
     tags: ['دراسة جدوى', 'تعادل', 'استثمار'],
-    link: '/#products',
+    link: '/product/p3',
   },
   {
     id: 'acc-7',
@@ -96,7 +96,7 @@ export const ACCOUNTING_CATALOG: CatalogRecommendation[] = [
     priceEGP: 290,
     description: 'داشبورد ديناميكية تحول أرقام إكسل الصامتة إلى رسوم بيانية ومؤشرات أداء استراتيجية.',
     tags: ['Power BI', 'داشبورد', 'تحليل مالي'],
-    link: '/#products',
+    link: '/product/p10',
   },
   {
     id: 'acc-8',
@@ -105,7 +105,7 @@ export const ACCOUNTING_CATALOG: CatalogRecommendation[] = [
     priceEGP: 240,
     description: 'تحديد تكلفة تصنيع الوحدة، هامش المساهمة، وتسعير الخدمات بهامش ربح آمن ومدروس.',
     tags: ['تسعير', 'تكاليف', 'تصنيع'],
-    link: '/#products',
+    link: '/product/p38',
   },
   {
     id: 'acc-9',
@@ -114,7 +114,7 @@ export const ACCOUNTING_CATALOG: CatalogRecommendation[] = [
     priceEGP: 310,
     description: 'استخراج القوائم الختامية متوافقة مع معايير المحاسبة الدولية IFRS تلقائياً من ميزان المراجعة.',
     tags: ['قوائم مالية', 'IFRS', 'ميزانية'],
-    link: '/#products',
+    link: '/product/p3',
   },
   {
     id: 'acc-10',
@@ -123,7 +123,7 @@ export const ACCOUNTING_CATALOG: CatalogRecommendation[] = [
     priceEGP: 210,
     description: 'توزيع الديون حسب الفترات (30/60/90 يوماً) مع مؤشرات تحصيل ومعدل دوران المدينين.',
     tags: ['أعمار ديون', 'تحصيل', 'عملاء'],
-    link: '/#products',
+    link: '/product/p7',
   },
   {
     id: 'acc-11',
@@ -132,7 +132,7 @@ export const ACCOUNTING_CATALOG: CatalogRecommendation[] = [
     priceEGP: 180,
     description: 'حساب قسط الإهلاك الثابت والمتناقص ومجمع الإهلاك والقيمة الدفترية للأصول.',
     tags: ['أصول ثابتة', 'إهلاك', 'دفاتر'],
-    link: '/#products',
+    link: '/product/p37',
   },
   {
     id: 'acc-12',
@@ -141,7 +141,7 @@ export const ACCOUNTING_CATALOG: CatalogRecommendation[] = [
     priceEGP: 270,
     description: 'فصل ومراقبة التكاليف التشغيلية والرأسمالية مع مقارنة الفعلي بالمخطط شهرياً.',
     tags: ['OPEX', 'CAPEX', 'موازنة'],
-    link: '/#products',
+    link: '/product/p12',
   },
 ];
 
@@ -153,7 +153,7 @@ export const LEGAL_CATALOG: CatalogRecommendation[] = [
     priceEGP: 250,
     description: 'صيغة قانونية محكمة تغطي فترات التجربة، ساعات العمل، الإجازات، وحماية سرية البيانات.',
     tags: ['عقد عمل', 'توظيف', 'قانوني'],
-    link: '/#products',
+    link: '/product/p1',
   },
   {
     id: 'leg-2',
@@ -162,7 +162,7 @@ export const LEGAL_CATALOG: CatalogRecommendation[] = [
     priceEGP: 180,
     description: 'حماية أسرار العمل، الأكواد البرمجية، والأفكار الاستثمارية مع الشركاء والموظفين.',
     tags: ['NDA', 'سرية معلومات', 'حماية الملكية'],
-    link: '/#products',
+    link: '/product/free-p3',
   },
   {
     id: 'leg-3',
@@ -171,7 +171,7 @@ export const LEGAL_CATALOG: CatalogRecommendation[] = [
     priceEGP: 350,
     description: 'تحديد نسب الشراكة، إدارة الشركة، آلية التخارج، وحصص المستثمر الملائكي والتقني.',
     tags: ['شراكة', 'استثمار', 'تأسيس شركات'],
-    link: '/#products',
+    link: '/product/p36',
   },
   {
     id: 'leg-4',
@@ -180,7 +180,7 @@ export const LEGAL_CATALOG: CatalogRecommendation[] = [
     priceEGP: 220,
     description: 'تحديد نطاق العمل Scope of Work، شروط التسليم، وجداول الدفعات المالية والجزاءات.',
     tags: ['خدمات', 'SLA', 'استشارات'],
-    link: '/#products',
+    link: '/product/p48',
   },
   {
     id: 'leg-5',
@@ -189,7 +189,7 @@ export const LEGAL_CATALOG: CatalogRecommendation[] = [
     priceEGP: 300,
     description: 'شروط الدفعة المقدمة، المستخلصات الشهرية، غرامات التأخير، وخطابات الضمان البنكية.',
     tags: ['مقاولات', 'تشييد', 'هندسة'],
-    link: '/#products',
+    link: '/product/p15',
   },
   {
     id: 'leg-6',
@@ -198,7 +198,7 @@ export const LEGAL_CATALOG: CatalogRecommendation[] = [
     priceEGP: 170,
     description: 'تحمي صاحب العمل والفريلانسر، مع نقل ملكية الكود والتصميم وحظر التنافس.',
     tags: ['عمل حر', 'برمجة', 'تصميم'],
-    link: '/#products',
+    link: '/product/p29',
   },
   {
     id: 'leg-7',
@@ -207,7 +207,7 @@ export const LEGAL_CATALOG: CatalogRecommendation[] = [
     priceEGP: 280,
     description: 'توثيق بيع المواقع والتطبيقات وقواعد البيانات والتنازل عن الحقوق الفكرية والتجارية.',
     tags: ['بيع برمجيات', 'حقوق فكرية', 'تنازل'],
-    link: '/#products',
+    link: '/product/p47',
   },
   {
     id: 'leg-8',
@@ -216,7 +216,7 @@ export const LEGAL_CATALOG: CatalogRecommendation[] = [
     priceEGP: 190,
     description: 'شروط التجديد، التأمين المسترد، الصيانة، والتصريح بالأنشطة التجارية المرخصة.',
     tags: ['إيجار تجاري', 'مكاتب', 'عقارات'],
-    link: '/#products',
+    link: '/product/p1',
   },
   {
     id: 'leg-9',
@@ -225,7 +225,7 @@ export const LEGAL_CATALOG: CatalogRecommendation[] = [
     priceEGP: 260,
     description: 'تنظيم العلاقة بين المورد والوكيل المحلي، عمولات المبيعات، ومناطق التوزيع الجغرافية.',
     tags: ['وكالة تجارية', 'توزيع', 'تسويق'],
-    link: '/#products',
+    link: '/product/p6',
   },
   {
     id: 'leg-10',
@@ -234,7 +234,7 @@ export const LEGAL_CATALOG: CatalogRecommendation[] = [
     priceEGP: 200,
     description: 'متوافقة مع أنظمة حماية البيانات الشخصية والجرائم الإلكترونية وقوانين التجارة الإلكترونية.',
     tags: ['سياسة الخصوصية', 'شروط الاستخدام', 'متاجر'],
-    link: '/#products',
+    link: '/product/p47',
   },
 ];
 
@@ -303,7 +303,7 @@ export default function RaseenAssistant() {
         {
           id: 'welcome',
           sender: 'assistant',
-          text: 'أهلاً بك في منصة رَصين لإدارة الأعمال! 🌟 أنا مستشارك الذكي المؤتمت على مدار الساعة (24/7).\n\nأساعدك في ترشيح أفضل الشيتات المالية والعقود القانونية المناسبة لمجال عملك، أو شرح نموذج أرباح البائعين (85%)، أو تزويدك بحلول التسعير والفواتير فورياً.',
+          text: 'أهلاً بك في منصة رَصين! 🌟 أنا مستشار رَصين ومساعدك الذكي لإدارة وتمكين الأعمال.\n\nيسعدني مساعدتك في استكشاف وترشيح أفضل الشيتات المالية والنماذج والعقود القانونية المناسبة لمشروعك، أو الإجابة على استفساراتك حول بيع أصولك وتفعيل أدواتك فوراً.',
           time: getCurrentTime(),
           quickReplies: [
             {
@@ -379,7 +379,7 @@ export default function RaseenAssistant() {
   const startRecommendationTree = () => {
     setCurrentStep('select_industry');
     const text =
-      '🎯 **الخطوة 1 من 2**: اختر طبيعة ونشاط مشروعك لنرشح لك أنسب الأصول المعتمدة فوراً:';
+      '🎯 **الخطوة 1 من 2**: اختر طبيعة ونشاط مشروعك لنرشح لك أنسب الأصول الاحترافية فوراً:';
 
     setMessages((prev) => [
       ...prev,
@@ -483,7 +483,7 @@ export default function RaseenAssistant() {
       };
       const ids = mapping[industry];
       recs = LEGAL_CATALOG.filter((item) => ids.includes(item.id));
-      summary = `إليك ترشيحات العقود والاتفاقيات القانونية المعتمدة لقطاعك:`;
+      summary = `إليك ترشيحات العقود والاتفاقيات القانونية المناسبة لقطاعك:`;
     } else {
       recs = [
         ACCOUNTING_CATALOG.find((i) => i.id === 'acc-6')!,
@@ -523,7 +523,7 @@ export default function RaseenAssistant() {
       {
         id: Date.now().toString(),
         sender: 'assistant',
-        text: '📊 **كتالوج شيتات ونماذج المحاسبة المعتمدة لعام 2026 (acc-1 إلى acc-12)**:\nجميع الشيتات مجهزة بمعادلات إكسيل ديناميكية، حماية من الأخطاء، ومتوافقة مع المعايير الدولية:',
+        text: '📊 **كتالوج شيتات ونماذج المحاسبة لعام 2026 (acc-1 إلى acc-12)**:\nجميع الشيتات مجهزة بمعادلات إكسيل ديناميكية، حماية من الأخطاء، ومصممة وفق المعايير المحاسبية الدولية:',
         time: getCurrentTime(),
         recommendations: ACCOUNTING_CATALOG,
         actionLink: { label: 'استعراض كافة المنتجات بالسوق', href: '/#products' },
@@ -547,7 +547,7 @@ export default function RaseenAssistant() {
       {
         id: Date.now().toString(),
         sender: 'assistant',
-        text: '⚖️ **كتالوج العقود والاتفاقيات القانونية التجارية (leg-1 إلى leg-10)**:\nمصاغة ومراجعة بواسطة محامين تجاريين معتمدين وقابلة للتعديل الفوري بصيغتي Word و PDF:',
+        text: '⚖️ **كتالوج العقود والاتفاقيات القانونية التجارية (leg-1 إلى leg-10)**:\nصيغ استرشادية محررة بعناية لمواءمة الممارسات التجارية وقابلة للتعديل الفوري بصيغتي Word و PDF:',
         time: getCurrentTime(),
         recommendations: LEGAL_CATALOG,
         actionLink: { label: 'استعراض كافة المنتجات بالسوق', href: '/#products' },
@@ -577,7 +577,7 @@ export default function RaseenAssistant() {
       {
         id: Date.now().toString(),
         sender: 'assistant',
-        text: `يسعدنا جداً خدمتك! 🤝\nيرجى تزويدنا برقم الواتساب أو بريدك الإلكتروني وسيتواصل معك مستشار أعمال معتمد من رَصين لمساعدتك فوراً في: "${interestTopic}".`,
+        text: `يسعدنا جداً خدمتك! 🤝\nيرجى تزويدنا برقم الواتساب أو بريدك الإلكتروني وسيتواصل معك مستشار رَصين لمساعدتك فوراً في: "${interestTopic}".`,
         time: getCurrentTime(),
       },
     ]);
@@ -960,7 +960,7 @@ export default function RaseenAssistant() {
         {
           id: Date.now().toString(),
           sender: 'assistant',
-          text: '📐 **الترسانة الهندسية ونماذج BIM المعمارية المعتمدة**:\n\nنوفر للمهندسين والمقاولين عائلات Revit بارامترية (LOD 350)، وبلوكات AutoCAD (1500+ بلوك)، وشيتات حصر كميات ومقايسات BOQ.\n\n🎁 **هدية مجانية فورية**: يمكنك تنزيل **حزمة عائلات Revit التمهيدية (LOD 300)** مجاناً 100% لتجربة جودة النمذجة قبل اقتناء الترسانة الكاملة!',
+          text: '📐 **الترسانة الهندسية ونماذج BIM المعمارية والإنشائية**:\n\nنوفر للمهندسين والمقاولين عائلات Revit بارامترية (LOD 350)، وبلوكات AutoCAD (1500+ بلوك)، وشيتات حصر كميات ومقايسات BOQ.\n\n🎁 **هدية مجانية فورية**: يمكنك تنزيل **حزمة عائلات Revit التمهيدية (LOD 300)** مجاناً 100% لتجربة جودة النمذجة قبل اقتناء الترسانة الكاملة!',
           time: getCurrentTime(),
           recommendedProducts: bimProducts,
           intent: 'engineering_bim',
@@ -1089,24 +1089,30 @@ export default function RaseenAssistant() {
         {!isOpen && (
           <div
             onClick={() => setIsOpen(true)}
-            className="hidden sm:flex items-center gap-2 bg-slate-900/90 border border-amber-500/30 text-amber-300 px-3.5 py-1.5 rounded-full text-xs font-bold shadow-xl backdrop-blur-md cursor-pointer hover:border-amber-400 transition-all animate-bounce"
+            className="hidden sm:flex items-center gap-2.5 bg-slate-950/90 border border-amber-400/40 text-amber-300 px-4 py-2 rounded-full text-xs font-bold shadow-2xl backdrop-blur-xl cursor-pointer hover:border-amber-300 hover:scale-105 transition-all shadow-amber-500/10"
           >
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-            <span>مساعد رَصين الذكي 🟢 متصل</span>
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="font-cairo">مستشار رَصين • المساعد الذكي</span>
           </div>
         )}
 
         <button
           onClick={() => setIsOpen(!isOpen)}
-          aria-label="فتح المساعد الذكي"
-          className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-600 via-amber-500 to-amber-400 text-slate-950 flex items-center justify-center shadow-2xl shadow-amber-500/30 hover:scale-105 active:scale-95 transition-transform cursor-pointer border border-amber-300"
+          aria-label="فتح مستشار رَصين"
+          className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-600 via-amber-500 to-amber-400 text-slate-950 flex items-center justify-center shadow-2xl shadow-amber-500/25 hover:scale-105 active:scale-95 transition-transform cursor-pointer border border-amber-300"
         >
           {isOpen ? (
-            <span className="text-2xl font-black">✕</span>
+            <span className="text-xl font-black">✕</span>
           ) : (
-            <div className="relative">
-              <span className="text-2xl">🤖</span>
-              <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full border-2 border-slate-900" />
+            <div className="relative flex items-center justify-center">
+              {/* Sleek Advisor Brand Icon */}
+              <svg className="w-7 h-7 text-slate-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                <path d="M8 10h.01" />
+                <path d="M12 10h.01" />
+                <path d="M16 10h.01" />
+              </svg>
+              <span className="absolute -top-1.5 -right-1.5 w-3 h-3 bg-emerald-400 rounded-full border-2 border-slate-950 animate-pulse" />
             </div>
           )}
         </button>
@@ -1116,28 +1122,34 @@ export default function RaseenAssistant() {
       {isOpen && (
         <div
           dir="rtl"
-          className="fixed bottom-22 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[440px] max-h-[640px] h-[82vh] bg-slate-950/95 border border-slate-700/80 rounded-3xl shadow-2xl backdrop-blur-2xl flex flex-col overflow-hidden text-right font-cairo text-white animate-fade-in-up"
+          className="fixed bottom-24 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[440px] max-h-[640px] h-[82vh] bg-slate-950/95 border border-slate-700/80 rounded-3xl shadow-2xl backdrop-blur-2xl flex flex-col overflow-hidden text-right font-cairo text-white animate-fade-in-up"
         >
           {/* Header */}
-          <div className="p-4 bg-slate-900 border-b border-slate-800 flex items-center justify-between">
+          <div className="p-4 bg-slate-900/95 border-b border-slate-800/80 flex items-center justify-between backdrop-blur-md">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-xl">
-                🤖
+              <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-400/20 via-slate-900 to-amber-500/10 border border-amber-400/40 flex items-center justify-center shadow-lg shadow-amber-500/10">
+                <svg className="w-6 h-6 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
               </div>
               <div>
-                <div className="flex items-center gap-1.5">
-                  <span className="text-sm font-black text-white">مستشار رَصين المؤتمت</span>
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-black text-white tracking-wide">مستشار رَصين</span>
+                  <span className="inline-flex items-center gap-1 bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>متصل</span>
+                  </span>
                 </div>
-                <span className="text-[10px] text-slate-400 block">
-                  ذكاء اصطناعي 24/7 • أصول معتمدة ومبيعات
+                <span className="text-[11px] text-amber-300/80 font-medium block mt-0.5">
+                  المساعد الذكي • إدارة وتمكين الأعمال
                 </span>
               </div>
             </div>
 
             <button
               onClick={() => setIsOpen(false)}
-              className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center text-xs transition-colors"
+              aria-label="إغلاق المحادثة"
+              className="w-8 h-8 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center text-xs transition-colors cursor-pointer border border-slate-700/50"
             >
               ✕
             </button>

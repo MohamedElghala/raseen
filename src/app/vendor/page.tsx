@@ -1,13 +1,36 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { useAuthStore } from '@/store/authStore';
 import QuickStoreWizard from '@/components/vendor/QuickStoreWizard';
 
+const VENDOR_STORAGE_KEY = 'raseen-vendor-products';
+
+interface VendorProductItem {
+  id: string;
+  title: string;
+  price: number;
+  sales: number;
+  status: string;
+}
+
+const DEFAULT_VENDOR_PRODUCTS: VendorProductItem[] = [];
+
 export default function VendorDashboardPage() {
-  const user = useAuthStore((s) => s.user);
+  const { data: session, status: sessionStatus } = useSession();
   const toggleLoginModal = useAuthStore((s) => s.toggleLoginModal);
+  const sessionUser = session?.user as
+    | { name?: string | null; email?: string | null; role?: string }
+    | undefined;
+  const user = sessionUser
+    ? {
+        name: sessionUser.name || 'صانع محتوى رَصين',
+        email: sessionUser.email || '',
+        role: sessionUser.role || 'buyer',
+      }
+    : null;
 
   const [activeTab, setActiveTab] = useState<'overview' | 'products' | 'upload' | 'wizard'>('overview');
   const [formData, setFormData] = useState({
@@ -22,15 +45,48 @@ export default function VendorDashboardPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [productToDelete, setProductToDelete] = useState<string | null>(null);
+  const [editingProduct, setEditingProduct] = useState<VendorProductItem | null>(null);
+  const [editTitle, setEditTitle] = useState('');
+  const [editPrice, setEditPrice] = useState('');
   const [successNotice, setSuccessNotice] = useState<string | null>(null);
 
-  const [vendorProducts, setVendorProducts] = useState([
-    { id: '1', title: 'حزمة عقود العمل والشراكة القانونية', price: 250, sales: 320, status: 'نشط' },
-    { id: '2', title: 'شيت إكسل المحاسبة الشاملة والقيود', price: 350, sales: 180, status: 'نشط' },
-    { id: '3', title: 'حزمة بلوكات AutoCAD المعمارية المعتمدة', price: 200, sales: 95, status: 'نشط' },
-  ]);
+  const [vendorProducts, setVendorProducts] = useState<VendorProductItem[]>(DEFAULT_VENDOR_PRODUCTS);
 
-  if (!user || user.role !== 'vendor') {
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const saved = localStorage.getItem(VENDOR_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) setVendorProducts(parsed);
+      }
+    } catch {
+      // ignore corrupted storage
+    }
+  }, []);
+
+  const persistVendorProducts = (next: VendorProductItem[]) => {
+    setVendorProducts(next);
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem(VENDOR_STORAGE_KEY, JSON.stringify(next));
+      } catch {
+        // ignore storage write failures
+      }
+    }
+  };
+
+  if (sessionStatus === 'loading') {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-raseen-dark text-white font-cairo px-4" dir="rtl">
+        <div className="bg-raseen-navy p-8 rounded-2xl border border-raseen-border text-center max-w-md w-full animate-pulse">
+          <p className="text-sm text-slate-300 font-bold">جاري التحقق من صلاحيات بوابة البائع...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user || (user.role !== 'vendor' && user.role !== 'admin')) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-raseen-dark text-white font-cairo px-4" dir="rtl" lang="ar">
         <div className="bg-raseen-navy p-8 rounded-2xl border border-raseen-border text-center max-w-md w-full shadow-2xl">
@@ -39,14 +95,16 @@ export default function VendorDashboardPage() {
           </div>
           <h1 className="text-2xl font-bold text-white mb-2">بوابة البائعين وصناع المحتوى</h1>
           <p className="text-slate-400 text-sm mb-6 leading-relaxed">
-            هذه اللوحة مخصصة للبائعين لإدارة ملفاتهم ومتابعة أرباحهم وصرف مستحقاتهم الأسبوعية (85%).
+            {user
+              ? `أنت مسجل حالياً بحساب عميل (${user.email}). هذه اللوحة مخصصة لحسابات البائعين لإدارة ملفاتهم وأرباحهم الأسبوعية (85%).`
+              : 'هذه اللوحة مخصصة للبائعين لإدارة ملفاتهم ومتابعة أرباحهم وصرف مستحقاتهم الأسبوعية (85%).'}
           </p>
           <div className="flex flex-col gap-3">
             <button
               onClick={() => toggleLoginModal(true)}
               className="btn-gold w-full min-h-[44px]"
             >
-              تسجيل الدخول أو إنشاء حساب بائع
+              {user ? 'التبديل أو تسجيل حساب بائع جديد' : 'تسجيل الدخول أو إنشاء حساب بائع'}
             </button>
             <Link
               href="/"
@@ -83,19 +141,19 @@ export default function VendorDashboardPage() {
       setIsSubmitting(true);
       setTimeout(() => {
         setIsSubmitting(false);
-        const newProd = {
+        const newProd: VendorProductItem = {
           id: String(Date.now()),
-          title: formData.title,
+          title: formData.title.trim(),
           price: Number(formData.price),
           sales: 0,
-          status: 'قيد التدقيق الآلي',
+          status: 'مسودة محلية (قيد المراجعة)',
         };
-        setVendorProducts([newProd, ...vendorProducts]);
-        setSuccessNotice(`تم رفع المنتج "${formData.title}" بنجاح وجاري فحصه آلياً.`);
+        persistVendorProducts([newProd, ...vendorProducts]);
+        setSuccessNotice(`تم حفظ المسودة المحلية للمنتج "${formData.title}" ضمن لوحة البائع.`);
         setFormData({ title: '', description: '', category: '', fileType: '', price: '', licenseType: 'commercial' });
         setActiveTab('products');
         setTimeout(() => setSuccessNotice(null), 5000);
-      }, 1200);
+      }, 300);
     }
   };
 
@@ -106,12 +164,36 @@ export default function VendorDashboardPage() {
 
   const confirmDelete = () => {
     if (productToDelete) {
-      setVendorProducts(vendorProducts.filter((p) => p.id !== productToDelete));
-      setSuccessNotice('تم حذف المنتج بنجاح.');
+      persistVendorProducts(vendorProducts.filter((p) => p.id !== productToDelete));
+      setSuccessNotice('تم حذف المنتج من قائمتك بنجاح.');
       setTimeout(() => setSuccessNotice(null), 4000);
     }
     setShowConfirmModal(false);
     setProductToDelete(null);
+  };
+
+  const openEditModal = (prod: VendorProductItem) => {
+    setEditingProduct(prod);
+    setEditTitle(prod.title);
+    setEditPrice(String(prod.price));
+  };
+
+  const handleSaveEdit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingProduct) return;
+    const parsedPrice = Number(editPrice);
+    if (!editTitle.trim() || !Number.isFinite(parsedPrice) || parsedPrice < 50) return;
+
+    persistVendorProducts(
+      vendorProducts.map((p) =>
+        p.id === editingProduct.id
+          ? { ...p, title: editTitle.trim(), price: parsedPrice }
+          : p
+      )
+    );
+    setSuccessNotice(`تم تحديث بيانات "${editTitle.trim()}" بنجاح.`);
+    setEditingProduct(null);
+    setTimeout(() => setSuccessNotice(null), 4000);
   };
 
   return (
@@ -181,63 +263,72 @@ export default function VendorDashboardPage() {
 
           {activeTab === 'overview' && (
             <div className="space-y-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="bg-raseen-surface p-6 rounded-xl border border-raseen-border">
-                  <div className="text-slate-400 text-sm mb-2 flex items-center justify-between">
-                    <span>إجمالي المبيعات</span>
-                    <span>💰</span>
-                  </div>
-                  <div className="text-2xl font-black text-white">15,340 ج.م</div>
-                  <div className="text-xs text-slate-500 mt-2">منذ بداية الشهر الحالي</div>
-                </div>
+              {(() => {
+                const trackedGross = vendorProducts.reduce((sum, p) => sum + p.price * p.sales, 0);
+                const creatorShare = Math.round(trackedGross * 0.85);
+                const platformFee = trackedGross - creatorShare;
+                return (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="bg-raseen-surface p-6 rounded-xl border border-raseen-border">
+                      <div className="text-slate-400 text-sm mb-2 flex items-center justify-between">
+                        <span>إجمالي المبيعات المؤكدة</span>
+                        <span>💰</span>
+                      </div>
+                      <div className="text-2xl font-black text-white">{trackedGross.toLocaleString('en-US')} ج.م</div>
+                      <div className="text-xs text-slate-500 mt-2">
+                        {trackedGross === 0 ? 'لا توجد مبيعات مسجلة بعد' : 'محسوبة من أصولك المسجلة'}
+                      </div>
+                    </div>
 
-                <div className="bg-raseen-surface p-6 rounded-xl border border-green-500/20">
-                  <div className="text-slate-400 text-sm mb-2 flex items-center justify-between">
-                    <span className="text-green-400 font-bold">صافي أرباحك (85%)</span>
-                    <span>📈</span>
-                  </div>
-                  <div className="text-2xl font-black text-green-400">13,039 ج.م</div>
-                  <div className="text-xs text-slate-500 mt-2">مستحقات معتمدة ومؤكدة</div>
-                </div>
+                    <div className="bg-raseen-surface p-6 rounded-xl border border-green-500/20">
+                      <div className="text-slate-400 text-sm mb-2 flex items-center justify-between">
+                        <span className="text-green-400 font-bold">صافي أرباحك (85%)</span>
+                        <span>📈</span>
+                      </div>
+                      <div className="text-2xl font-black text-green-400">{creatorShare.toLocaleString('en-US')} ج.م</div>
+                      <div className="text-xs text-slate-500 mt-2">تُحتسب فور تأكيد الطلبات</div>
+                    </div>
 
-                <div className="bg-raseen-surface p-6 rounded-xl border border-raseen-border">
-                  <div className="text-slate-400 text-sm mb-2 flex items-center justify-between">
-                    <span>عمولة المنصة (15%)</span>
-                    <span>🏢</span>
-                  </div>
-                  <div className="text-2xl font-black text-slate-300">2,301 ج.م</div>
-                  <div className="text-xs text-slate-500 mt-2">شاملة بوابات الدفع والتخزين</div>
-                </div>
+                    <div className="bg-raseen-surface p-6 rounded-xl border border-raseen-border">
+                      <div className="text-slate-400 text-sm mb-2 flex items-center justify-between">
+                        <span>عمولة المنصة (15%)</span>
+                        <span>🏢</span>
+                      </div>
+                      <div className="text-2xl font-black text-slate-300">{platformFee.toLocaleString('en-US')} ج.م</div>
+                      <div className="text-xs text-slate-500 mt-2">تشمل الاستضافة وبوابات الدفع</div>
+                    </div>
 
-                <div className="bg-raseen-surface p-6 rounded-xl border border-raseen-border">
-                  <div className="text-slate-400 text-sm mb-2 flex items-center justify-between">
-                    <span>المنتجات النشطة</span>
-                    <span>📦</span>
+                    <div className="bg-raseen-surface p-6 rounded-xl border border-raseen-border">
+                      <div className="text-slate-400 text-sm mb-2 flex items-center justify-between">
+                        <span>مسودات ومنتجات البائع</span>
+                        <span>📦</span>
+                      </div>
+                      <div className="text-2xl font-black text-raseen-gold">{vendorProducts.length} أصل</div>
+                      <div className="text-xs text-slate-500 mt-2">محفوظة في مسوداتك المحلية</div>
+                    </div>
                   </div>
-                  <div className="text-2xl font-black text-raseen-gold">{vendorProducts.length} منتجات</div>
-                  <div className="text-xs text-slate-500 mt-2">متوفرة للتنزيل الفوري</div>
-                </div>
-              </div>
+                );
+              })()}
 
               {/* Payout Banner */}
               <div className="bg-gradient-to-r from-raseen-surface via-raseen-accent to-raseen-surface p-6 rounded-xl border border-raseen-gold/30 flex items-center justify-between flex-wrap gap-4">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-lg">⚡</span>
-                    <h3 className="text-lg font-bold text-white">دفعة الصرف الأسبوعية القادمة</h3>
+                    <h3 className="text-lg font-bold text-white">نظام تسوية مستحقات البائعين (85%)</h3>
                   </div>
                   <p className="text-slate-400 text-sm">
-                    تحويل بنكي / محفظة فودافون كاش / إنستاباي آلي عبر شبكة Paymob Send.
+                    يتم التنسيق الأسبوعي لصرف المستحقات المؤكدة عبر التحويل البنكي أو محفظة فودافون كاش أو إنستاباي بعد مراجعة الطلبات.
                   </p>
                 </div>
                 <div className="flex items-center gap-4 text-center">
                   <div className="bg-raseen-dark px-4 py-2 rounded-xl border border-raseen-border">
-                    <div className="text-raseen-gold font-bold text-lg">الخميس القادم</div>
-                    <div className="text-xs text-slate-400">تلقائياً وبدون تدخل</div>
+                    <div className="text-raseen-gold font-bold text-lg">كل خميس</div>
+                    <div className="text-xs text-slate-400">مراجعة وصرف المستحقات</div>
                   </div>
                   <div className="bg-raseen-dark px-4 py-2 rounded-xl border border-raseen-border">
-                    <div className="text-white font-bold text-lg">2,450 ج.م</div>
-                    <div className="text-xs text-green-400">المبلغ الجاهز للصرف</div>
+                    <div className="text-white font-bold text-lg">0 ج.م</div>
+                    <div className="text-xs text-slate-400">الرصيد المتاح للصرف حالياً</div>
                   </div>
                 </div>
               </div>
@@ -247,6 +338,22 @@ export default function VendorDashboardPage() {
           {activeTab === 'products' && (
             <div>
               <h2 className="text-xl font-bold text-white mb-6">قائمة الأصول الرقمية المرفوعة</h2>
+              {vendorProducts.length === 0 ? (
+                <div className="bg-raseen-surface border border-raseen-border rounded-2xl p-10 text-center space-y-3">
+                  <div className="text-4xl">📦</div>
+                  <h3 className="text-lg font-bold text-white">لا توجد مسودات أو أصول مرفوعة بعد</h3>
+                  <p className="text-xs text-slate-400 max-w-md mx-auto">
+                    أضف أول أصل رقمي أو استخدم معالج المتجر السريع لحفظ مسوداتك هنا ومعاينة الأسعار والأرباح.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('upload')}
+                    className="btn-gold text-xs font-bold !px-6 !py-2.5"
+                  >
+                    + رفع أصل رقمي جديد
+                  </button>
+                </div>
+              ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-right border-collapse min-w-[600px]">
                   <thead>
@@ -276,7 +383,7 @@ export default function VendorDashboardPage() {
                         <td className="py-4 px-3">
                           <div className="flex items-center justify-center gap-2">
                             <button
-                              onClick={() => alert(`تعديل المنتج "${p.title}"`)}
+                              onClick={() => openEditModal(p)}
                               className="px-3 py-1.5 bg-raseen-dark text-slate-300 hover:text-white rounded-lg border border-raseen-border hover:border-raseen-gold text-xs transition-colors min-h-[36px]"
                               aria-label={`تعديل ${p.title}`}
                             >
@@ -296,6 +403,7 @@ export default function VendorDashboardPage() {
                   </tbody>
                 </table>
               </div>
+              )}
             </div>
           )}
 
@@ -376,7 +484,7 @@ export default function VendorDashboardPage() {
                       <option value="powerpoint">عرض بوربوينت (.pptx)</option>
                       <option value="word-pdf">عقد أو وثيقة (.docx / .pdf)</option>
                       <option value="cad-revit">ملف أوتوكاد / ريفيت (.dwg / .rvt)</option>
-                      <option value="ai-prompts">برومبتات ذكاء اصطناعي</option>
+                      <option value="ai-prompts">حزم قوالب وأوامر احترافية (Prompts)</option>
                     </select>
                     {errors.fileType && <span className="text-red-400 text-xs mt-1 block">{errors.fileType}</span>}
                   </div>
@@ -438,6 +546,51 @@ export default function VendorDashboardPage() {
 
         </div>
       </div>
+
+      {/* Inline Edit Modal */}
+      {editingProduct && (
+        <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in-up">
+          <form
+            onSubmit={handleSaveEdit}
+            className="bg-raseen-navy border border-raseen-border rounded-2xl p-6 max-w-md w-full shadow-2xl space-y-4"
+          >
+            <h3 className="text-lg font-bold text-white">تعديل بيانات المنتج</h3>
+            <div>
+              <label className="block text-xs text-slate-300 mb-1">اسم المنتج</label>
+              <input
+                type="text"
+                value={editTitle}
+                onChange={(e) => setEditTitle(e.target.value)}
+                required
+                className="w-full px-3 py-2 rounded-xl bg-raseen-dark border border-raseen-border text-sm text-white focus:border-raseen-gold focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-slate-300 mb-1">السعر (ج.م - الحد الأدنى 50)</label>
+              <input
+                type="number"
+                min={50}
+                value={editPrice}
+                onChange={(e) => setEditPrice(e.target.value)}
+                required
+                className="w-full px-3 py-2 rounded-xl bg-raseen-dark border border-raseen-border text-sm text-white focus:border-raseen-gold focus:outline-none"
+              />
+            </div>
+            <div className="flex gap-3 justify-end pt-2">
+              <button
+                type="button"
+                onClick={() => setEditingProduct(null)}
+                className="btn-outline !py-2 !px-4 text-sm"
+              >
+                إلغاء
+              </button>
+              <button type="submit" className="btn-gold !py-2 !px-5 text-sm">
+                حفظ التعديلات
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
 
       {/* Confirmation Modal */}
       {showConfirmModal && (

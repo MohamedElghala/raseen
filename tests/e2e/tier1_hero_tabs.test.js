@@ -37,7 +37,7 @@ suite.test('HERO-1.2: Default active tab is search catalog with active visual in
 
   // Search input should be rendered and visible
   assert(html.includes('aria-label="ابحث عن المنتجات والأصول الرقمية"'), 'Search input must have accessible aria-label');
-  assert(html.includes('placeholder="ابحث في أكثر من 1,400 أصل'), 'Search input must have comprehensive placeholder');
+  assert(html.includes('placeholder="ابحث في أكثر من 54 أصل'), 'Search input must have comprehensive placeholder');
 
   // Active tab styling (slate/glass pill indicator) on search tab
   assert(html.includes('bg-slate-800/90 text-white border border-amber-400/40'), 'Active tab must have slate/glass pill highlighting');
@@ -47,7 +47,7 @@ suite.test('HERO-1.2: Default active tab is search catalog with active visual in
 suite.test('HERO-1.3: All 4 tab triggers exist with distinct labels and freemium badges', () => {
   const html = renderComponent(Hero, { onSearch: () => {} });
 
-  assert(html.includes('سوق الأصول والشيتات (50 أصل)'), 'Search tab trigger must exist');
+  assert(html.includes('سوق الأصول والشيتات (54 أصل معتمد)'), 'Search tab trigger must exist');
   assert(html.includes('مولد الفواتير الضريبية (ZATCA QR)'), 'Invoice tab trigger must exist');
   assert(html.includes('حاسبة التعادل والأرباح'), 'Break-even tab trigger must exist');
   assert(html.includes('فحص صحة المتاجر والسيو'), 'Audit tab trigger must exist');

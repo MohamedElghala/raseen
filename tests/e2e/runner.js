@@ -17,6 +17,7 @@ const suites = [
   require('./tier2_boundary.test.js'),
   require('./tier3_combinations.test.js'),
   require('./tier4_scenarios.test.js'),
+  require('./tier5_hardening.test.js'),
 ];
 
 async function main() {

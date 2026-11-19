@@ -1,266 +1,323 @@
 'use client';
 
-import React, { useState } from 'react';
-import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { signOut, useSession } from 'next-auth/react';
 import { useAuthStore } from '@/store/authStore';
-import { useWishlistStore } from '@/store/wishlistStore';
 import { mockProducts } from '@/lib/mockData';
-import ProductCard from '@/components/storefront/ProductCard';
 
-const MOCK_PURCHASES = [
-  {
-    id: 'p1',
-    title: 'حزمة عقود العمل والشراكة القانونية',
-    date: '2026-09-28',
-    remainingDownloads: 8,
-    maxDownloads: 10,
-    image: 'https://placehold.co/600x400/1a2744/f5b731?text=عقود+قانونية',
-    fileType: 'DOCX / PDF'
-  },
-  {
-    id: 'p3',
-    title: 'شيت إكسل المحاسبة الشاملة والقيود اليومية',
-    date: '2026-09-29',
-    remainingDownloads: 10,
-    maxDownloads: 10,
-    image: 'https://placehold.co/600x400/1a2744/f5b731?text=إكسل+محاسبي',
-    fileType: 'XLSX'
-  },
-  {
-    id: 'p10',
-    title: 'قوالب Notion الذكية لإدارة المهام والمذاكرة',
-    date: '2026-09-30',
-    remainingDownloads: 4,
-    maxDownloads: 10,
-    image: 'https://placehold.co/600x400/1a2744/f5b731?text=قالب+نوشن',
-    fileType: 'Notion Link'
-  },
-];
+interface SavedOrderItem {
+  id: string;
+  title: string;
+  fileType?: string;
+  imageUrl?: string;
+  downloadUrl?: string;
+  licenseToken?: string;
+}
+
+interface SavedOrderRecord {
+  orderId: string;
+  status: 'completed' | 'pending' | string;
+  currency: string;
+  totalAmount: number;
+  createdAt: string;
+  buyerContact?: string;
+  items: SavedOrderItem[];
+}
 
 export default function BuyerDashboardPage() {
-  const user = useAuthStore((s) => s.user);
-  const logout = useAuthStore((s) => s.logout);
+  const { data: session, status: sessionStatus } = useSession();
   const toggleLoginModal = useAuthStore((s) => s.toggleLoginModal);
+  const [orders, setOrders] = useState<SavedOrderRecord[]>([]);
+  const [downloadNotice, setDownloadNotice] = useState<string | null>(null);
 
-  const [activeTab, setActiveTab] = useState<'purchases' | 'wishlist'>('purchases');
-  const [downloading, setDownloading] = useState<string | null>(null);
-  const [downloadAlert, setDownloadAlert] = useState<string | null>(null);
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const raw = localStorage.getItem('raseen-orders-history');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) {
+          setOrders(parsed);
+        }
+      }
+    } catch {
+      // ignore corrupted local storage payload
+    }
+  }, []);
 
-  const wishlistIds = useWishlistStore((s) => s.wishlistIds);
-  const favoriteProducts = mockProducts.filter((p) => wishlistIds.includes(p.id));
-
-  const handleDownload = (id: string, title: string) => {
-    setDownloading(id);
-    setTimeout(() => {
-      setDownloading(null);
-      setDownloadAlert(`تم تجهيز رابط التنزيل المشفر لـ "${title}". صالح لمدة 48 ساعة.`);
-      setTimeout(() => setDownloadAlert(null), 5000);
-    }, 1200);
-  };
-
-  if (!user) {
+  if (sessionStatus === 'loading') {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-raseen-dark text-white font-cairo px-4" dir="rtl" lang="ar">
-        <div className="bg-raseen-navy p-8 rounded-2xl border border-raseen-border text-center max-w-md w-full shadow-2xl">
-          <div className="w-16 h-16 bg-raseen-accent rounded-full flex items-center justify-center text-3xl mx-auto mb-4 border border-raseen-border text-raseen-gold">
-            👤
-          </div>
-          <h1 className="text-2xl font-bold text-white mb-2">يرجى تسجيل الدخول</h1>
-          <p className="text-slate-400 text-sm mb-6 leading-relaxed">
-            يجب عليك تسجيل الدخول بحسابك للوصول إلى لوحة التحكم والملفات التي قمت بشرائها.
-          </p>
-          <button
-            onClick={() => toggleLoginModal(true)}
-            className="btn-gold w-full min-h-[44px]"
-          >
-            تسجيل الدخول الآن
-          </button>
+      <main className="min-h-screen bg-raseen-dark flex items-center justify-center py-20 px-4">
+        <div className="bg-raseen-surface border border-raseen-border rounded-2xl p-8 max-w-md w-full text-center shadow-2xl animate-pulse">
+          <div className="text-3xl mb-3">⏳</div>
+          <p className="text-sm text-slate-300 font-bold">جاري التحقق من جلستك الآمنة...</p>
         </div>
-      </div>
+      </main>
     );
   }
 
-  return (
-    <main className="min-h-screen bg-raseen-dark text-white font-cairo py-10" dir="rtl" lang="ar">
-      <div className="container mx-auto px-4">
+  const sessionUser = session?.user as
+    | { name?: string | null; email?: string | null; image?: string | null; role?: string }
+    | undefined;
 
-        {downloadAlert && (
-          <div className="mb-6 p-4 bg-green-500/10 border border-green-500/30 text-green-400 rounded-xl flex items-center gap-2 text-sm animate-fade-in-up">
-            <span>✓</span> {downloadAlert}
+  if (!sessionUser) {
+    return (
+      <main className="min-h-screen bg-raseen-dark flex items-center justify-center py-20 px-4">
+        <div className="bg-raseen-surface border border-raseen-border rounded-2xl p-8 max-w-md w-full text-center shadow-2xl">
+          <div className="text-5xl mb-4">🔐</div>
+          <h1 className="text-2xl font-black text-white mb-2">يرجى تسجيل الدخول</h1>
+          <p className="text-slate-400 text-sm mb-6">
+            هذه الصفحة مخصصة للمشترين المسجلين للوصول إلى مكتبة الأصول، سجل الطلبات، والتحقق من التراخيص.
+          </p>
+          <div className="flex flex-col gap-3">
+            <button onClick={() => toggleLoginModal(true)} className="btn-gold w-full">
+              تسجيل الدخول للمنصة
+            </button>
+            <Link href="/verify" className="btn-outline w-full text-sm">
+              التحقق من رخصة أو طلب برقم المرجع
+            </Link>
           </div>
-        )}
+        </div>
+      </main>
+    );
+  }
 
+  const displayName = sessionUser.name || 'مستخدم رَصين';
+  const displayEmail = sessionUser.email || '';
+  const userRole = sessionUser.role || 'buyer';
+  const totalPurchasedItems = orders.reduce((acc, ord) => acc + (ord.items?.length || 0), 0);
+
+  const handleLogout = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('raseen-auth-storage');
+    }
+    signOut({ callbackUrl: '/' });
+  };
+
+  const resolveThumb = (item: SavedOrderItem): string => {
+    const fromCatalog = mockProducts.find((p) => p.id === item.id)?.imageUrl;
+    return fromCatalog || item.imageUrl || '/products/fallback-card.svg';
+  };
+
+  return (
+    <main className="min-h-screen bg-raseen-dark py-12" dir="rtl" lang="ar">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 bg-raseen-navy p-6 rounded-2xl border border-raseen-border">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10 pb-6 border-b border-raseen-border">
           <div>
-            <div className="flex items-center gap-3 mb-1">
-              <span className="text-3xl font-black text-raseen-gold">مرحباً، {user.name}</span>
-              <span className="text-xs bg-raseen-dark text-slate-300 px-2 py-0.5 rounded-full border border-raseen-border">
-                {user.role === 'vendor' ? 'حساب بائع' : 'حساب مشتري'}
+            <div className="flex items-center gap-3 flex-wrap">
+              <h1 className="text-3xl font-black text-raseen-gold">مرحباً، {displayName}</h1>
+              <span className="text-xs px-2.5 py-1 rounded bg-raseen-accent border border-raseen-border text-slate-300 font-bold">
+                {userRole === 'vendor'
+                  ? 'حساب بائع'
+                  : userRole === 'admin'
+                    ? 'حساب إدارة'
+                    : 'حساب عميل'}
               </span>
             </div>
-            <p className="text-slate-400 text-sm">إدارة مشترياتك، تحميلاتك الفورية، وتفضيلات حسابك.</p>
+            <p className="text-slate-400 text-sm mt-1">
+              لوحة إدارة الطلبات الرقمية، ملفات الخزنة، والتحقق من التراخيص المشفرة.
+            </p>
           </div>
-          <div className="flex items-center gap-3">
-            {user.role === 'vendor' && (
-              <Link href="/vendor" className="btn-gold !px-4 !py-2 text-sm">
-                لوحة البائعين 🏪
+
+          <div className="flex items-center gap-3 flex-wrap">
+            <Link href="/verify" className="btn-outline text-sm">
+              🛡️ فحص رخصة رقمية
+            </Link>
+            {(userRole === 'vendor' || userRole === 'admin') && (
+              <Link href="/vendor" className="btn-outline text-sm">
+                🏪 الانتقال لبوابة البائع
               </Link>
             )}
             <button
-              onClick={logout}
-              className="px-4 py-2 bg-red-500/10 text-red-400 border border-red-500/20 rounded-xl hover:bg-red-500/20 transition-all text-sm font-semibold min-h-[44px]"
-              aria-label="تسجيل الخروج"
+              onClick={handleLogout}
+              className="px-4 py-2 rounded-lg text-sm font-bold text-red-400 border border-red-500/30 hover:bg-red-500/10 transition-colors"
             >
               تسجيل الخروج
             </button>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        {/* Download Notice */}
+        {downloadNotice && (
+          <div className="mb-8 p-4 rounded-xl bg-green-950/60 border border-green-500/50 text-green-300 text-sm flex items-center gap-3">
+            <span className="text-xl">✅</span>
+            <p className="font-bold">{downloadNotice}</p>
+          </div>
+        )}
 
-          {/* Sidebar */}
-          <div className="lg:col-span-1 space-y-4">
-            <div className="bg-raseen-navy p-6 rounded-2xl border border-raseen-border">
-              <div className="flex items-center gap-4 mb-6 pb-6 border-b border-raseen-border">
-                <div className="w-12 h-12 bg-raseen-accent rounded-full flex items-center justify-center font-bold text-lg text-raseen-gold border border-raseen-border">
-                  {user.name.charAt(0)}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Account Info Sidebar */}
+          <div className="lg:col-span-1 space-y-6">
+            <div className="bg-raseen-surface border border-raseen-border rounded-xl p-6">
+              <div className="flex items-center gap-4 mb-5">
+                <div className="w-12 h-12 rounded-full bg-raseen-gold/20 border border-raseen-gold flex items-center justify-center text-raseen-gold font-black text-xl overflow-hidden">
+                  {sessionUser.image ? (
+                    <img src={sessionUser.image} alt={displayName} className="w-full h-full object-cover" />
+                  ) : (
+                    displayName.charAt(0)
+                  )}
                 </div>
                 <div className="overflow-hidden">
-                  <div className="font-bold text-white truncate">{user.name}</div>
-                  <div className="text-xs text-slate-400 truncate">{user.email}</div>
+                  <div className="font-bold text-white truncate">{displayName}</div>
+                  <div className="text-xs text-slate-400 truncate" dir="ltr">
+                    {displayEmail}
+                  </div>
                 </div>
               </div>
-              <div className="flex flex-col gap-2">
-                <button
-                  onClick={() => setActiveTab('purchases')}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-bold min-h-[44px] ${
-                    activeTab === 'purchases'
-                      ? 'bg-raseen-gold text-raseen-dark'
-                      : 'text-slate-400 hover:bg-raseen-dark hover:text-white'
-                  }`}
-                >
-                  <span>📦</span>
-                  <span>مشترياتي ({MOCK_PURCHASES.length})</span>
-                </button>
-                <button
-                  onClick={() => setActiveTab('wishlist')}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-bold min-h-[44px] ${
-                    activeTab === 'wishlist'
-                      ? 'bg-raseen-gold text-raseen-dark'
-                      : 'text-slate-400 hover:bg-raseen-dark hover:text-white'
-                  }`}
-                >
-                  <span>❤️</span>
-                  <span>المفضلة ({wishlistIds.length})</span>
-                </button>
+
+              <div className="space-y-3 text-sm border-t border-raseen-border/60 pt-4">
+                <div className="flex justify-between text-slate-300">
+                  <span>إجمالي الطلبات:</span>
+                  <span className="font-bold text-white">{orders.length}</span>
+                </div>
+                <div className="flex justify-between text-slate-300">
+                  <span>الأصول المسجلة:</span>
+                  <span className="font-bold text-raseen-gold">{totalPurchasedItems}</span>
+                </div>
+                <div className="flex justify-between text-slate-300">
+                  <span>حالة الجلسة:</span>
+                  <span className="text-green-400 font-bold">موثقة (NextAuth)</span>
+                </div>
               </div>
             </div>
 
-            {user.role !== 'vendor' && (
-              <div className="bg-gradient-to-br from-raseen-accent to-raseen-navy p-6 rounded-2xl border border-raseen-border text-center">
-                <h3 className="font-bold text-white mb-2">هل تصنع أدوات أو شيتات رقمية؟</h3>
-                <p className="text-xs text-slate-400 mb-4 leading-relaxed">
-                  انضم إلى منصة رَصين كبائع وحقق دخلاً ممتازاً مع عمولة 85% لك وصرف أسبوعي فوري.
+            {userRole !== 'vendor' && (
+              <div className="bg-gradient-to-br from-raseen-surface to-slate-900 border border-raseen-gold/30 rounded-xl p-6">
+                <h3 className="font-bold text-raseen-gold mb-2">لديك خبرة مهنية؟</h3>
+                <p className="text-xs text-slate-300 leading-relaxed mb-4">
+                  انضم كبائع على منصة رَصين وارفع قوالبك الهندسية أو المحاسبية واحصل على 85% من قيمة كل عملية بيع.
                 </p>
-                <Link
-                  href="/vendor"
-                  className="btn-outline inline-block w-full text-center text-sm !py-2"
-                >
-                  بوابة البائعين
+                <Link href="/vendor" className="btn-outline w-full text-xs text-center block">
+                  اعرف المزيد عن البيع
                 </Link>
               </div>
             )}
           </div>
 
-          {/* Main Content */}
+          {/* Orders & Vault History */}
           <div className="lg:col-span-3">
-            <div className="bg-raseen-navy p-6 rounded-2xl border border-raseen-border min-h-[450px]">
+            <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+              <span>📦</span>
+              <span>سجل الطلبات ومكتبة التحميل ({orders.length})</span>
+            </h2>
 
-              {activeTab === 'purchases' && (
-                <div>
-                  <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                    <span>📦</span>
-                    <span>الملفات والأصول المشتراة</span>
-                  </h2>
-                  <div className="space-y-4">
-                    {MOCK_PURCHASES.map((item) => (
-                      <div
-                        key={item.id}
-                        className="flex flex-col sm:flex-row items-center justify-between p-4 bg-raseen-surface rounded-xl border border-raseen-border gap-4 hover:border-raseen-border/80 transition-all"
-                      >
-                        <div className="flex items-center gap-4 w-full sm:w-auto">
-                          <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 border border-raseen-border bg-raseen-dark">
-                            <Image src={item.image} alt={item.title} fill className="object-cover" />
-                          </div>
-                          <div>
-                            <h3 className="font-bold text-white text-sm md:text-base mb-1 line-clamp-1">{item.title}</h3>
-                            <div className="flex items-center gap-3 text-xs text-slate-400">
-                              <span>تاريخ الشراء: {item.date}</span>
-                              <span>•</span>
-                              <span className="text-raseen-gold font-mono">{item.fileType}</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-between sm:justify-end gap-6 w-full sm:w-auto mt-2 sm:mt-0 pt-4 sm:pt-0 border-t border-raseen-border sm:border-0">
-                          <div className="text-xs text-slate-400 text-center">
-                            التحميلات المتبقية
-                            <div className="font-bold text-white text-sm">{item.remainingDownloads} / {item.maxDownloads}</div>
-                          </div>
-                          <button
-                            onClick={() => handleDownload(item.id, item.title)}
-                            disabled={downloading === item.id || item.remainingDownloads === 0}
-                            className={`btn-gold !px-5 !py-2 text-sm flex items-center gap-2 ${
-                              item.remainingDownloads === 0 ? 'opacity-50 cursor-not-allowed' : ''
+            {orders.length === 0 ? (
+              <div className="bg-raseen-surface border border-raseen-border rounded-2xl p-8 text-center">
+                <div className="text-4xl mb-3">🗂️</div>
+                <h3 className="text-lg font-bold text-white mb-2">لا توجد طلبات مسجلة في هذا المتصفح بعد</h3>
+                <p className="text-sm text-slate-400 max-w-lg mx-auto mb-6">
+                  عند إتمام أي طلب مجاني (0 ج.م) أو حجز طلب مدفوع من السلة، سيتم حفظ سجل الطلب وروابط خزنة الملفات وشهادة الترخيص هنا تلقائياً.
+                </p>
+                <div className="flex flex-wrap justify-center gap-3">
+                  <Link href="/#products" className="btn-gold text-sm">
+                    تصفح الأصول والقوالب
+                  </Link>
+                  <Link href="/verify" className="btn-outline text-sm">
+                    فحص كود ترخيص حالي
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                {orders.map((order) => {
+                  const isCompleted = order.status === 'completed';
+                  return (
+                    <div
+                      key={order.orderId}
+                      className="bg-raseen-surface border border-raseen-border rounded-2xl p-5 shadow-lg space-y-4"
+                    >
+                      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-raseen-border/60 text-xs">
+                        <div className="flex items-center gap-3 flex-wrap">
+                          <span className="font-mono font-bold text-raseen-gold" dir="ltr">
+                            {order.orderId}
+                          </span>
+                          <span
+                            className={`px-2.5 py-0.5 rounded font-bold ${
+                              isCompleted
+                                ? 'bg-green-500/15 text-green-300 border border-green-500/30'
+                                : 'bg-amber-500/15 text-amber-300 border border-amber-500/30'
                             }`}
-                            aria-label={`تحميل ${item.title}`}
                           >
-                            <span>📥</span>
-                            <span>{downloading === item.id ? 'جاري التحضير...' : 'تحميل فوري'}</span>
-                          </button>
+                            {isCompleted ? 'مكتمل — جاهز للتحميل' : 'قيد التحقق اليدوي من التحويل'}
+                          </span>
+                        </div>
+                        <div className="text-slate-400">
+                          {new Date(order.createdAt).toLocaleDateString('ar-EG')} •{' '}
+                          <span className="text-white font-bold">
+                            {order.totalAmount} {order.currency}
+                          </span>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                </div>
-              )}
 
-              {activeTab === 'wishlist' && (
-                <div>
-                  <div className="flex items-center justify-between mb-6 pb-4 border-b border-raseen-border">
-                    <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                      <span>❤️</span>
-                      <span>قائمة الأصول المفضلة ({favoriteProducts.length})</span>
-                    </h2>
-                    <Link href="/#products" className="text-xs text-raseen-gold hover:underline">
-                      + تصفح المزيد من الأصول
-                    </Link>
-                  </div>
+                      <div className="space-y-3">
+                        {order.items.map((item) => (
+                          <div
+                            key={`${order.orderId}-${item.id}`}
+                            className="bg-raseen-dark/60 border border-raseen-border/70 rounded-xl p-4 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center"
+                          >
+                            <div className="flex items-center gap-4">
+                              <img
+                                src={resolveThumb(item)}
+                                alt={item.title}
+                                onError={(e) => {
+                                  e.currentTarget.src = '/products/fallback-card.svg';
+                                }}
+                                className="w-16 h-16 rounded-lg object-cover border border-raseen-border shrink-0 bg-slate-900"
+                              />
+                              <div>
+                                <div className="flex items-center gap-2 mb-1">
+                                  {item.fileType && (
+                                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-800 text-raseen-gold border border-slate-700 uppercase">
+                                      {item.fileType}
+                                    </span>
+                                  )}
+                                </div>
+                                <Link
+                                  href={`/product/${item.id}`}
+                                  className="font-bold text-white text-sm hover:text-raseen-gold transition-colors"
+                                >
+                                  {item.title}
+                                </Link>
+                              </div>
+                            </div>
 
-                  {favoriteProducts.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center h-[320px] text-center">
-                      <span className="text-5xl mb-4">❤️</span>
-                      <h3 className="text-lg font-bold text-white mb-2">قائمة المفضلة فارغة حالياً</h3>
-                      <p className="text-slate-400 text-xs mb-6 max-w-sm leading-relaxed">
-                        اضغط على أيقونة القلب على أي شيت أو عقد أو مشروع لحفظه هنا والرجوع إليه لاحقاً.
-                      </p>
-                      <Link href="/#products" className="btn-gold !px-6 !py-2 text-xs font-bold">
-                        تصفح المنتجات في السوق
-                      </Link>
+                            <div className="flex flex-wrap gap-2 w-full sm:w-auto">
+                              {isCompleted && item.downloadUrl ? (
+                                <a
+                                  href={item.downloadUrl}
+                                  download
+                                  onClick={() =>
+                                    setDownloadNotice(`بدأ تحميل الملف الفعلي للأصل "${item.title}" من خزنة رَصين.`)
+                                  }
+                                  className="btn-gold !px-4 !py-2 text-xs text-center flex-1 sm:flex-none"
+                                >
+                                  ⬇️ تحميل الملف الآن
+                                </a>
+                              ) : (
+                                <span className="px-3 py-2 rounded-lg text-xs bg-slate-800 text-amber-300 border border-slate-700">
+                                  يُفعَّل التحميل بعد تأكيد التحويل
+                                </span>
+                              )}
+
+                              {item.licenseToken && (
+                                <Link
+                                  href={`/verify?token=${encodeURIComponent(item.licenseToken)}`}
+                                  className="btn-outline !px-3 !py-2 text-xs text-center"
+                                >
+                                  🛡️ عرض الرخصة
+                                </Link>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {favoriteProducts.map((prod) => (
-                        <ProductCard key={prod.id} product={prod} />
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
-
-            </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -8,6 +8,7 @@ import { formatPrice } from '@/lib/currency';
 
 export default function BundleDeals() {
   const addItem = useCartStore((s) => s.addItem);
+  const toggleCart = useCartStore((s) => s.toggleCart);
   const currency = useCartStore((s) => s.currency);
 
   const handleAddBundle = (productIds: string[]) => {
@@ -15,6 +16,7 @@ export default function BundleDeals() {
       const prod = products.find((p) => p.id === id);
       if (prod) addItem(prod);
     });
+    toggleCart(true);
   };
 
   return (
@@ -51,6 +53,9 @@ export default function BundleDeals() {
                     src={bundle.imageUrl}
                     alt={bundle.title}
                     fill
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src = '/products/fallback-card.svg';
+                    }}
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />

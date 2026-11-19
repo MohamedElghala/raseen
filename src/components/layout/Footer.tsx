@@ -41,11 +41,12 @@ export default function Footer() {
           <div className="col-span-1">
             <h3 className="text-lg font-bold text-slate-200 mb-4">التصنيفات</h3>
             <ul className="space-y-3">
-              <li><Link href="/" className="text-slate-400 hover:text-raseen-gold transition-colors text-sm">شيتات إكسل</Link></li>
-              <li><Link href="/" className="text-slate-400 hover:text-raseen-gold transition-colors text-sm">عقود قانونية</Link></li>
-              <li><Link href="/" className="text-slate-400 hover:text-raseen-gold transition-colors text-sm">قوالب Notion</Link></li>
-              <li><Link href="/" className="text-slate-400 hover:text-raseen-gold transition-colors text-sm">بلوكات CAD</Link></li>
-              <li><Link href="/" className="text-slate-400 hover:text-raseen-gold transition-colors text-sm">برومبتات AI</Link></li>
+              <li><Link href="/?filter=excel" className="text-slate-400 hover:text-raseen-gold transition-colors text-sm">شيتات إكسل</Link></li>
+              <li><Link href="/?filter=word-pdf" className="text-slate-400 hover:text-raseen-gold transition-colors text-sm">عقود قانونية</Link></li>
+              <li><Link href="/?filter=notion" className="text-slate-400 hover:text-raseen-gold transition-colors text-sm">قوالب Notion</Link></li>
+              <li><Link href="/?filter=canva" className="text-slate-400 hover:text-raseen-gold transition-colors text-sm">قوالب Canva والتصميم</Link></li>
+              <li><Link href="/?filter=cad-revit" className="text-slate-400 hover:text-raseen-gold transition-colors text-sm">بلوكات CAD</Link></li>
+              <li><Link href="/?filter=ai-prompts" className="text-slate-400 hover:text-raseen-gold transition-colors text-sm">برومبتات AI</Link></li>
             </ul>
           </div>
 
@@ -64,13 +65,12 @@ export default function Footer() {
 
           {/* Payment & Trust */}
           <div className="col-span-1">
-            <h3 className="text-lg font-bold text-slate-200 mb-4">طرق الدفع المدعومة</h3>
+            <h3 className="text-lg font-bold text-slate-200 mb-4">طرق السداد والتوثيق</h3>
             <div className="flex flex-wrap gap-2 mb-6">
-              <span className="bg-raseen-surface border border-raseen-border text-xs px-2 py-1 rounded text-slate-300">Visa / MasterCard</span>
-              <span className="bg-raseen-surface border border-raseen-border text-xs px-2 py-1 rounded text-slate-300">Paymob Accept</span>
-              <span className="bg-raseen-surface border border-raseen-border text-xs px-2 py-1 rounded text-slate-300">Vodafone Cash</span>
-              <span className="bg-raseen-surface border border-raseen-border text-xs px-2 py-1 rounded text-slate-300">InstaPay</span>
-              <span className="bg-raseen-surface border border-raseen-border text-xs px-2 py-1 rounded text-slate-300">Mada</span>
+              <span className="bg-raseen-surface border border-raseen-border text-xs px-2 py-1 rounded text-slate-300">InstaPay ⚡</span>
+              <span className="bg-raseen-surface border border-raseen-border text-xs px-2 py-1 rounded text-slate-300">Vodafone Cash 📱</span>
+              <span className="bg-raseen-surface border border-raseen-border text-xs px-2 py-1 rounded text-slate-300">تحويل مباشر عبر واتساب</span>
+              <span className="bg-raseen-surface border border-raseen-border text-xs px-2 py-1 rounded text-slate-300">توثيق رخص HMAC</span>
             </div>
           </div>
 

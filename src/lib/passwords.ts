@@ -30,23 +30,40 @@ export function checkPasswordStrength(password: string): {
   isValid: boolean;
   message?: string;
 } {
-  if (!password || password.length < 6) {
-    return { score: 0, label: 'ضعيفة جداً', color: '#ef4444', isValid: false, message: 'يجب أن تكون 6 أحرف على الأقل' };
+  if (!password || password.length < 10) {
+    return {
+      score: 0,
+      label: 'ضعيفة جداً',
+      color: '#ef4444',
+      isValid: false,
+      message: 'يجب أن تكون كلمة المرور 10 أحرف على الأقل',
+    };
   }
+
+  const hasLower = /[a-z]/.test(password);
+  const hasUpper = /[A-Z]/.test(password);
+  const hasDigit = /[0-9]/.test(password);
+  const hasSpecial = /[^a-zA-Z0-9]/.test(password);
 
   let score = 0;
-  if (password.length >= 8) score += 1;
-  if (/[0-9]/.test(password)) score += 1;
-  if (/[a-zA-Z]/.test(password)) score += 1;
-  if (/[^a-zA-Z0-9]/.test(password)) score += 1;
+  if (password.length >= 10) score += 1;
+  if (hasLower && hasUpper) score += 1;
+  if (hasDigit) score += 1;
+  if (hasSpecial) score += 1;
 
-  if (score <= 1) {
-    return { score: 1, label: 'ضعيفة', color: '#f87171', isValid: false, message: 'يُفضل إضافة أرقام وحروف كبيرة' };
-  } else if (score === 2) {
-    return { score: 2, label: 'متوسطة', color: '#fbbf24', isValid: true };
-  } else if (score === 3) {
-    return { score: 3, label: 'قوية', color: '#34d399', isValid: true };
-  } else {
+  if (!hasLower || !hasUpper || !hasDigit || !hasSpecial) {
+    return {
+      score: Math.min(score, 2),
+      label: score <= 1 ? 'ضعيفة' : 'متوسطة',
+      color: score <= 1 ? '#f87171' : '#fbbf24',
+      isValid: false,
+      message: 'يجب أن تحتوي كلمة المرور على حرف كبير، حرف صغير، رقم، ورمز خاص (!@#$)',
+    };
+  }
+
+  if (password.length >= 14) {
     return { score: 4, label: 'قوية جداً', color: '#10b981', isValid: true };
   }
+
+  return { score: 3, label: 'قوية', color: '#34d399', isValid: true };
 }

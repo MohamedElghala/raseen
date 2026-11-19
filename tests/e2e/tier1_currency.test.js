@@ -57,21 +57,26 @@ suite.test('CURR-1.2: Fallback rates are sane and ensure offline resilience', as
   assertEqual(data.recommendedCurrency, 'SAR', 'SA query must recommend SAR');
 });
 
-// Test 3: Math Properties of convertPrice
-suite.test('CURR-1.3: convertPrice scales base EGP amounts with zero precision loss', () => {
+// Test 3: Math Properties of convertPrice (PPP default + explicit custom rate override)
+suite.test('CURR-1.3: convertPrice scales base EGP amounts accurately via PPP and custom rates', () => {
   const basePriceEGP = 1000;
 
   const egp = currencyLib.convertPrice(basePriceEGP, 'EGP');
   assertEqual(egp, 1000, 'EGP to EGP must be 1:1');
 
-  const sar = currencyLib.convertPrice(basePriceEGP, 'SAR');
-  assertEqual(sar, 77, '1000 EGP at 0.077 must equal 77 SAR');
+  // Regional PPP Pricing Engine defaults (EGP=1, SAR=0.25, AED=0.25, USD=0.08)
+  const sarPPP = currencyLib.convertPrice(basePriceEGP, 'SAR');
+  assertEqual(sarPPP, 250, '1000 EGP at PPP 0.25 must equal 250 SAR');
 
-  const aed = currencyLib.convertPrice(basePriceEGP, 'AED');
-  assertEqual(aed, 74, '1000 EGP at 0.074 must equal 74 AED');
+  const aedPPP = currencyLib.convertPrice(basePriceEGP, 'AED');
+  assertEqual(aedPPP, 250, '1000 EGP at PPP 0.25 must equal 250 AED');
 
-  const usd = currencyLib.convertPrice(basePriceEGP, 'USD');
-  assertEqual(usd, 20, '1000 EGP at 0.02 must equal 20 USD');
+  const usdPPP = currencyLib.convertPrice(basePriceEGP, 'USD');
+  assertEqual(usdPPP, 80, '1000 EGP at PPP 0.08 must equal 80 USD');
+
+  // Explicit market exchange-rate override must also be honored
+  const sarMarket = currencyLib.convertPrice(basePriceEGP, 'SAR', currencyLib.EXCHANGE_RATES);
+  assertEqual(sarMarket, Math.round(1000 * currencyLib.EXCHANGE_RATES.SAR), 'Explicit rates parameter must be honored');
 });
 
 // Test 4: formatPrice Output Formatting & RTL Spacing

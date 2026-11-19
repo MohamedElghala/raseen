@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Raseen Digital Asset">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#071124"/>
+      <stop offset="55%" stop-color="#0f2042"/>
+      <stop offset="100%" stop-color="#172f5c"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d4961a"/>
+      <stop offset="50%" stop-color="#f5b731"/>
+      <stop offset="100%" stop-color="#fde08d"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <g opacity="0.14" stroke="#f5b731" stroke-width="1">
+    <path d="M0 100 H800 M0 200 H800 M0 300 H800 M0 400 H800"/>
+    <path d="M160 0 V500 M320 0 V500 M480 0 V500 M640 0 V500"/>
+  </g>
+  <rect x="275" y="135" width="250" height="175" rx="22" fill="#0b1833" stroke="url(#gold)" stroke-width="2.5"/>
+  <rect x="305" y="168" width="190" height="18" rx="6" fill="url(#gold)" opacity="0.9"/>
+  <rect x="305" y="204" width="145" height="12" rx="5" fill="#94a3b8" opacity="0.55"/>
+  <rect x="305" y="228" width="165" height="12" rx="5" fill="#94a3b8" opacity="0.38"/>
+  <rect x="305" y="262" width="90" height="22" rx="8" fill="#1e3a6e" stroke="#f5b731" stroke-opacity="0.5"/>
+  <text x="400" y="370" text-anchor="middle" fill="#f5b731" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="800">RASEEN | رَصِيـن</text>
+  <text x="400" y="406" text-anchor="middle" fill="#cbd5e1" font-family="Segoe UI, Arial, sans-serif" font-size="16" letter-spacing="1.5">DIGITAL ASSET &amp; TEMPLATE VAULT</text>
+</svg>

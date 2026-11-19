@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { generateZatcaTLV, renderQRCodeMatrix, generateZatcaQRSvg } from '@/lib/zatca';
 import { Analytics } from '@/lib/analytics';
+import ToolLeadCaptureModal from '@/components/tools/ToolLeadCaptureModal';
 
 interface InvoiceItem {
   id: string;
@@ -14,8 +15,13 @@ interface InvoiceItem {
 export default function InvoiceGenerator() {
   const [companyName, setCompanyName] = useState('شركة رَصين للحلول الرقمية');
   const [taxNumber, setTaxNumber] = useState('31024589200003');
-  const [invoiceNumber, setInvoiceNumber] = useState(`INV-2026-${Math.floor(1000 + Math.random() * 9000)}`);
-  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+  const [invoiceNumber, setInvoiceNumber] = useState('INV-2026-1001');
+  const [date, setDate] = useState('2026-01-01');
+
+  useEffect(() => {
+    setInvoiceNumber(`INV-2026-${Math.floor(1000 + Math.random() * 9000)}`);
+    setDate(new Date().toISOString().split('T')[0]);
+  }, []);
   const [clientName, setClientName] = useState('مؤسسة الأفق المتقدمة');
   const [clientTaxNumber, setClientTaxNumber] = useState('');
   const [currency, setCurrency] = useState<'SAR' | 'EGP' | 'AED' | 'USD'>('SAR');
@@ -28,6 +34,8 @@ export default function InvoiceGenerator() {
   const [discount, setDiscount] = useState<number>(0);
   const [notes, setNotes] = useState('شكراً لتعاملكم معنا. الدفع عبر التحويل البنكي أو إنستاباي / مدى.');
   const [error, setError] = useState('');
+  const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
+  const [hasCapturedLead, setHasCapturedLead] = useState(false);
 
   const currencySymbols: Record<string, string> = {
     SAR: 'ر.س',
@@ -108,6 +116,11 @@ export default function InvoiceGenerator() {
     }
   }, [zatcaPayload]);
 
+  const executePrint = () => {
+    Analytics.toolUsed('invoice_generator', { total: total, currency });
+    window.print();
+  };
+
   const handlePrint = (e: React.FormEvent) => {
     e.preventDefault();
     if (!companyName || !clientName) {
@@ -120,8 +133,12 @@ export default function InvoiceGenerator() {
       return;
     }
     setError('');
-    Analytics.toolUsed('invoice_generator', { total: total, currency });
-    window.print();
+
+    if (!hasCapturedLead) {
+      setIsLeadModalOpen(true);
+    } else {
+      executePrint();
+    }
   };
 
   return (
@@ -268,7 +285,7 @@ export default function InvoiceGenerator() {
                       />
                     </td>
                     <td className="p-2.5 font-mono font-bold text-amber-400">
-                      {((Number(item.quantity) || 0) * (Number(item.price) || 0)).toLocaleString(undefined, { minimumFractionDigits: 2 })} {curr}
+                      {((Number(item.quantity) || 0) * (Number(item.price) || 0)).toLocaleString('en-US', { minimumFractionDigits: 2 })} {curr}
                     </td>
                     <td className="p-2.5 text-center">
                       <button
@@ -371,26 +388,26 @@ export default function InvoiceGenerator() {
             <div className="space-y-2 bg-slate-900 p-4 rounded-xl border border-slate-800/80 text-xs">
               <div className="flex justify-between text-slate-300">
                 <span>المجموع الفرعي:</span>
-                <span className="font-mono">{getSubtotal().toLocaleString(undefined, { minimumFractionDigits: 2 })} {curr}</span>
+                <span className="font-mono">{getSubtotal().toLocaleString('en-US', { minimumFractionDigits: 2 })} {curr}</span>
               </div>
               
               {discount > 0 && (
                 <div className="flex justify-between text-rose-400">
                   <span>الخصم ({discount}%):</span>
-                  <span className="font-mono">-{getDiscountAmount().toLocaleString(undefined, { minimumFractionDigits: 2 })} {curr}</span>
+                  <span className="font-mono">-{getDiscountAmount().toLocaleString('en-US', { minimumFractionDigits: 2 })} {curr}</span>
                 </div>
               )}
 
               {taxEnabled && (
                 <div className="flex justify-between text-slate-400">
                   <span>ضريبة القيمة المضافة ({taxRate}%):</span>
-                  <span className="font-mono">+{getTax().toLocaleString(undefined, { minimumFractionDigits: 2 })} {curr}</span>
+                  <span className="font-mono">+{getTax().toLocaleString('en-US', { minimumFractionDigits: 2 })} {curr}</span>
                 </div>
               )}
 
               <div className="flex justify-between text-amber-400 font-black text-base border-t border-slate-800 pt-2 mt-1">
                 <span>الإجمالي النهائي المستحق:</span>
-                <span className="font-mono">{getTotal().toLocaleString(undefined, { minimumFractionDigits: 2 })} {curr}</span>
+                <span className="font-mono">{getTotal().toLocaleString('en-US', { minimumFractionDigits: 2 })} {curr}</span>
               </div>
             </div>
 
@@ -568,6 +585,15 @@ export default function InvoiceGenerator() {
         </div>
       </div>
 
+      <ToolLeadCaptureModal
+        isOpen={isLeadModalOpen}
+        toolName="الفاتورة الضريبية ZATCA"
+        onClose={() => setIsLeadModalOpen(false)}
+        onProceed={() => {
+          setHasCapturedLead(true);
+          executePrint();
+        }}
+      />
     </div>
   );
 }
